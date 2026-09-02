@@ -1,0 +1,1278 @@
+{
+  "section_matches": [
+    {
+      "section": 1,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "A Sabalenka",
+      "p1_seed": "1",
+      "p2": "C Osorio",
+      "p2_seed": null,
+      "winner": "A Sabalenka"
+    },
+    {
+      "section": 1,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "R Zarazúa",
+      "p1_seed": null,
+      "p2": "P Iatcenko",
+      "p2_seed": "Q",
+      "winner": "P Iatcenko"
+    },
+    {
+      "section": 1,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "A Ito",
+      "p1_seed": "PR",
+      "p2": "O Selekhmeteva",
+      "p2_seed": null,
+      "winner": "O Selekhmeteva"
+    },
+    {
+      "section": 1,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "K Rakhimova",
+      "p1_seed": null,
+      "p2": "B Krejčíková",
+      "p2_seed": "27",
+      "winner": "K Rakhimova"
+    },
+    {
+      "section": 1,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "M Chwalińska",
+      "p1_seed": "20",
+      "p2": "T Townsend",
+      "p2_seed": null,
+      "winner": "T Townsend"
+    },
+    {
+      "section": 1,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "T Preston",
+      "p1_seed": "WC",
+      "p2": "A Parks",
+      "p2_seed": null,
+      "winner": "T Preston"
+    },
+    {
+      "section": 1,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "H Vandewinkel",
+      "p1_seed": null,
+      "p2": "Ka Plíšková",
+      "p2_seed": null,
+      "winner": "Ka Plíšková"
+    },
+    {
+      "section": 1,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "D Snigur",
+      "p1_seed": null,
+      "p2": "D Shnaider",
+      "p2_seed": "15",
+      "winner": "D Shnaider"
+    },
+    {
+      "section": 1,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "A Sabalenka",
+      "p1_seed": "1",
+      "p2": "P Iatcenko",
+      "p2_seed": "Q",
+      "winner": null
+    },
+    {
+      "section": 1,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "O Selekhmeteva",
+      "p1_seed": null,
+      "p2": "K Rakhimova",
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 1,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "T Townsend",
+      "p1_seed": null,
+      "p2": "T Preston",
+      "p2_seed": "WC",
+      "winner": null
+    },
+    {
+      "section": 1,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "Ka Plíšková",
+      "p1_seed": null,
+      "p2": "D Shnaider",
+      "p2_seed": "15",
+      "winner": null
+    },
+    {
+      "section": 1,
+      "round": "Third round",
+      "round_num": 3,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 1,
+      "round": "Third round",
+      "round_num": 3,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 1,
+      "round": "Fourth round",
+      "round_num": 4,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 2,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "M Kostyuk",
+      "p1_seed": "11",
+      "p2": "S Hunter",
+      "p2_seed": "Q",
+      "winner": "M Kostyuk"
+    },
+    {
+      "section": 2,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "S Stephens",
+      "p1_seed": "WC",
+      "p2": "C Tauson",
+      "p2_seed": null,
+      "winner": "S Stephens"
+    },
+    {
+      "section": 2,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "K Birrell",
+      "p1_seed": null,
+      "p2": "P Marčinko",
+      "p2_seed": null,
+      "winner": "K Birrell"
+    },
+    {
+      "section": 2,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "M Kessler",
+      "p1_seed": null,
+      "p2": "E Alexandrova",
+      "p2_seed": "18",
+      "winner": "E Alexandrova"
+    },
+    {
+      "section": 2,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "A Li",
+      "p1_seed": "29",
+      "p2": "A Ružić",
+      "p2_seed": null,
+      "winner": "A Li"
+    },
+    {
+      "section": 2,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "T Gibson",
+      "p1_seed": null,
+      "p2": "D Vekić",
+      "p2_seed": null,
+      "winner": "D Vekić"
+    },
+    {
+      "section": 2,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "E Kalieva",
+      "p1_seed": "Q",
+      "p2": "L Tararudee",
+      "p2_seed": null,
+      "winner": "L Tararudee"
+    },
+    {
+      "section": 2,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "K Volynets",
+      "p1_seed": null,
+      "p2": "L Nosková",
+      "p2_seed": "6",
+      "winner": "L Nosková"
+    },
+    {
+      "section": 2,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "M Kostyuk",
+      "p1_seed": "11",
+      "p2": "S Stephens",
+      "p2_seed": "WC",
+      "winner": null
+    },
+    {
+      "section": 2,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "K Birrell",
+      "p1_seed": null,
+      "p2": "E Alexandrova",
+      "p2_seed": "18",
+      "winner": null
+    },
+    {
+      "section": 2,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "A Li",
+      "p1_seed": "29",
+      "p2": "D Vekić",
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 2,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "L Tararudee",
+      "p1_seed": null,
+      "p2": "L Nosková",
+      "p2_seed": "6",
+      "winner": null
+    },
+    {
+      "section": 2,
+      "round": "Third round",
+      "round_num": 3,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 2,
+      "round": "Third round",
+      "round_num": 3,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 2,
+      "round": "Fourth round",
+      "round_num": 4,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 3,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "J Pegula",
+      "p1_seed": "3",
+      "p2": "E-G Ruse",
+      "p2_seed": null,
+      "winner": "J Pegula"
+    },
+    {
+      "section": 3,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "V Williams",
+      "p1_seed": "WC",
+      "p2": "S Kenin",
+      "p2_seed": "WC",
+      "winner": "S Kenin"
+    },
+    {
+      "section": 3,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "M Sawangkaew",
+      "p1_seed": "PR",
+      "p2": "P Udvardy",
+      "p2_seed": null,
+      "winner": "M Sawangkaew"
+    },
+    {
+      "section": 3,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "S Zhang",
+      "p1_seed": null,
+      "p2": "L Fernandez",
+      "p2_seed": "31",
+      "winner": "L Fernandez"
+    },
+    {
+      "section": 3,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "J Paolini",
+      "p1_seed": "19",
+      "p2": "V Erjavec",
+      "p2_seed": null,
+      "winner": "J Paolini"
+    },
+    {
+      "section": 3,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "L Stefanini",
+      "p1_seed": "Q",
+      "p2": "D Yastremska",
+      "p2_seed": null,
+      "winner": "L Stefanini"
+    },
+    {
+      "section": 3,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "V Golubic",
+      "p1_seed": null,
+      "p2": "D Parry",
+      "p2_seed": null,
+      "winner": "D Parry"
+    },
+    {
+      "section": 3,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "J Grabher",
+      "p1_seed": null,
+      "p2": "S Cîrstea",
+      "p2_seed": "16",
+      "winner": "S Cîrstea"
+    },
+    {
+      "section": 3,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "J Pegula",
+      "p1_seed": "3",
+      "p2": "S Kenin",
+      "p2_seed": "WC",
+      "winner": null
+    },
+    {
+      "section": 3,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "M Sawangkaew",
+      "p1_seed": "PR",
+      "p2": "L Fernandez",
+      "p2_seed": "31",
+      "winner": null
+    },
+    {
+      "section": 3,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "J Paolini",
+      "p1_seed": "19",
+      "p2": "L Stefanini",
+      "p2_seed": "Q",
+      "winner": null
+    },
+    {
+      "section": 3,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "D Parry",
+      "p1_seed": null,
+      "p2": "S Cîrstea",
+      "p2_seed": "16",
+      "winner": null
+    },
+    {
+      "section": 3,
+      "round": "Third round",
+      "round_num": 3,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 3,
+      "round": "Third round",
+      "round_num": 3,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 3,
+      "round": "Fourth round",
+      "round_num": 4,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 4,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "E Svitolina",
+      "p1_seed": "9",
+      "p2": "S Sierra",
+      "p2_seed": null,
+      "winner": "E Svitolina"
+    },
+    {
+      "section": 4,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "M Joint",
+      "p1_seed": null,
+      "p2": "L Samsonova",
+      "p2_seed": null,
+      "winner": "M Joint"
+    },
+    {
+      "section": 4,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "E Arango",
+      "p1_seed": null,
+      "p2": "Xin Wang",
+      "p2_seed": null,
+      "winner": "Xin Wang"
+    },
+    {
+      "section": 4,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "A Blinkova",
+      "p1_seed": null,
+      "p2": "A Kalinskaya",
+      "p2_seed": "21",
+      "winner": "A Kalinskaya"
+    },
+    {
+      "section": 4,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "E Navarro",
+      "p1_seed": "26",
+      "p2": "L Boisson",
+      "p2_seed": "PR",
+      "winner": "E Navarro"
+    },
+    {
+      "section": 4,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "A Koevermans",
+      "p1_seed": "Q",
+      "p2": "C McNally",
+      "p2_seed": null,
+      "winner": "C McNally"
+    },
+    {
+      "section": 4,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "CYS Lee",
+      "p1_seed": "WC",
+      "p2": "K Boulter",
+      "p2_seed": null,
+      "winner": "K Boulter"
+    },
+    {
+      "section": 4,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "S Kraus",
+      "p1_seed": null,
+      "p2": "K Muchová",
+      "p2_seed": "7",
+      "winner": "K Muchová"
+    },
+    {
+      "section": 4,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "E Svitolina",
+      "p1_seed": "9",
+      "p2": "M Joint",
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 4,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "Xin Wang",
+      "p1_seed": null,
+      "p2": "A Kalinskaya",
+      "p2_seed": "21",
+      "winner": null
+    },
+    {
+      "section": 4,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "E Navarro",
+      "p1_seed": "26",
+      "p2": "C McNally",
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 4,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "K Boulter",
+      "p1_seed": null,
+      "p2": "K Muchová",
+      "p2_seed": "7",
+      "winner": null
+    },
+    {
+      "section": 4,
+      "round": "Third round",
+      "round_num": 3,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 4,
+      "round": "Third round",
+      "round_num": 3,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 4,
+      "round": "Fourth round",
+      "round_num": 4,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 5,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "M Andreeva",
+      "p1_seed": "5",
+      "p2": "J Tjen",
+      "p2_seed": null,
+      "winner": "M Andreeva"
+    },
+    {
+      "section": 5,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "G Knutson",
+      "p1_seed": "Q",
+      "p2": "E Lys",
+      "p2_seed": null,
+      "winner": "E Lys"
+    },
+    {
+      "section": 5,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "N Bartůňková",
+      "p1_seed": null,
+      "p2": "M Sherif",
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 5,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "T Maria",
+      "p1_seed": null,
+      "p2": "J Ostapenko",
+      "p2_seed": "30",
+      "winner": null
+    },
+    {
+      "section": 5,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "A Potapova",
+      "p1_seed": "24",
+      "p2": "D Semeņistaja",
+      "p2_seed": "LL",
+      "winner": "A Potapova"
+    },
+    {
+      "section": 5,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "A Rus",
+      "p1_seed": "Q",
+      "p2": "L Jeanjean",
+      "p2_seed": "WC",
+      "winner": "L Jeanjean"
+    },
+    {
+      "section": 5,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "L Tagger",
+      "p1_seed": null,
+      "p2": "T Korpatsch",
+      "p2_seed": null,
+      "winner": "L Tagger"
+    },
+    {
+      "section": 5,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "A Krueger",
+      "p1_seed": null,
+      "p2": "A Anisimova",
+      "p2_seed": "10",
+      "winner": "A Anisimova"
+    },
+    {
+      "section": 5,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "M Andreeva",
+      "p1_seed": "5",
+      "p2": "E Lys",
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 5,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 5,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "A Potapova",
+      "p1_seed": "24",
+      "p2": "L Jeanjean",
+      "p2_seed": "WC",
+      "winner": null
+    },
+    {
+      "section": 5,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "L Tagger",
+      "p1_seed": null,
+      "p2": "A Anisimova",
+      "p2_seed": "10",
+      "winner": null
+    },
+    {
+      "section": 5,
+      "round": "Third round",
+      "round_num": 3,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 5,
+      "round": "Third round",
+      "round_num": 3,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 5,
+      "round": "Fourth round",
+      "round_num": 4,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 6,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "I Jovic",
+      "p1_seed": "14",
+      "p2": "M Fręch",
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 6,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "M Linette",
+      "p1_seed": null,
+      "p2": "F Jones",
+      "p2_seed": "Q",
+      "winner": null
+    },
+    {
+      "section": 6,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "O Oliynykova",
+      "p1_seed": null,
+      "p2": "R Brantmeier",
+      "p2_seed": "WC",
+      "winner": "O Oliynykova"
+    },
+    {
+      "section": 6,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "M Stoiana",
+      "p1_seed": "Q",
+      "p2": "A Eala",
+      "p2_seed": "17",
+      "winner": "A Eala"
+    },
+    {
+      "section": 6,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "S Bejlek",
+      "p1_seed": "28",
+      "p2": "C Bucșa",
+      "p2_seed": null,
+      "winner": "C Bucșa"
+    },
+    {
+      "section": 6,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "A Kalinina",
+      "p1_seed": null,
+      "p2": "H Sakatsume",
+      "p2_seed": "Q",
+      "winner": "H Sakatsume"
+    },
+    {
+      "section": 6,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "D Kasatkina",
+      "p1_seed": null,
+      "p2": "P Badosa",
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 6,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "Z Sönmez",
+      "p1_seed": null,
+      "p2": "C Gauff",
+      "p2_seed": "4",
+      "winner": "C Gauff"
+    },
+    {
+      "section": 6,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 6,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "O Oliynykova",
+      "p1_seed": null,
+      "p2": "A Eala",
+      "p2_seed": "17",
+      "winner": null
+    },
+    {
+      "section": 6,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "C Bucșa",
+      "p1_seed": null,
+      "p2": "H Sakatsume",
+      "p2_seed": "Q",
+      "winner": null
+    },
+    {
+      "section": 6,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": null,
+      "p1_seed": null,
+      "p2": "C Gauff",
+      "p2_seed": "4",
+      "winner": null
+    },
+    {
+      "section": 6,
+      "round": "Third round",
+      "round_num": 3,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 6,
+      "round": "Third round",
+      "round_num": 3,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 6,
+      "round": "Fourth round",
+      "round_num": 4,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 7,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "I Świątek",
+      "p1_seed": "8",
+      "p2": "Xiy Wang",
+      "p2_seed": null,
+      "winner": "I Świątek"
+    },
+    {
+      "section": 7,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "N Podoroska",
+      "p1_seed": "PR",
+      "p2": "S Waltert",
+      "p2_seed": null,
+      "winner": "N Podoroska"
+    },
+    {
+      "section": 7,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "H Dart",
+      "p1_seed": "Q",
+      "p2": "P Stearns",
+      "p2_seed": null,
+      "winner": "H Dart"
+    },
+    {
+      "section": 7,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "E Jacquemot",
+      "p1_seed": null,
+      "p2": "M Bouzková",
+      "p2_seed": "25",
+      "winner": "M Bouzková"
+    },
+    {
+      "section": 7,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "M Keys",
+      "p1_seed": "22",
+      "p2": "A Korneeva",
+      "p2_seed": null,
+      "winner": "M Keys"
+    },
+    {
+      "section": 7,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "L Havlíčková",
+      "p1_seed": "Q",
+      "p2": "A Bondár",
+      "p2_seed": null,
+      "winner": "A Bondár"
+    },
+    {
+      "section": 7,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "Q Zheng",
+      "p1_seed": "Q",
+      "p2": "K Liutova",
+      "p2_seed": "Q",
+      "winner": "Q Zheng"
+    },
+    {
+      "section": 7,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "Y Putintseva",
+      "p1_seed": null,
+      "p2": "B Bencic",
+      "p2_seed": "12",
+      "winner": "Y Putintseva"
+    },
+    {
+      "section": 7,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "I Świątek",
+      "p1_seed": "8",
+      "p2": "N Podoroska",
+      "p2_seed": "PR",
+      "winner": null
+    },
+    {
+      "section": 7,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "H Dart",
+      "p1_seed": "Q",
+      "p2": "M Bouzková",
+      "p2_seed": "25",
+      "winner": null
+    },
+    {
+      "section": 7,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "M Keys",
+      "p1_seed": "22",
+      "p2": "A Bondár",
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 7,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "Q Zheng",
+      "p1_seed": "Q",
+      "p2": "Y Putintseva",
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 7,
+      "round": "Third round",
+      "round_num": 3,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 7,
+      "round": "Third round",
+      "round_num": 3,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 7,
+      "round": "Fourth round",
+      "round_num": 4,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 8,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "N Osaka",
+      "p1_seed": "13",
+      "p2": "A Zakharova",
+      "p2_seed": null,
+      "winner": "N Osaka"
+    },
+    {
+      "section": 8,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "E Cocciaretto",
+      "p1_seed": null,
+      "p2": "K Siniaková",
+      "p2_seed": null,
+      "winner": "K Siniaková"
+    },
+    {
+      "section": 8,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "T Zidanšek",
+      "p1_seed": "Q",
+      "p2": "M Timofeeva",
+      "p2_seed": null,
+      "winner": "M Timofeeva"
+    },
+    {
+      "section": 8,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "K Quevedo",
+      "p1_seed": null,
+      "p2": "E Mertens",
+      "p2_seed": "23",
+      "winner": "E Mertens"
+    },
+    {
+      "section": 8,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "M Sakkari",
+      "p1_seed": "32",
+      "p2": "R Montgomery",
+      "p2_seed": "Q",
+      "winner": "M Sakkari"
+    },
+    {
+      "section": 8,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "Y Starodubtseva",
+      "p1_seed": null,
+      "p2": "E Seidel",
+      "p2_seed": null,
+      "winner": "Y Starodubtseva"
+    },
+    {
+      "section": 8,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "D Vidmanova",
+      "p1_seed": null,
+      "p2": "J Bouzas Maneiro",
+      "p2_seed": null,
+      "winner": "J Bouzas Maneiro"
+    },
+    {
+      "section": 8,
+      "round": "First round",
+      "round_num": 1,
+      "p1": "T Frodin",
+      "p1_seed": "WC",
+      "p2": "E Rybakina",
+      "p2_seed": "2",
+      "winner": "E Rybakina"
+    },
+    {
+      "section": 8,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "N Osaka",
+      "p1_seed": "13",
+      "p2": "K Siniaková",
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 8,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "M Timofeeva",
+      "p1_seed": null,
+      "p2": "E Mertens",
+      "p2_seed": "23",
+      "winner": null
+    },
+    {
+      "section": 8,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "M Sakkari",
+      "p1_seed": "32",
+      "p2": "Y Starodubtseva",
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 8,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "J Bouzas Maneiro",
+      "p1_seed": null,
+      "p2": "E Rybakina",
+      "p2_seed": "2",
+      "winner": null
+    },
+    {
+      "section": 8,
+      "round": "Third round",
+      "round_num": 3,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 8,
+      "round": "Third round",
+      "round_num": 3,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": 8,
+      "round": "Fourth round",
+      "round_num": 4,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    }
+  ],
+  "final_matches": [
+    {
+      "section": "FINALS",
+      "round": "Quarterfinals",
+      "round_num": 1,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": "FINALS",
+      "round": "Quarterfinals",
+      "round_num": 1,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": "FINALS",
+      "round": "Quarterfinals",
+      "round_num": 1,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": "FINALS",
+      "round": "Quarterfinals",
+      "round_num": 1,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": "FINALS",
+      "round": "Semifinals",
+      "round_num": 2,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": "FINALS",
+      "round": "Semifinals",
+      "round_num": 2,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    },
+    {
+      "section": "FINALS",
+      "round": "Final",
+      "round_num": 3,
+      "p1": null,
+      "p1_seed": null,
+      "p2": null,
+      "p2_seed": null,
+      "winner": null
+    }
+  ],
+  "fetched_at": "2026-09-02T05:53:46.925170+00:00",
+  "source": "https://en.wikipedia.org/wiki/2026_US_Open_%E2%80%93_Women%27s_singles"
+}
