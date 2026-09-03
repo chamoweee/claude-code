@@ -46,11 +46,17 @@ pip install -r requirements.txt
 # refresh data (re-run any time to pick up new results as the tournament progresses)
 python3 src/fetch_data.py --year 2026
 
-# generate predictions
+# generate predictions (markdown reports + CSVs)
 python3 src/predict.py --draw both --sims 20000
+
+# generate the same predictions as a formatted Excel workbook
+python3 src/export_xlsx.py --sims 20000
 ```
 
-Outputs land in `predictions/`.
+Outputs land in `predictions/`. `us_open_2026_predictions.xlsx` has a README
+tab plus a Pending-Matches and Full-Draw sheet (ranked by simulated title
+probability, with per-round advancement odds) for each of the men's and
+women's draws.
 
 ## Limitations
 
