@@ -88,7 +88,7 @@
       "p1_seed": "1",
       "p2": "P Iatcenko",
       "p2_seed": "Q",
-      "winner": null
+      "winner": "A Sabalenka"
     },
     {
       "section": 1,
@@ -98,7 +98,7 @@
       "p1_seed": null,
       "p2": "K Rakhimova",
       "p2_seed": null,
-      "winner": null
+      "winner": "K Rakhimova"
     },
     {
       "section": 1,
@@ -108,7 +108,7 @@
       "p1_seed": null,
       "p2": "T Preston",
       "p2_seed": "WC",
-      "winner": null
+      "winner": "T Townsend"
     },
     {
       "section": 1,
@@ -118,15 +118,15 @@
       "p1_seed": null,
       "p2": "D Shnaider",
       "p2_seed": "15",
-      "winner": null
+      "winner": "D Shnaider"
     },
     {
       "section": 1,
       "round": "Third round",
       "round_num": 3,
-      "p1": null,
-      "p1_seed": null,
-      "p2": null,
+      "p1": "A Sabalenka",
+      "p1_seed": "1",
+      "p2": "K Rakhimova",
       "p2_seed": null,
       "winner": null
     },
@@ -134,10 +134,10 @@
       "section": 1,
       "round": "Third round",
       "round_num": 3,
-      "p1": null,
+      "p1": "T Townsend",
       "p1_seed": null,
-      "p2": null,
-      "p2_seed": null,
+      "p2": "D Shnaider",
+      "p2_seed": "15",
       "winner": null
     },
     {
@@ -238,7 +238,7 @@
       "p1_seed": "11",
       "p2": "S Stephens",
       "p2_seed": "WC",
-      "winner": null
+      "winner": "M Kostyuk"
     },
     {
       "section": 2,
@@ -248,7 +248,7 @@
       "p1_seed": null,
       "p2": "E Alexandrova",
       "p2_seed": "18",
-      "winner": null
+      "winner": "E Alexandrova"
     },
     {
       "section": 2,
@@ -258,7 +258,7 @@
       "p1_seed": "29",
       "p2": "D Vekić",
       "p2_seed": null,
-      "winner": null
+      "winner": "A Li"
     },
     {
       "section": 2,
@@ -268,26 +268,26 @@
       "p1_seed": null,
       "p2": "L Nosková",
       "p2_seed": "6",
+      "winner": "L Nosková"
+    },
+    {
+      "section": 2,
+      "round": "Third round",
+      "round_num": 3,
+      "p1": "M Kostyuk",
+      "p1_seed": "11",
+      "p2": "E Alexandrova",
+      "p2_seed": "18",
       "winner": null
     },
     {
       "section": 2,
       "round": "Third round",
       "round_num": 3,
-      "p1": null,
-      "p1_seed": null,
-      "p2": null,
-      "p2_seed": null,
-      "winner": null
-    },
-    {
-      "section": 2,
-      "round": "Third round",
-      "round_num": 3,
-      "p1": null,
-      "p1_seed": null,
-      "p2": null,
-      "p2_seed": null,
+      "p1": "A Li",
+      "p1_seed": "29",
+      "p2": "L Nosková",
+      "p2_seed": "6",
       "winner": null
     },
     {
@@ -388,7 +388,7 @@
       "p1_seed": "3",
       "p2": "S Kenin",
       "p2_seed": "WC",
-      "winner": null
+      "winner": "J Pegula"
     },
     {
       "section": 3,
@@ -398,7 +398,7 @@
       "p1_seed": "PR",
       "p2": "L Fernandez",
       "p2_seed": "31",
-      "winner": null
+      "winner": "L Fernandez"
     },
     {
       "section": 3,
@@ -408,7 +408,7 @@
       "p1_seed": "19",
       "p2": "L Stefanini",
       "p2_seed": "Q",
-      "winner": null
+      "winner": "J Paolini"
     },
     {
       "section": 3,
@@ -418,26 +418,26 @@
       "p1_seed": null,
       "p2": "S Cîrstea",
       "p2_seed": "16",
+      "winner": "S Cîrstea"
+    },
+    {
+      "section": 3,
+      "round": "Third round",
+      "round_num": 3,
+      "p1": "J Pegula",
+      "p1_seed": "3",
+      "p2": "L Fernandez",
+      "p2_seed": "31",
       "winner": null
     },
     {
       "section": 3,
       "round": "Third round",
       "round_num": 3,
-      "p1": null,
-      "p1_seed": null,
-      "p2": null,
-      "p2_seed": null,
-      "winner": null
-    },
-    {
-      "section": 3,
-      "round": "Third round",
-      "round_num": 3,
-      "p1": null,
-      "p1_seed": null,
-      "p2": null,
-      "p2_seed": null,
+      "p1": "J Paolini",
+      "p1_seed": "19",
+      "p2": "S Cîrstea",
+      "p2_seed": "16",
       "winner": null
     },
     {
@@ -538,7 +538,7 @@
       "p1_seed": "9",
       "p2": "M Joint",
       "p2_seed": null,
-      "winner": null
+      "winner": "E Svitolina"
     },
     {
       "section": 4,
@@ -548,7 +548,7 @@
       "p1_seed": null,
       "p2": "A Kalinskaya",
       "p2_seed": "21",
-      "winner": null
+      "winner": "A Kalinskaya"
     },
     {
       "section": 4,
@@ -558,7 +558,7 @@
       "p1_seed": "26",
       "p2": "C McNally",
       "p2_seed": null,
-      "winner": null
+      "winner": "E Navarro"
     },
     {
       "section": 4,
@@ -568,26 +568,26 @@
       "p1_seed": null,
       "p2": "K Muchová",
       "p2_seed": "7",
+      "winner": "K Muchová"
+    },
+    {
+      "section": 4,
+      "round": "Third round",
+      "round_num": 3,
+      "p1": "E Svitolina",
+      "p1_seed": "9",
+      "p2": "A Kalinskaya",
+      "p2_seed": "21",
       "winner": null
     },
     {
       "section": 4,
       "round": "Third round",
       "round_num": 3,
-      "p1": null,
-      "p1_seed": null,
-      "p2": null,
-      "p2_seed": null,
-      "winner": null
-    },
-    {
-      "section": 4,
-      "round": "Third round",
-      "round_num": 3,
-      "p1": null,
-      "p1_seed": null,
-      "p2": null,
-      "p2_seed": null,
+      "p1": "E Navarro",
+      "p1_seed": "26",
+      "p2": "K Muchová",
+      "p2_seed": "7",
       "winner": null
     },
     {
@@ -628,7 +628,7 @@
       "p1_seed": null,
       "p2": "M Sherif",
       "p2_seed": null,
-      "winner": null
+      "winner": "N Bartůňková"
     },
     {
       "section": 5,
@@ -638,7 +638,7 @@
       "p1_seed": null,
       "p2": "J Ostapenko",
       "p2_seed": "30",
-      "winner": null
+      "winner": "T Maria"
     },
     {
       "section": 5,
@@ -688,17 +688,17 @@
       "p1_seed": "5",
       "p2": "E Lys",
       "p2_seed": null,
-      "winner": null
+      "winner": "M Andreeva"
     },
     {
       "section": 5,
       "round": "Second round",
       "round_num": 2,
-      "p1": null,
+      "p1": "N Bartůňková",
       "p1_seed": null,
-      "p2": null,
+      "p2": "T Maria",
       "p2_seed": null,
-      "winner": null
+      "winner": "N Bartůňková"
     },
     {
       "section": 5,
@@ -708,7 +708,7 @@
       "p1_seed": "24",
       "p2": "L Jeanjean",
       "p2_seed": "WC",
-      "winner": null
+      "winner": "A Potapova"
     },
     {
       "section": 5,
@@ -718,15 +718,15 @@
       "p1_seed": null,
       "p2": "A Anisimova",
       "p2_seed": "10",
-      "winner": null
+      "winner": "A Anisimova"
     },
     {
       "section": 5,
       "round": "Third round",
       "round_num": 3,
-      "p1": null,
-      "p1_seed": null,
-      "p2": null,
+      "p1": "M Andreeva",
+      "p1_seed": "5",
+      "p2": "N Bartůňková",
       "p2_seed": null,
       "winner": null
     },
@@ -734,10 +734,10 @@
       "section": 5,
       "round": "Third round",
       "round_num": 3,
-      "p1": null,
-      "p1_seed": null,
-      "p2": null,
-      "p2_seed": null,
+      "p1": "A Potapova",
+      "p1_seed": "24",
+      "p2": "A Anisimova",
+      "p2_seed": "10",
       "winner": null
     },
     {
@@ -758,7 +758,7 @@
       "p1_seed": "14",
       "p2": "M Fręch",
       "p2_seed": null,
-      "winner": null
+      "winner": "I Jovic"
     },
     {
       "section": 6,
@@ -768,7 +768,7 @@
       "p1_seed": null,
       "p2": "F Jones",
       "p2_seed": "Q",
-      "winner": null
+      "winner": "F Jones"
     },
     {
       "section": 6,
@@ -818,7 +818,7 @@
       "p1_seed": null,
       "p2": "P Badosa",
       "p2_seed": null,
-      "winner": null
+      "winner": "P Badosa"
     },
     {
       "section": 6,
@@ -834,11 +834,11 @@
       "section": 6,
       "round": "Second round",
       "round_num": 2,
-      "p1": null,
-      "p1_seed": null,
-      "p2": null,
-      "p2_seed": null,
-      "winner": null
+      "p1": "I Jovic",
+      "p1_seed": "14",
+      "p2": "F Jones",
+      "p2_seed": "Q",
+      "winner": "I Jovic"
     },
     {
       "section": 6,
@@ -848,7 +848,7 @@
       "p1_seed": null,
       "p2": "A Eala",
       "p2_seed": "17",
-      "winner": null
+      "winner": "A Eala"
     },
     {
       "section": 6,
@@ -858,36 +858,36 @@
       "p1_seed": null,
       "p2": "H Sakatsume",
       "p2_seed": "Q",
-      "winner": null
+      "winner": "C Bucșa"
     },
     {
       "section": 6,
       "round": "Second round",
       "round_num": 2,
-      "p1": null,
+      "p1": "P Badosa",
       "p1_seed": null,
       "p2": "C Gauff",
       "p2_seed": "4",
+      "winner": "C Gauff"
+    },
+    {
+      "section": 6,
+      "round": "Third round",
+      "round_num": 3,
+      "p1": "I Jovic",
+      "p1_seed": "14",
+      "p2": "A Eala",
+      "p2_seed": "17",
       "winner": null
     },
     {
       "section": 6,
       "round": "Third round",
       "round_num": 3,
-      "p1": null,
+      "p1": "C Bucșa",
       "p1_seed": null,
-      "p2": null,
-      "p2_seed": null,
-      "winner": null
-    },
-    {
-      "section": 6,
-      "round": "Third round",
-      "round_num": 3,
-      "p1": null,
-      "p1_seed": null,
-      "p2": null,
-      "p2_seed": null,
+      "p2": "C Gauff",
+      "p2_seed": "4",
       "winner": null
     },
     {
@@ -988,7 +988,7 @@
       "p1_seed": "8",
       "p2": "N Podoroska",
       "p2_seed": "PR",
-      "winner": null
+      "winner": "I Świątek"
     },
     {
       "section": 7,
@@ -998,7 +998,7 @@
       "p1_seed": "Q",
       "p2": "M Bouzková",
       "p2_seed": "25",
-      "winner": null
+      "winner": "M Bouzková"
     },
     {
       "section": 7,
@@ -1008,7 +1008,7 @@
       "p1_seed": "22",
       "p2": "A Bondár",
       "p2_seed": null,
-      "winner": null
+      "winner": "M Keys"
     },
     {
       "section": 7,
@@ -1018,26 +1018,26 @@
       "p1_seed": "Q",
       "p2": "Y Putintseva",
       "p2_seed": null,
+      "winner": "Q Zheng"
+    },
+    {
+      "section": 7,
+      "round": "Third round",
+      "round_num": 3,
+      "p1": "I Świątek",
+      "p1_seed": "8",
+      "p2": "M Bouzková",
+      "p2_seed": "25",
       "winner": null
     },
     {
       "section": 7,
       "round": "Third round",
       "round_num": 3,
-      "p1": null,
-      "p1_seed": null,
-      "p2": null,
-      "p2_seed": null,
-      "winner": null
-    },
-    {
-      "section": 7,
-      "round": "Third round",
-      "round_num": 3,
-      "p1": null,
-      "p1_seed": null,
-      "p2": null,
-      "p2_seed": null,
+      "p1": "M Keys",
+      "p1_seed": "22",
+      "p2": "Q Zheng",
+      "p2_seed": "Q",
       "winner": null
     },
     {
@@ -1138,7 +1138,7 @@
       "p1_seed": "13",
       "p2": "K Siniaková",
       "p2_seed": null,
-      "winner": null
+      "winner": "N Osaka"
     },
     {
       "section": 8,
@@ -1148,7 +1148,7 @@
       "p1_seed": null,
       "p2": "E Mertens",
       "p2_seed": "23",
-      "winner": null
+      "winner": "E Mertens"
     },
     {
       "section": 8,
@@ -1158,7 +1158,7 @@
       "p1_seed": "32",
       "p2": "Y Starodubtseva",
       "p2_seed": null,
-      "winner": null
+      "winner": "Y Starodubtseva"
     },
     {
       "section": 8,
@@ -1168,26 +1168,26 @@
       "p1_seed": null,
       "p2": "E Rybakina",
       "p2_seed": "2",
+      "winner": "E Rybakina"
+    },
+    {
+      "section": 8,
+      "round": "Third round",
+      "round_num": 3,
+      "p1": "N Osaka",
+      "p1_seed": "13",
+      "p2": "E Mertens",
+      "p2_seed": "23",
       "winner": null
     },
     {
       "section": 8,
       "round": "Third round",
       "round_num": 3,
-      "p1": null,
+      "p1": "Y Starodubtseva",
       "p1_seed": null,
-      "p2": null,
-      "p2_seed": null,
-      "winner": null
-    },
-    {
-      "section": 8,
-      "round": "Third round",
-      "round_num": 3,
-      "p1": null,
-      "p1_seed": null,
-      "p2": null,
-      "p2_seed": null,
+      "p2": "E Rybakina",
+      "p2_seed": "2",
       "winner": null
     },
     {
@@ -1273,6 +1273,6 @@
       "winner": null
     }
   ],
-  "fetched_at": "2026-09-02T05:53:46.925170+00:00",
+  "fetched_at": "2026-09-04T15:09:21.863143+00:00",
   "source": "https://en.wikipedia.org/wiki/2026_US_Open_%E2%80%93_Women%27s_singles"
 }

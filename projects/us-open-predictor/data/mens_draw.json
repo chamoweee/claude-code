@@ -8,7 +8,7 @@
       "p1_seed": "1",
       "p2": "L Sonego",
       "p2_seed": null,
-      "winner": null
+      "winner": "A Zverev"
     },
     {
       "section": 1,
@@ -84,11 +84,11 @@
       "section": 1,
       "round": "Second round",
       "round_num": 2,
-      "p1": null,
-      "p1_seed": null,
+      "p1": "A Zverev",
+      "p1_seed": "1",
       "p2": "Q Halys",
       "p2_seed": null,
-      "winner": null
+      "winner": "A Zverev"
     },
     {
       "section": 1,
@@ -98,7 +98,7 @@
       "p1_seed": null,
       "p2": "A Tabilo",
       "p2_seed": "25",
-      "winner": null
+      "winner": "A Tabilo"
     },
     {
       "section": 1,
@@ -108,7 +108,7 @@
       "p1_seed": "21",
       "p2": "D Svrčina",
       "p2_seed": "Q",
-      "winner": null
+      "winner": "L Darderi"
     },
     {
       "section": 1,
@@ -118,26 +118,26 @@
       "p1_seed": "WC",
       "p2": "L Musetti",
       "p2_seed": "13",
+      "winner": "D Sweeny"
+    },
+    {
+      "section": 1,
+      "round": "Third round",
+      "round_num": 3,
+      "p1": "A Zverev",
+      "p1_seed": "1",
+      "p2": "A Tabilo",
+      "p2_seed": "25",
       "winner": null
     },
     {
       "section": 1,
       "round": "Third round",
       "round_num": 3,
-      "p1": null,
-      "p1_seed": null,
-      "p2": null,
-      "p2_seed": null,
-      "winner": null
-    },
-    {
-      "section": 1,
-      "round": "Third round",
-      "round_num": 3,
-      "p1": null,
-      "p1_seed": null,
-      "p2": null,
-      "p2_seed": null,
+      "p1": "L Darderi",
+      "p1_seed": "21",
+      "p2": "D Sweeny",
+      "p2_seed": "WC",
       "winner": null
     },
     {
@@ -158,7 +158,7 @@
       "p1_seed": "12",
       "p2": "Y Bu",
       "p2_seed": "LL",
-      "winner": null
+      "winner": "Y Bu"
     },
     {
       "section": 2,
@@ -168,7 +168,7 @@
       "p1_seed": null,
       "p2": "M Zheng",
       "p2_seed": "WC",
-      "winner": null
+      "winner": "M Zheng"
     },
     {
       "section": 2,
@@ -178,7 +178,7 @@
       "p1_seed": null,
       "p2": "D Altmaier",
       "p2_seed": null,
-      "winner": null
+      "winner": "Z Svajda"
     },
     {
       "section": 2,
@@ -198,7 +198,7 @@
       "p1_seed": "31",
       "p2": "C Taberner",
       "p2_seed": "PR",
-      "winner": null
+      "winner": "Z Bergs"
     },
     {
       "section": 2,
@@ -208,7 +208,7 @@
       "p1_seed": null,
       "p2": "F Passaro",
       "p2_seed": "Q",
-      "winner": null
+      "winner": "J de Jong"
     },
     {
       "section": 2,
@@ -218,7 +218,7 @@
       "p1_seed": null,
       "p2": "B van de Zandschulp",
       "p2_seed": null,
-      "winner": null
+      "winner": "B van de Zandschulp"
     },
     {
       "section": 2,
@@ -228,65 +228,65 @@
       "p1_seed": "Q",
       "p2": "A de Minaur",
       "p2_seed": "6",
-      "winner": null
+      "winner": "A de Minaur"
     },
     {
       "section": 2,
       "round": "Second round",
       "round_num": 2,
-      "p1": null,
+      "p1": "Y Bu",
+      "p1_seed": "LL",
+      "p2": "M Zheng",
+      "p2_seed": "WC",
+      "winner": "M Zheng"
+    },
+    {
+      "section": 2,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "Z Svajda",
       "p1_seed": null,
-      "p2": null,
+      "p2": "A Géa",
+      "p2_seed": "LL",
+      "winner": "A Géa"
+    },
+    {
+      "section": 2,
+      "round": "Second round",
+      "round_num": 2,
+      "p1": "Z Bergs",
+      "p1_seed": "31",
+      "p2": "J de Jong",
       "p2_seed": null,
-      "winner": null
+      "winner": "Z Bergs"
     },
     {
       "section": 2,
       "round": "Second round",
       "round_num": 2,
-      "p1": null,
+      "p1": "B van de Zandschulp",
       "p1_seed": null,
+      "p2": "A de Minaur",
+      "p2_seed": "6",
+      "winner": "B van de Zandschulp"
+    },
+    {
+      "section": 2,
+      "round": "Third round",
+      "round_num": 3,
+      "p1": "M Zheng",
+      "p1_seed": "WC",
       "p2": "A Géa",
       "p2_seed": "LL",
       "winner": null
     },
     {
       "section": 2,
-      "round": "Second round",
-      "round_num": 2,
-      "p1": null,
-      "p1_seed": null,
-      "p2": null,
-      "p2_seed": null,
-      "winner": null
-    },
-    {
-      "section": 2,
-      "round": "Second round",
-      "round_num": 2,
-      "p1": null,
-      "p1_seed": null,
-      "p2": null,
-      "p2_seed": null,
-      "winner": null
-    },
-    {
-      "section": 2,
       "round": "Third round",
       "round_num": 3,
-      "p1": null,
-      "p1_seed": null,
-      "p2": null,
-      "p2_seed": null,
-      "winner": null
-    },
-    {
-      "section": 2,
-      "round": "Third round",
-      "round_num": 3,
-      "p1": null,
-      "p1_seed": null,
-      "p2": null,
+      "p1": "Z Bergs",
+      "p1_seed": "31",
+      "p2": "B van de Zandschulp",
       "p2_seed": null,
       "winner": null
     },
@@ -328,7 +328,7 @@
       "p1_seed": null,
       "p2": "B Bonzi",
       "p2_seed": null,
-      "winner": null
+      "winner": "B Bonzi"
     },
     {
       "section": 3,
@@ -338,7 +338,7 @@
       "p1_seed": null,
       "p2": "I Buse",
       "p2_seed": "32",
-      "winner": null
+      "winner": "I Buse"
     },
     {
       "section": 3,
@@ -388,17 +388,17 @@
       "p1_seed": "3",
       "p2": "K Khachanov",
       "p2_seed": null,
-      "winner": null
+      "winner": "K Khachanov"
     },
     {
       "section": 3,
       "round": "Second round",
       "round_num": 2,
-      "p1": null,
+      "p1": "B Bonzi",
       "p1_seed": null,
-      "p2": null,
-      "p2_seed": null,
-      "winner": null
+      "p2": "I Buse",
+      "p2_seed": "32",
+      "winner": "B Bonzi"
     },
     {
       "section": 3,
@@ -408,7 +408,7 @@
       "p1_seed": "17",
       "p2": "J Rodionov",
       "p2_seed": "Q",
-      "winner": null
+      "winner": "J Menšík"
     },
     {
       "section": 3,
@@ -418,15 +418,15 @@
       "p1_seed": "WC",
       "p2": "L Tien",
       "p2_seed": "14",
-      "winner": null
+      "winner": "L Tien"
     },
     {
       "section": 3,
       "round": "Third round",
       "round_num": 3,
-      "p1": null,
+      "p1": "K Khachanov",
       "p1_seed": null,
-      "p2": null,
+      "p2": "B Bonzi",
       "p2_seed": null,
       "winner": null
     },
@@ -434,10 +434,10 @@
       "section": 3,
       "round": "Third round",
       "round_num": 3,
-      "p1": null,
-      "p1_seed": null,
-      "p2": null,
-      "p2_seed": null,
+      "p1": "J Menšík",
+      "p1_seed": "17",
+      "p2": "L Tien",
+      "p2_seed": "14",
       "winner": null
     },
     {
@@ -538,7 +538,7 @@
       "p1_seed": "9",
       "p2": "M Bellucci",
       "p2_seed": null,
-      "winner": null
+      "winner": "T Fritz"
     },
     {
       "section": 4,
@@ -548,7 +548,7 @@
       "p1_seed": null,
       "p2": "F Cerúndolo",
       "p2_seed": "24",
-      "winner": null
+      "winner": "F Cerúndolo"
     },
     {
       "section": 4,
@@ -558,7 +558,7 @@
       "p1_seed": "28",
       "p2": "M Trungelliti",
       "p2_seed": null,
-      "winner": null
+      "winner": "A Blockx"
     },
     {
       "section": 4,
@@ -568,26 +568,26 @@
       "p1_seed": "Q",
       "p2": "F Cobolli",
       "p2_seed": "5",
+      "winner": "F Cobolli"
+    },
+    {
+      "section": 4,
+      "round": "Third round",
+      "round_num": 3,
+      "p1": "T Fritz",
+      "p1_seed": "9",
+      "p2": "F Cerúndolo",
+      "p2_seed": "24",
       "winner": null
     },
     {
       "section": 4,
       "round": "Third round",
       "round_num": 3,
-      "p1": null,
-      "p1_seed": null,
-      "p2": null,
-      "p2_seed": null,
-      "winner": null
-    },
-    {
-      "section": 4,
-      "round": "Third round",
-      "round_num": 3,
-      "p1": null,
-      "p1_seed": null,
-      "p2": null,
-      "p2_seed": null,
+      "p1": "A Blockx",
+      "p1_seed": "28",
+      "p2": "F Cobolli",
+      "p2_seed": "5",
       "winner": null
     },
     {
@@ -688,7 +688,7 @@
       "p1_seed": "7",
       "p2": "S Gorzny",
       "p2_seed": "WC",
-      "winner": null
+      "winner": "D Medvedev"
     },
     {
       "section": 5,
@@ -698,7 +698,7 @@
       "p1_seed": null,
       "p2": "A Rinderknech",
       "p2_seed": "26",
-      "winner": null
+      "winner": "A Rinderknech"
     },
     {
       "section": 5,
@@ -708,7 +708,7 @@
       "p1_seed": "22",
       "p2": "K Majchrzak",
       "p2_seed": null,
-      "winner": null
+      "winner": "V Vacherot"
     },
     {
       "section": 5,
@@ -718,26 +718,26 @@
       "p1_seed": "Q",
       "p2": "F Tiafoe",
       "p2_seed": "11",
+      "winner": "F Tiafoe"
+    },
+    {
+      "section": 5,
+      "round": "Third round",
+      "round_num": 3,
+      "p1": "D Medvedev",
+      "p1_seed": "7",
+      "p2": "A Rinderknech",
+      "p2_seed": "26",
       "winner": null
     },
     {
       "section": 5,
       "round": "Third round",
       "round_num": 3,
-      "p1": null,
-      "p1_seed": null,
-      "p2": null,
-      "p2_seed": null,
-      "winner": null
-    },
-    {
-      "section": 5,
-      "round": "Third round",
-      "round_num": 3,
-      "p1": null,
-      "p1_seed": null,
-      "p2": null,
-      "p2_seed": null,
+      "p1": "V Vacherot",
+      "p1_seed": "22",
+      "p2": "F Tiafoe",
+      "p2_seed": "11",
       "winner": null
     },
     {
@@ -838,7 +838,7 @@
       "p1_seed": "16",
       "p2": "A Michelsen",
       "p2_seed": null,
-      "winner": null
+      "winner": "A Michelsen"
     },
     {
       "section": 6,
@@ -848,7 +848,7 @@
       "p1_seed": null,
       "p2": "A Rublev",
       "p2_seed": "23",
-      "winner": null
+      "winner": "D Mérida"
     },
     {
       "section": 6,
@@ -858,7 +858,7 @@
       "p1_seed": "27",
       "p2": "J Fearnley",
       "p2_seed": "LL",
-      "winner": null
+      "winner": "TM Etcheverry"
     },
     {
       "section": 6,
@@ -868,15 +868,15 @@
       "p1_seed": null,
       "p2": "M Navone",
       "p2_seed": null,
-      "winner": null
+      "winner": "M Navone"
     },
     {
       "section": 6,
       "round": "Third round",
       "round_num": 3,
-      "p1": null,
+      "p1": "A Michelsen",
       "p1_seed": null,
-      "p2": null,
+      "p2": "D Mérida",
       "p2_seed": null,
       "winner": null
     },
@@ -884,9 +884,9 @@
       "section": 6,
       "round": "Third round",
       "round_num": 3,
-      "p1": null,
-      "p1_seed": null,
-      "p2": null,
+      "p1": "TM Etcheverry",
+      "p1_seed": "27",
+      "p2": "M Navone",
       "p2_seed": null,
       "winner": null
     },
@@ -988,7 +988,7 @@
       "p1_seed": "8",
       "p2": "H Hurkacz",
       "p2_seed": null,
-      "winner": null
+      "winner": "B Shelton"
     },
     {
       "section": 7,
@@ -998,7 +998,7 @@
       "p1_seed": null,
       "p2": "L Van Assche",
       "p2_seed": null,
-      "winner": null
+      "winner": "D Shapovalov"
     },
     {
       "section": 7,
@@ -1008,7 +1008,7 @@
       "p1_seed": "18",
       "p2": "T Samuel",
       "p2_seed": "Q",
-      "winner": null
+      "winner": "J Lehečka"
     },
     {
       "section": 7,
@@ -1018,15 +1018,15 @@
       "p1_seed": "Q",
       "p2": "S Tsitsipas",
       "p2_seed": null,
-      "winner": null
+      "winner": "S Tsitsipas"
     },
     {
       "section": 7,
       "round": "Third round",
       "round_num": 3,
-      "p1": null,
-      "p1_seed": null,
-      "p2": null,
+      "p1": "B Shelton",
+      "p1_seed": "8",
+      "p2": "D Shapovalov",
       "p2_seed": null,
       "winner": null
     },
@@ -1034,9 +1034,9 @@
       "section": 7,
       "round": "Third round",
       "round_num": 3,
-      "p1": null,
-      "p1_seed": null,
-      "p2": null,
+      "p1": "J Lehečka",
+      "p1_seed": "18",
+      "p2": "S Tsitsipas",
       "p2_seed": null,
       "winner": null
     },
@@ -1138,7 +1138,7 @@
       "p1_seed": "15",
       "p2": "A Mannarino",
       "p2_seed": null,
-      "winner": null
+      "winner": "A Bublik"
     },
     {
       "section": 8,
@@ -1148,7 +1148,7 @@
       "p1_seed": null,
       "p2": "T Paul",
       "p2_seed": "20",
-      "winner": null
+      "winner": "T Paul"
     },
     {
       "section": 8,
@@ -1158,7 +1158,7 @@
       "p1_seed": null,
       "p2": "Y Wu",
       "p2_seed": null,
-      "winner": null
+      "winner": "Y Wu"
     },
     {
       "section": 8,
@@ -1168,26 +1168,26 @@
       "p1_seed": null,
       "p2": "C Alcaraz",
       "p2_seed": "2",
+      "winner": "C Alcaraz"
+    },
+    {
+      "section": 8,
+      "round": "Third round",
+      "round_num": 3,
+      "p1": "A Bublik",
+      "p1_seed": "15",
+      "p2": "T Paul",
+      "p2_seed": "20",
       "winner": null
     },
     {
       "section": 8,
       "round": "Third round",
       "round_num": 3,
-      "p1": null,
+      "p1": "Y Wu",
       "p1_seed": null,
-      "p2": null,
-      "p2_seed": null,
-      "winner": null
-    },
-    {
-      "section": 8,
-      "round": "Third round",
-      "round_num": 3,
-      "p1": null,
-      "p1_seed": null,
-      "p2": null,
-      "p2_seed": null,
+      "p2": "C Alcaraz",
+      "p2_seed": "2",
       "winner": null
     },
     {
@@ -1273,6 +1273,6 @@
       "winner": null
     }
   ],
-  "fetched_at": "2026-09-02T05:53:46.925170+00:00",
+  "fetched_at": "2026-09-04T15:09:21.863143+00:00",
   "source": "https://en.wikipedia.org/wiki/2026_US_Open_%E2%80%93_Men%27s_singles"
 }
