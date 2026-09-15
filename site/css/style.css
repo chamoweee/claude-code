@@ -193,7 +193,8 @@ img { max-width: 100%; display: block; }
     overflow: hidden;
     transition: max-height 0.3s ease, opacity 0.25s ease, padding 0.3s ease;
   }
-  .nav-links.open { max-height: 320px; opacity: 1; padding: 8px 24px 16px; }
+  /* vh rather than a fixed px cap so adding nav items can't silently clip the menu */
+  .nav-links.open { max-height: 80vh; opacity: 1; padding: 8px 24px 16px; overflow-y: auto; }
   .nav-links li { padding: 10px 0; border-top: 1px solid rgba(60,40,20,0.06); }
   .nav-cta .btn-outline { display: none; }
 }
