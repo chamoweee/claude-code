@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Sattva Table</title>
+  <meta name="description" content="Get in touch with Sattva Table — ask a question, submit a recipe, or say hello." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">🌿</span> Sattva Table
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About No-Allium</a></li>
+        <li><a href="recipes.html">Recipes</a></li>
+        <li><a href="contact.html" aria-current="page">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="recipes.html" class="btn btn-outline">Browse Recipes</a>
+        <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <span class="eyebrow">We'd love to hear from you</span>
+        <h1>Get in touch</h1>
+        <p>Questions about ingredient swaps, a recipe request, or want to submit your own no-allium creation? Send us a note.</p>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0;">
+      <div class="container contact-grid">
+        <div class="form-card">
+          <form class="contact-form">
+            <div class="form-row">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" required />
+            </div>
+            <div class="form-row">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required />
+            </div>
+            <div class="form-row">
+              <label for="topic">Topic</label>
+              <select id="topic" name="topic">
+                <option>General question</option>
+                <option>Recipe request</option>
+                <option>Submit a recipe</option>
+                <option>Ingredient substitution help</option>
+                <option>Something else</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Send Message</button>
+            <p class="form-success contact-success">Thanks for reaching out! We'll get back to you within a couple of days.</p>
+          </form>
+        </div>
+        <div>
+          <div class="contact-info-item">
+            <div class="feature-icon">✉️</div>
+            <div>
+              <h4>Email</h4>
+              <p>hello@sattvatable.example</p>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="feature-icon">📖</div>
+            <div>
+              <h4>Recipe submissions</h4>
+              <p>Share your own onion- and garlic-free vegetarian recipe and we may feature it, with credit, on the site.</p>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="feature-icon">💬</div>
+            <div>
+              <h4>Response time</h4>
+              <p>We read every message and typically reply within 2-3 business days.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="brand" style="color:#fff;">
+            <span class="brand-mark">🌿</span> Sattva Table
+          </a>
+          <p>Vegetarian recipes made without onion, garlic, leeks, shallots, or chives.</p>
+        </div>
+        <div>
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="recipes.html">Recipes</a></li>
+            <li><a href="about.html">About No-Allium</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Recipe types</h4>
+          <ul>
+            <li><a href="recipes.html">Breakfast</a></li>
+            <li><a href="recipes.html">Curries &amp; Dals</a></li>
+            <li><a href="recipes.html">Snacks</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="contact.html">Contact us</a></li>
+            <li><a href="contact.html">Submit a recipe</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 Sattva Table. All recipes vegetarian &amp; allium-free.</span>
+        <span>Made with ginger, not garlic.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
