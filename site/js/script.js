@@ -272,6 +272,21 @@
       });
     }
 
+    // "/" focuses search, Escape clears it — but never while the user is typing elsewhere.
+    if (searchInput) {
+      document.addEventListener("keydown", (e) => {
+        const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName);
+        if (e.key === "/" && !typing && !e.metaKey && !e.ctrlKey) {
+          e.preventDefault();
+          searchInput.focus();
+          searchInput.select();
+        } else if (e.key === "Escape" && document.activeElement === searchInput) {
+          searchInput.value = "";
+          apply();
+        }
+      });
+    }
+
     dietBoxes.concat(spiceBoxes).forEach((box) => box.addEventListener("change", apply));
 
     if (timeInput) {

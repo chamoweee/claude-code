@@ -465,6 +465,12 @@ const featured = recipes.filter((r) => r.featured).slice(0, 6);
 buildPage("index.html", "home", [
   (h) => inject(h, "featured", featured.map((r) => card(r)).join("\n")),
   (h) => inject(h, "stat-count", `<div class="stat-num">${recipes.length}</div>`),
+  (h) =>
+    inject(
+      h,
+      "stat-categories",
+      `<div class="stat-num">${new Set(recipes.map((r) => r.category)).size}</div>`
+    ),
 ]);
 written.push("index.html");
 

@@ -1308,3 +1308,18 @@ details.recipe-details[open] summary::after { content: "\2212"; }
   }
   .pantry-item { padding: 24px 22px; }
 }
+
+.search-kbd {
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  padding: 2px 7px;
+  margin-right: 4px;
+  line-height: 1.4;
+}
+.search-bar:focus-within .search-kbd { display: none; }
+@media (max-width: 640px) { .search-kbd { display: none; } }
