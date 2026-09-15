@@ -6,6 +6,7 @@
   --ink-soft: #6b5e4f;
   --terracotta: #c96f4a;
   --terracotta-dark: #a8552f;
+  --terracotta-deep: #8a4425;
   --sage: #7c8f6e;
   --sage-dark: #5f7052;
   --mustard: #e0a831;
@@ -87,10 +88,10 @@ img { max-width: 100%; display: block; }
   transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 .btn-primary {
-  background: var(--terracotta);
+  background: var(--terracotta-dark);
   color: #fff;
 }
-.btn-primary:hover { background: var(--terracotta-dark); transform: translateY(-2px); box-shadow: 0 10px 24px rgba(168, 85, 47, 0.3); }
+.btn-primary:hover { background: var(--terracotta-deep); transform: translateY(-2px); box-shadow: 0 10px 24px rgba(168, 85, 47, 0.3); }
 .btn-primary:active { transform: translateY(0); box-shadow: none; }
 .btn-outline {
   background: transparent;
@@ -704,6 +705,7 @@ details.recipe-details[open] summary::after { content: "\2212"; }
   --ink-soft: #b3a698;
   --terracotta: #e08a62;
   --terracotta-dark: #eda27e;
+  --terracotta-deep: #f5b593;
   --sage: #9bb089;
   --sage-dark: #a9bd97;
   --mustard: #edc05c;
@@ -1151,3 +1153,17 @@ details.recipe-details[open] summary::after { content: "\2212"; }
   h1 { font-size: 20pt; }
   h2 { font-size: 14pt; }
 }
+
+/* Dark theme: primary buttons invert to dark text on a light terracotta face */
+:root[data-theme="dark"] .btn-primary { color: #23190f; }
+:root[data-theme="dark"] .save-btn.saved { color: #23190f; }
+
+/* Footer column headings are h2 for a clean heading hierarchy */
+.footer-grid h2 {
+  color: #fff;
+  font-size: 0.95rem;
+  margin-bottom: 16px;
+  font-family: "Playfair Display", serif;
+}
+
+.contact-info-heading { font-size: 1rem; margin-bottom: 4px; }

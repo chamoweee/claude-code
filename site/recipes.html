@@ -105,7 +105,7 @@
               <label class="chk"><input type="checkbox" data-spice="sweet" /> Sweet</label>
             </div>
             <div class="adv-group">
-              <span class="adv-label">Max total time: <output id="time-output">any</output></span>
+              <label class="adv-label" for="time-filter">Max total time: <output id="time-output" for="time-filter">any</output></label>
               <input type="range" id="time-filter" min="15" max="90" step="5" value="90" />
             </div>
           </div>
@@ -116,6 +116,7 @@
         <p class="result-count"><span data-result-count>28</span> recipes</p>
 <!-- /BUILD:count -->
 
+        <h2 class="visually-hidden">Recipe results</h2>
         <div class="recipe-grid" id="recipe-grid">
 <!-- BUILD:grid -->
           <article class="recipe-card reveal" data-category="curry" data-spice="medium" data-time="35" data-vegan="false" data-gf="true" data-jain="true" data-slug="hing-tempered-dal-tadka" data-search="hing-tempered dal tadka curries &amp; dals creamy yellow lentils finished with a sizzling asafoetida and cumin tempering. split pigeon peas (toor dal), rinsed water ground turmeric ghee (or oil for vegan) cumin seeds asafoetida (hing) fresh ginger, grated green chili, slit lengthwise tomato, finely chopped red chili powder salt, to taste fresh coriander, chopped">
@@ -702,7 +703,7 @@
           <p>Vegetarian recipes made without onion, garlic, leeks, shallots, or chives — for sattvic, Jain, and allium-sensitive kitchens.</p>
         </div>
         <div>
-          <h4>Explore</h4>
+          <h2>Explore</h2>
           <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="recipes.html">All recipes</a></li>
@@ -711,7 +712,7 @@
           </ul>
         </div>
         <div>
-          <h4>Recipe types</h4>
+          <h2>Recipe types</h2>
           <ul>
             <li><a href="recipes.html#breakfast">Breakfast</a></li>
             <li><a href="recipes.html#curry">Curries &amp; dals</a></li>
@@ -720,7 +721,7 @@
           </ul>
         </div>
         <div>
-          <h4>Connect</h4>
+          <h2>Connect</h2>
           <ul>
             <li><a href="contact.html">Contact us</a></li>
             <li><a href="contact.html">Submit a recipe</a></li>

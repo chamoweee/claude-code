@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "site/**"
+      - "scripts/**"
       - ".github/workflows/deploy-recipe-site.yml"
   workflow_dispatch:
 
@@ -18,7 +19,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install Playwright
+        run: npm install --no-save playwright && npx playwright install --with-deps chromium
+      - name: Run site tests
+        run: node scripts/test-site.js
+
   deploy:
+    needs: test
     runs-on: ubuntu-latest
     environment:
       name: github-pages

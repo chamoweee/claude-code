@@ -118,7 +118,7 @@ function footer(prefix = "") {
           <p>Vegetarian recipes made without onion, garlic, leeks, shallots, or chives — for sattvic, Jain, and allium-sensitive kitchens.</p>
         </div>
         <div>
-          <h4>Explore</h4>
+          <h2>Explore</h2>
           <ul>
             <li><a href="${prefix}index.html">Home</a></li>
             <li><a href="${prefix}recipes.html">All recipes</a></li>
@@ -127,7 +127,7 @@ function footer(prefix = "") {
           </ul>
         </div>
         <div>
-          <h4>Recipe types</h4>
+          <h2>Recipe types</h2>
           <ul>
             <li><a href="${prefix}recipes.html#breakfast">Breakfast</a></li>
             <li><a href="${prefix}recipes.html#curry">Curries &amp; dals</a></li>
@@ -136,7 +136,7 @@ function footer(prefix = "") {
           </ul>
         </div>
         <div>
-          <h4>Connect</h4>
+          <h2>Connect</h2>
           <ul>
             <li><a href="${prefix}contact.html">Contact us</a></li>
             <li><a href="${prefix}contact.html">Submit a recipe</a></li>
@@ -189,6 +189,18 @@ function card(r, prefix = "") {
 }
 
 /* ---------- recipe detail page ---------- */
+
+function breadcrumbFor(r) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/index.html` },
+      { "@type": "ListItem", position: 2, name: "Recipes", item: `${SITE_URL}/recipes.html` },
+      { "@type": "ListItem", position: 3, name: r.title, item: `${SITE_URL}/recipes/${r.slug}.html` },
+    ],
+  };
+}
 
 function jsonLdFor(r) {
   return {
@@ -254,6 +266,7 @@ ${head({
   canonical: `recipes/${r.slug}.html`,
   jsonLd: jsonLdFor(r),
 })}
+  <script type="application/ld+json">${JSON.stringify(breadcrumbFor(r))}</script>
 </head>
 <body>
 ${header("recipes", "../")}
