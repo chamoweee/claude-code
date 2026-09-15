@@ -13,6 +13,7 @@ const SITE = path.join(ROOT, "site");
 const SITE_URL = "https://chamoweee.github.io/claude-code";
 
 const recipes = JSON.parse(fs.readFileSync(path.join(SITE, "data", "recipes.json"), "utf8"));
+const pantry = JSON.parse(fs.readFileSync(path.join(SITE, "data", "pantry.json"), "utf8"));
 
 const CATEGORIES = [
   { id: "all", label: "All" },
@@ -92,7 +93,8 @@ function header(active, prefix = "") {
       <ul class="nav-links">
         ${link("index.html", "Home", "home")}
         ${link("recipes.html", "Recipes", "recipes")}
-        ${link("about.html", "About No-Allium", "about")}
+        ${link("about.html", "About", "about")}
+        ${link("pantry.html", "Pantry", "pantry")}
         ${link("saved.html", "Saved", "saved")}
         ${link("contact.html", "Contact", "contact")}
       </ul>
@@ -123,6 +125,7 @@ function footer(prefix = "") {
             <li><a href="${prefix}index.html">Home</a></li>
             <li><a href="${prefix}recipes.html">All recipes</a></li>
             <li><a href="${prefix}about.html">About no-allium</a></li>
+            <li><a href="${prefix}pantry.html">Pantry guide</a></li>
             <li><a href="${prefix}saved.html">Saved recipes</a></li>
           </ul>
         </div>
@@ -358,6 +361,54 @@ ${footer("../")}
 `;
 }
 
+/* ---------- pantry ---------- */
+
+function recipesUsing(item) {
+  return recipes.filter((r) =>
+    r.ingredients.some((ing) => {
+      const name = ing.name.toLowerCase();
+      return item.match.some((m) => name.includes(m.toLowerCase()));
+    })
+  );
+}
+
+function pantryEntry(item, index) {
+  const used = recipesUsing(item);
+  const links = used
+    .slice(0, 6)
+    .map((r) => `<a href="recipes/${r.slug}.html">${esc(r.title)}</a>`)
+    .join("");
+
+  return `        <article class="pantry-item reveal" id="${item.name.toLowerCase().replace(/[^a-z]+/g, "-")}" style="--reveal-delay:${
+    (index % 3) * 0.08
+  }s">
+          <div class="pantry-head">
+            <div class="pantry-icon" aria-hidden="true">${item.emoji}</div>
+            <div>
+              <h3>${esc(item.name)}${
+    item.essential ? ' <span class="essential-badge">Essential</span>' : ""
+  }</h3>
+              <p class="pantry-aka">${esc(item.alsoKnownAs)}</p>
+            </div>
+            <div class="pantry-replaces"><span>Replaces</span><strong>${esc(item.replaces)}</strong></div>
+          </div>
+          <p class="pantry-desc">${esc(item.description)}</p>
+          <div class="pantry-details">
+            <div><h4>How to use it</h4><p>${esc(item.howToUse)}</p></div>
+            <div><h4>Buying &amp; storing</h4><p>${esc(item.buying)}</p></div>
+            <div><h4>Watch out</h4><p>${esc(item.watchOut)}</p></div>
+          </div>
+          ${
+            used.length
+              ? `<div class="pantry-recipes">
+            <span class="pantry-recipes-label">Used in ${used.length} recipe${used.length === 1 ? "" : "s"}:</span>
+            <div class="pantry-links">${links}</div>
+          </div>`
+              : ""
+          }
+        </article>`;
+}
+
 /* ---------- injection helper ---------- */
 
 function inject(html, marker, content) {
@@ -417,7 +468,15 @@ buildPage("index.html", "home", [
 ]);
 written.push("index.html");
 
-// 4. Remaining static pages
+// 4. Pantry guide
+if (fs.existsSync(path.join(SITE, "pantry.html"))) {
+  buildPage("pantry.html", "pantry", [
+    (h) => inject(h, "pantry", pantry.map(pantryEntry).join("\n")),
+  ]);
+  written.push("pantry.html");
+}
+
+// 5. Remaining static pages
 for (const [file, active] of [
   ["about.html", "about"],
   ["contact.html", "contact"],
@@ -430,14 +489,14 @@ for (const [file, active] of [
   }
 }
 
-// 5. sitemap.xml
+// 6. sitemap.xml
 const today = new Date().toISOString().slice(0, 10);
 const urls = [
   "index.html",
   "recipes.html",
   "about.html",
+  "pantry.html",
   "contact.html",
-  "saved.html",
   ...recipes.map((r) => `recipes/${r.slug}.html`),
 ];
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
@@ -457,7 +516,7 @@ ${urls
 fs.writeFileSync(path.join(SITE, "sitemap.xml"), sitemap);
 written.push("sitemap.xml");
 
-// 6. robots.txt
+// 7. robots.txt
 fs.writeFileSync(
   path.join(SITE, "robots.txt"),
   `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`

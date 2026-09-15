@@ -33,6 +33,7 @@ function section(title) {
 /* ---------- 1. data integrity (no browser needed) ---------- */
 
 const recipes = JSON.parse(fs.readFileSync(path.join(SITE, "data", "recipes.json"), "utf8"));
+const pantry = JSON.parse(fs.readFileSync(path.join(SITE, "data", "pantry.json"), "utf8"));
 const ALLIUMS = ["onion", "garlic", "leek", "shallot", "chive", "scallion"];
 
 function dataChecks() {
@@ -86,6 +87,27 @@ function dataChecks() {
     "every recipe has a page",
     recipes.every((r) => fs.existsSync(path.join(SITE, "recipes", `${r.slug}.html`)))
   );
+
+  section("Pantry data");
+  const pantryRequired = ["name", "alsoKnownAs", "emoji", "replaces", "match", "description", "howToUse", "buying", "watchOut"];
+  const pantryMissing = [];
+  for (const item of pantry) {
+    for (const f of pantryRequired) {
+      if (!item[f]) pantryMissing.push(`${item.name}.${f}`);
+    }
+  }
+  check("pantry entries complete", pantryMissing.length === 0, pantryMissing.join(", "));
+
+  // A pantry entry whose keywords match nothing is a broken cross-link section.
+  const orphans = pantry.filter(
+    (item) =>
+      !recipes.some((r) =>
+        r.ingredients.some((ing) =>
+          item.match.some((m) => ing.name.toLowerCase().includes(m.toLowerCase()))
+        )
+      )
+  );
+  check("every pantry item links to real recipes", orphans.length === 0, orphans.map((o) => o.name).join(", "));
 }
 
 /* ---------- 2. build freshness ---------- */
@@ -96,6 +118,7 @@ function buildFreshnessCheck() {
   const tracked = [
     "index.html",
     "recipes.html",
+    "pantry.html",
     "sitemap.xml",
     ...recipes.map((r) => `recipes/${r.slug}.html`),
   ];
@@ -265,7 +288,7 @@ async function browserChecks() {
 
     /* --- accessibility --- */
     section("Accessibility");
-    const pages = ["index.html", "recipes.html", "about.html", "contact.html", "saved.html", "404.html", `recipes/${sample.slug}.html`];
+    const pages = ["index.html", "recipes.html", "about.html", "pantry.html", "contact.html", "saved.html", "404.html", `recipes/${sample.slug}.html`];
     const a11y = [];
     for (const p of pages) {
       const ap = await ctx.newPage();
