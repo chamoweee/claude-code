@@ -110,7 +110,54 @@ function dataChecks() {
   check("every pantry item links to real recipes", orphans.length === 0, orphans.map((o) => o.name).join(", "));
 }
 
-/* ---------- 2. build freshness ---------- */
+/* ---------- 2. link integrity ---------- */
+
+function walkHtml(dir, out = []) {
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const p = path.join(dir, entry.name);
+    if (entry.isDirectory()) walkHtml(p, out);
+    else if (entry.name.endsWith(".html")) out.push(p);
+  }
+  return out;
+}
+
+function linkChecks() {
+  section("Links");
+
+  const files = walkHtml(SITE);
+  const brokenFiles = [];
+  const brokenAnchors = [];
+  let count = 0;
+
+  for (const file of files) {
+    const html = fs.readFileSync(file, "utf8");
+    const dir = path.dirname(file);
+    const ids = new Set([...html.matchAll(/id="([^"]+)"/g)].map((m) => m[1]));
+
+    for (const m of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
+      const href = m[1];
+      if (/^(https?:|mailto:|data:|tel:)/.test(href)) continue;
+
+      if (href.startsWith("#")) {
+        const id = href.slice(1);
+        if (id && !ids.has(id)) brokenAnchors.push(`${path.relative(SITE, file)} -> ${href}`);
+        continue;
+      }
+
+      const target = href.split("#")[0].split("?")[0];
+      if (!target) continue;
+      count++;
+      if (!fs.existsSync(path.resolve(dir, target))) {
+        brokenFiles.push(`${path.relative(SITE, file)} -> ${href}`);
+      }
+    }
+  }
+
+  check(`internal links resolve (${count} checked)`, brokenFiles.length === 0, brokenFiles.slice(0, 5).join(", "));
+  check("in-page anchors resolve", brokenAnchors.length === 0, [...new Set(brokenAnchors)].slice(0, 5).join(", "));
+}
+
+/* ---------- 3. build freshness ---------- */
 
 function buildFreshnessCheck() {
   section("Build freshness");
@@ -219,6 +266,17 @@ async function browserChecks() {
     await page.waitForTimeout(200);
     const veganExpected = recipes.filter((r) => r.vegan).length;
     check("vegan filter", (await visible()) === veganExpected, `${await visible()}/${veganExpected}`);
+
+    /* --- category deep links (footer uses recipes.html#curry etc.) --- */
+    for (const cat of ["breakfast", "curry", "dessert"]) {
+      const expected = recipes.filter((r) => r.category === cat).length;
+      const dl = await ctx.newPage();
+      await dl.goto(`${base}/recipes.html#${cat}`, { waitUntil: "domcontentloaded" });
+      await dl.waitForTimeout(250);
+      const shown = await dl.$$eval(".recipe-card", (c) => c.filter((x) => !x.hidden).length);
+      check(`#${cat} deep link filters on load`, shown === expected, `${shown}/${expected}`);
+      await dl.close();
+    }
 
     /* --- saving --- */
     section("Saved recipes");
@@ -332,6 +390,7 @@ async function browserChecks() {
 
 (async () => {
   dataChecks();
+  linkChecks();
   buildFreshnessCheck();
   await browserChecks();
 
