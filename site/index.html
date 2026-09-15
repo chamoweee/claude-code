@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%237c8f6e'/%3E%3Ctext x='50' y='68' font-size='58' text-anchor='middle'%3E%F0%9F%8C%BF%3C/text%3E%3C/svg%3E" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -31,6 +32,8 @@
 
   <main>
     <section class="hero">
+      <div class="hero-blob b1" aria-hidden="true"></div>
+      <div class="hero-blob b2" aria-hidden="true"></div>
       <div class="container hero-grid">
         <div>
           <span class="eyebrow">Onion-Free &middot; Garlic-Free &middot; 100% Vegetarian</span>
@@ -56,33 +59,33 @@
           </div>
         </div>
         <div class="hero-visual" aria-hidden="true">
-          <div class="hero-tile">🍛</div>
-          <div class="hero-tile">🥘</div>
-          <div class="hero-tile">🫓</div>
-          <div class="hero-tile">🍲</div>
+          <div class="hero-tile"><span>🍛</span></div>
+          <div class="hero-tile"><span>🥘</span></div>
+          <div class="hero-tile"><span>🫓</span></div>
+          <div class="hero-tile"><span>🍲</span></div>
         </div>
       </div>
     </section>
 
     <section class="section">
       <div class="container">
-        <div class="section-head">
+        <div class="section-head reveal">
           <span class="eyebrow">Why cook this way</span>
           <h2>Flavorful food, gentler on the body and the spirit</h2>
           <p>Skipping onion and garlic doesn't mean skipping flavor. We lean on ginger, asafoetida, warm spices, and slow cooking to build deep, satisfying dishes.</p>
         </div>
         <div class="feature-grid">
-          <div class="feature-card">
+          <div class="feature-card reveal" style="--reveal-delay:0s">
             <div class="feature-icon">🙏</div>
             <h3>Sattvic &amp; Jain-friendly</h3>
             <p>Rooted in Ayurvedic and Jain culinary traditions, where alliums are considered too stimulating for a calm, clear mind.</p>
           </div>
-          <div class="feature-card">
+          <div class="feature-card reveal" style="--reveal-delay:0.1s">
             <div class="feature-icon">🌱</div>
             <h3>Gentle on digestion</h3>
             <p>Many people find onion and garlic (high-FODMAP foods) trigger bloating — our recipes are naturally easier to digest.</p>
           </div>
-          <div class="feature-card">
+          <div class="feature-card reveal" style="--reveal-delay:0.2s">
             <div class="feature-icon">🔥</div>
             <h3>Still bold &amp; aromatic</h3>
             <p>Asafoetida (hing), ginger, curry leaves, and toasted spices deliver the same savory depth without a single allium.</p>
@@ -93,30 +96,30 @@
 
     <section class="section section-alt">
       <div class="container">
-        <div class="section-head">
+        <div class="section-head reveal">
           <span class="eyebrow">Fan favorites</span>
           <h2>Recipes to start with</h2>
           <p>A taste of what's cooking — every recipe is fully vegetarian and completely free of onion, garlic, leek, shallot, and chive.</p>
         </div>
         <div class="recipe-grid">
-          <article class="recipe-card">
-            <div class="recipe-thumb" style="background:linear-gradient(160deg,#f6d9a8,#e0a831);">🍛</div>
+          <article class="recipe-card reveal" style="--reveal-delay:0s">
+            <div class="recipe-thumb" style="background:linear-gradient(160deg,#f6d9a8,#e0a831);"><span>🍛</span></div>
             <div class="recipe-body">
               <div class="recipe-tags"><span class="tag">Dinner</span><span class="tag spice">Medium spice</span></div>
               <h3>Hing-Tempered Dal Tadka</h3>
               <p>Creamy yellow lentils finished with a sizzling asafoetida and cumin tempering — no onion or garlic needed.</p>
             </div>
           </article>
-          <article class="recipe-card">
-            <div class="recipe-thumb" style="background:linear-gradient(160deg,#cfe0b8,#7c8f6e);">🥗</div>
+          <article class="recipe-card reveal" style="--reveal-delay:0.1s">
+            <div class="recipe-thumb" style="background:linear-gradient(160deg,#cfe0b8,#7c8f6e);"><span>🥗</span></div>
             <div class="recipe-body">
               <div class="recipe-tags"><span class="tag">Lunch</span><span class="tag spice">Mild</span></div>
               <h3>Jain Vegetable Kofta Curry</h3>
               <p>Root-vegetable dumplings in a creamy tomato-cashew gravy, made without onion, garlic, or nightshade roots.</p>
             </div>
           </article>
-          <article class="recipe-card">
-            <div class="recipe-thumb" style="background:linear-gradient(160deg,#f3b79a,#c96f4a);">🍲</div>
+          <article class="recipe-card reveal" style="--reveal-delay:0.2s">
+            <div class="recipe-thumb" style="background:linear-gradient(160deg,#f3b79a,#c96f4a);"><span>🍲</span></div>
             <div class="recipe-body">
               <div class="recipe-tags"><span class="tag">Comfort</span><span class="tag spice">Mild</span></div>
               <h3>Ginger-Cumin Vegetable Stew</h3>
@@ -132,7 +135,7 @@
 
     <section class="section">
       <div class="container">
-        <div class="testimonial">
+        <div class="testimonial reveal">
           <blockquote>&ldquo;I didn't think you could make a curry taste this rich without onion and garlic. This site proved me completely wrong.&rdquo;</blockquote>
           <cite>&mdash; Priya M., home cook</cite>
         </div>
@@ -141,7 +144,7 @@
 
     <section class="section section-alt">
       <div class="container">
-        <div class="newsletter">
+        <div class="newsletter reveal">
           <h2>Get a new no-allium recipe every week</h2>
           <p>Join our free newsletter for weekly recipes, ingredient swap guides, and meal-planning tips.</p>
           <form class="newsletter-form">
@@ -195,6 +198,7 @@
     </div>
   </footer>
 
+  <button class="back-to-top" aria-label="Back to top">&#8593;</button>
   <script src="js/script.js"></script>
 </body>
 </html>

@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%237c8f6e'/%3E%3Ctext x='50' y='68' font-size='58' text-anchor='middle'%3E%F0%9F%8C%BF%3C/text%3E%3C/svg%3E" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -32,15 +33,15 @@
   <main>
     <section class="page-hero">
       <div class="container">
-        <span class="eyebrow">We'd love to hear from you</span>
-        <h1>Get in touch</h1>
-        <p>Questions about ingredient swaps, a recipe request, or want to submit your own no-allium creation? Send us a note.</p>
+        <span class="eyebrow reveal">We'd love to hear from you</span>
+        <h1 class="reveal" style="--reveal-delay:0.05s">Get in touch</h1>
+        <p class="reveal" style="--reveal-delay:0.1s">Questions about ingredient swaps, a recipe request, or want to submit your own no-allium creation? Send us a note.</p>
       </div>
     </section>
 
     <section class="section" style="padding-top:0;">
       <div class="container contact-grid">
-        <div class="form-card">
+        <div class="form-card reveal">
           <form class="contact-form">
             <div class="form-row">
               <label for="name">Name</label>
@@ -69,21 +70,21 @@
           </form>
         </div>
         <div>
-          <div class="contact-info-item">
+          <div class="contact-info-item reveal" style="--reveal-delay:0.0s">
             <div class="feature-icon">✉️</div>
             <div>
               <h4>Email</h4>
               <p>hello@sattvatable.example</p>
             </div>
           </div>
-          <div class="contact-info-item">
+          <div class="contact-info-item reveal" style="--reveal-delay:0.1s">
             <div class="feature-icon">📖</div>
             <div>
               <h4>Recipe submissions</h4>
               <p>Share your own onion- and garlic-free vegetarian recipe and we may feature it, with credit, on the site.</p>
             </div>
           </div>
-          <div class="contact-info-item">
+          <div class="contact-info-item reveal" style="--reveal-delay:0.2s">
             <div class="feature-icon">💬</div>
             <div>
               <h4>Response time</h4>
@@ -135,6 +136,7 @@
     </div>
   </footer>
 
+  <button class="back-to-top" aria-label="Back to top">&#8593;</button>
   <script src="js/script.js"></script>
 </body>
 </html>
