@@ -344,6 +344,20 @@ async function browserChecks() {
     await detail.goto(`${base}/index.html`, { waitUntil: "domcontentloaded" });
     check("theme persists across pages", await detail.evaluate(() => document.documentElement.dataset.theme === "dark"));
 
+    /* --- progressive enhancement: content must survive JS failure --- */
+    section("Without JavaScript");
+    const noJsCtx = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 1400, height: 950 } });
+    const njPage = await noJsCtx.newPage();
+    await njPage.goto(`${base}/index.html`, { waitUntil: "domcontentloaded" });
+    const hiddenWithoutJs = [];
+    for (const sel of [".testimonial", ".newsletter", ".feature-card", ".recipe-card"]) {
+      const el = await njPage.$(sel);
+      const box = el && (await el.boundingBox());
+      if (!box || box.height === 0) hiddenWithoutJs.push(sel);
+    }
+    check("content renders with JS disabled", hiddenWithoutJs.length === 0, hiddenWithoutJs.join(", "));
+    await noJsCtx.close();
+
     /* --- accessibility --- */
     section("Accessibility");
     const pages = ["index.html", "recipes.html", "about.html", "pantry.html", "contact.html", "saved.html", "404.html", `recipes/${sample.slug}.html`];

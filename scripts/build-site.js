@@ -77,6 +77,7 @@ function head(opts) {
           document.documentElement.dataset.theme = "dark";
         }
       } catch (e) {}
+      document.documentElement.classList.add("js");
     })();
   </script>${jsonLd ? `\n  <script type="application/ld+json">${JSON.stringify(jsonLd)}</script>` : ""}`;
 }

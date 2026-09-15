@@ -641,13 +641,15 @@ details.recipe-details[open] summary::after { content: "\2212"; }
 }
 .page-hero p { color: var(--ink-soft); max-width: 56ch; margin: 0 auto; }
 
-/* ===== Scroll reveal ===== */
-.reveal {
+/* ===== Scroll reveal =====
+   Gated on .js so content is never hidden when JavaScript fails to run.
+   Without JS the page renders fully visible; with it, sections animate in. */
+.js .reveal {
   opacity: 0;
   transform: translateY(28px);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
-.reveal.in-view {
+.js .reveal.in-view {
   opacity: 1;
   transform: none;
   transition-delay: var(--reveal-delay, 0s);
