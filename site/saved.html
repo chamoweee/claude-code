@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact — Sattva Table</title>
-  <meta name="description" content="Get in touch with Sattva Table — ask a question, submit a recipe, or say hello." />
+  <title>Saved Recipes — Sattva Table</title>
+  <meta name="description" content="Your saved no-allium vegetarian recipes, kept in this browser." />
+  <link rel="canonical" href="https://chamoweee.github.io/claude-code/saved.html" />
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#fbf6ee" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -33,8 +36,8 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="recipes.html">Recipes</a></li>
         <li><a href="about.html">About No-Allium</a></li>
-        <li><a href="saved.html">Saved</a></li>
-        <li><a href="contact.html" aria-current="page">Contact</a></li>
+        <li><a href="saved.html" aria-current="page">Saved</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
       <div class="nav-cta">
         <button class="theme-toggle" aria-label="Switch to dark theme" title="Toggle theme">
@@ -50,64 +53,21 @@
   <main id="main">
     <section class="page-hero">
       <div class="container">
-        <span class="eyebrow reveal">We'd love to hear from you</span>
-        <h1 class="reveal" style="--reveal-delay:0.05s">Get in touch</h1>
-        <p class="reveal" style="--reveal-delay:0.1s">Questions about ingredient swaps, a recipe request, or want to submit your own no-allium creation? Send us a note.</p>
+        <span class="eyebrow">Your collection</span>
+        <h1>Saved recipes</h1>
+        <p>Recipes you've hearted, stored privately in this browser. Nothing is uploaded anywhere.</p>
       </div>
     </section>
 
     <section class="section" style="padding-top:0;">
-      <div class="container contact-grid">
-        <div class="form-card reveal">
-          <form class="contact-form">
-            <div class="form-row">
-              <label for="name">Name</label>
-              <input type="text" id="name" name="name" required />
-            </div>
-            <div class="form-row">
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" required />
-            </div>
-            <div class="form-row">
-              <label for="topic">Topic</label>
-              <select id="topic" name="topic">
-                <option>General question</option>
-                <option>Recipe request</option>
-                <option>Submit a recipe</option>
-                <option>Ingredient substitution help</option>
-                <option>Something else</option>
-              </select>
-            </div>
-            <div class="form-row">
-              <label for="message">Message</label>
-              <textarea id="message" name="message" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Send Message</button>
-            <p class="form-success contact-success">Thanks for reaching out! We'll get back to you within a couple of days.</p>
-          </form>
-        </div>
-        <div>
-          <div class="contact-info-item reveal" style="--reveal-delay:0.0s">
-            <div class="feature-icon">✉️</div>
-            <div>
-              <h4>Email</h4>
-              <p>hello@sattvatable.example</p>
-            </div>
-          </div>
-          <div class="contact-info-item reveal" style="--reveal-delay:0.1s">
-            <div class="feature-icon">📖</div>
-            <div>
-              <h4>Recipe submissions</h4>
-              <p>Share your own onion- and garlic-free vegetarian recipe and we may feature it, with credit, on the site.</p>
-            </div>
-          </div>
-          <div class="contact-info-item reveal" style="--reveal-delay:0.2s">
-            <div class="feature-icon">💬</div>
-            <div>
-              <h4>Response time</h4>
-              <p>We read every message and typically reply within 2-3 business days.</p>
-            </div>
-          </div>
+      <div class="container">
+        <div class="recipe-grid" id="saved-grid"></div>
+
+        <div class="empty-state" id="saved-empty" hidden>
+          <div class="empty-icon" aria-hidden="true">♡</div>
+          <h2>Nothing saved yet</h2>
+          <p>Tap the heart on any recipe to keep it here for later.</p>
+          <a href="recipes.html" class="btn btn-primary">Browse recipes</a>
         </div>
       </div>
     </section>
@@ -158,5 +118,6 @@
   <button class="back-to-top" aria-label="Back to top">&#8593;</button>
 <!-- /BUILD:footer -->
   <script src="js/script.js"></script>
+  <script src="js/saved.js"></script>
 </body>
 </html>

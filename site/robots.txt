@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://chamoweee.github.io/claude-code/sitemap.xml

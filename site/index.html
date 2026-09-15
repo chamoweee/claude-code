@@ -3,34 +3,62 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sattva Table — Vegetarian, No Onion &amp; No Garlic Recipes</title>
-  <meta name="description" content="Sattva Table is a home for vegetarian recipes made without onion, garlic, leeks, or shallots — full of flavor, rooted in Jain, Ayurvedic, and sattvic cooking traditions." />
+  <title>Sattva Table — Vegetarian Recipes Without Onion or Garlic</title>
+  <meta name="description" content="Vegetarian recipes made entirely without onion, garlic, leeks, shallots, or chives — rooted in Jain, Ayurvedic, and sattvic cooking traditions, and friendly to low-FODMAP kitchens." />
+  <link rel="canonical" href="https://chamoweee.github.io/claude-code/index.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Sattva Table" />
+  <meta property="og:title" content="Sattva Table — Vegetarian Recipes Without Onion or Garlic" />
+  <meta property="og:description" content="Big flavor, zero allium. Vegetarian recipes for sattvic, Jain, and allium-sensitive kitchens." />
+  <meta property="og:url" content="https://chamoweee.github.io/claude-code/index.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sattva Table — Vegetarian Recipes Without Onion or Garlic" />
+  <meta name="twitter:description" content="Big flavor, zero allium. Vegetarian recipes for sattvic, Jain, and allium-sensitive kitchens." />
+  <meta name="theme-color" content="#fbf6ee" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%237c8f6e'/%3E%3Ctext x='50' y='68' font-size='58' text-anchor='middle'%3E%F0%9F%8C%BF%3C/text%3E%3C/svg%3E" />
   <link rel="stylesheet" href="css/style.css" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("st-theme");
+        if (t === "dark" || (!t && matchMedia("(prefers-color-scheme: dark)").matches)) {
+          document.documentElement.dataset.theme = "dark";
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Sattva Table","url":"https://chamoweee.github.io/claude-code/","description":"Vegetarian recipes made without onion, garlic, leeks, shallots, or chives.","publisher":{"@type":"Organization","name":"Sattva Table"}}</script>
 </head>
 <body>
+<!-- BUILD:header -->
+  <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
-    <nav class="nav">
+    <nav class="nav" aria-label="Main">
       <a href="index.html" class="brand">
-        <span class="brand-mark">🌿</span> Sattva Table
+        <span class="brand-mark" aria-hidden="true">🌿</span> Sattva Table
       </a>
       <ul class="nav-links">
         <li><a href="index.html" aria-current="page">Home</a></li>
-        <li><a href="about.html">About No-Allium</a></li>
         <li><a href="recipes.html">Recipes</a></li>
+        <li><a href="about.html">About No-Allium</a></li>
+        <li><a href="saved.html">Saved</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
       <div class="nav-cta">
-        <a href="recipes.html" class="btn btn-outline">Browse Recipes</a>
-        <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+        <button class="theme-toggle" aria-label="Switch to dark theme" title="Toggle theme">
+          <span class="theme-icon" aria-hidden="true">◐</span>
+        </button>
+        <a href="recipes.html" class="btn btn-outline nav-browse">Browse Recipes</a>
+        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">&#9776;</button>
       </div>
     </nav>
   </header>
+<!-- /BUILD:header -->
 
-  <main>
+  <main id="main">
     <section class="hero">
       <div class="hero-blob b1" aria-hidden="true"></div>
       <div class="hero-blob b2" aria-hidden="true"></div>
@@ -38,19 +66,21 @@
         <div>
           <span class="eyebrow">Onion-Free &middot; Garlic-Free &middot; 100% Vegetarian</span>
           <h1>Big flavor, zero allium. Vegetarian cooking done the sattvic way.</h1>
-          <p class="hero-lede">Sattva Table is a home for warming, aromatic vegetarian recipes made entirely without onion, garlic, leeks, shallots, or chives — perfect for Jain, Ayurvedic, sattvic, and allium-sensitive kitchens.</p>
+          <p class="hero-lede">Warming, aromatic vegetarian recipes made entirely without onion, garlic, leeks, shallots, or chives — for Jain, Ayurvedic, sattvic, and allium-sensitive kitchens.</p>
           <div class="hero-actions">
             <a href="recipes.html" class="btn btn-primary">Explore Recipes</a>
             <a href="about.html" class="btn btn-outline">Why No Allium?</a>
           </div>
           <div class="hero-stats">
             <div>
-              <div class="stat-num">120+</div>
+<!-- BUILD:stat-count -->
+<div class="stat-num">28</div>
+<!-- /BUILD:stat-count -->
               <div class="stat-label">Allium-free recipes</div>
             </div>
             <div>
-              <div class="stat-num">6</div>
-              <div class="stat-label">Cuisines covered</div>
+              <div class="stat-num">8</div>
+              <div class="stat-label">Recipe categories</div>
             </div>
             <div>
               <div class="stat-num">100%</div>
@@ -76,17 +106,17 @@
         </div>
         <div class="feature-grid">
           <div class="feature-card reveal" style="--reveal-delay:0s">
-            <div class="feature-icon">🙏</div>
+            <div class="feature-icon" aria-hidden="true">🙏</div>
             <h3>Sattvic &amp; Jain-friendly</h3>
             <p>Rooted in Ayurvedic and Jain culinary traditions, where alliums are considered too stimulating for a calm, clear mind.</p>
           </div>
           <div class="feature-card reveal" style="--reveal-delay:0.1s">
-            <div class="feature-icon">🌱</div>
+            <div class="feature-icon" aria-hidden="true">🌱</div>
             <h3>Gentle on digestion</h3>
             <p>Many people find onion and garlic (high-FODMAP foods) trigger bloating — our recipes are naturally easier to digest.</p>
           </div>
           <div class="feature-card reveal" style="--reveal-delay:0.2s">
-            <div class="feature-icon">🔥</div>
+            <div class="feature-icon" aria-hidden="true">🔥</div>
             <h3>Still bold &amp; aromatic</h3>
             <p>Asafoetida (hing), ginger, curry leaves, and toasted spices deliver the same savory depth without a single allium.</p>
           </div>
@@ -99,33 +129,111 @@
         <div class="section-head reveal">
           <span class="eyebrow">Fan favorites</span>
           <h2>Recipes to start with</h2>
-          <p>A taste of what's cooking — every recipe is fully vegetarian and completely free of onion, garlic, leek, shallot, and chive.</p>
+          <p>Every recipe is fully vegetarian and completely free of onion, garlic, leek, shallot, and chive.</p>
         </div>
         <div class="recipe-grid">
-          <article class="recipe-card reveal" style="--reveal-delay:0s">
-            <div class="recipe-thumb" style="background:linear-gradient(160deg,#f6d9a8,#e0a831);"><span>🍛</span></div>
+<!-- BUILD:featured -->
+          <article class="recipe-card reveal" data-category="curry" data-spice="medium" data-time="35" data-vegan="false" data-gf="true" data-jain="true" data-slug="hing-tempered-dal-tadka" data-search="hing-tempered dal tadka curries &amp; dals creamy yellow lentils finished with a sizzling asafoetida and cumin tempering. split pigeon peas (toor dal), rinsed water ground turmeric ghee (or oil for vegan) cumin seeds asafoetida (hing) fresh ginger, grated green chili, slit lengthwise tomato, finely chopped red chili powder salt, to taste fresh coriander, chopped">
+            <a class="recipe-card-link" href="recipes/hing-tempered-dal-tadka.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#f6d9a8,#e0a831);"><span>🍛</span></div>
+            </a>
             <div class="recipe-body">
-              <div class="recipe-tags"><span class="tag">Dinner</span><span class="tag spice">Medium spice</span></div>
-              <h3>Hing-Tempered Dal Tadka</h3>
-              <p>Creamy yellow lentils finished with a sizzling asafoetida and cumin tempering — no onion or garlic needed.</p>
+              <div class="recipe-tags">
+                <span class="tag">Curries &amp; Dals</span>
+                <span class="tag spice">medium</span>
+              </div>
+              <h3><a href="recipes/hing-tempered-dal-tadka.html">Hing-Tempered Dal Tadka</a></h3>
+              <div class="recipe-meta"><span>⏱ 35 min</span><span>🍽 Serves 4</span></div>
+              <p>Creamy yellow lentils finished with a sizzling asafoetida and cumin tempering.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Gluten free">GF</span><span class="diet-badge" title="Jain-friendly">Jain</span></div>
+                <button class="save-btn" data-slug="hing-tempered-dal-tadka" aria-label="Save Hing-Tempered Dal Tadka" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
             </div>
           </article>
-          <article class="recipe-card reveal" style="--reveal-delay:0.1s">
-            <div class="recipe-thumb" style="background:linear-gradient(160deg,#cfe0b8,#7c8f6e);"><span>🥗</span></div>
+          <article class="recipe-card reveal" data-category="curry" data-spice="mild" data-time="50" data-vegan="false" data-gf="true" data-jain="true" data-slug="jain-vegetable-kofta-curry" data-search="jain vegetable kofta curry curries &amp; dals bottle gourd dumplings simmered in a silky tomato-cashew gravy. bottle gourd (lauki), grated and squeezed dry chickpea flour (besan) garam masala oil, for shallow frying raw cashews, soaked 20 minutes tomatoes, pureed ghee fresh ginger, grated ground coriander ground turmeric asafoetida (hing) cream or thick yogurt salt, to taste">
+            <a class="recipe-card-link" href="recipes/jain-vegetable-kofta-curry.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#cfe0b8,#7c8f6e);"><span>🥗</span></div>
+            </a>
             <div class="recipe-body">
-              <div class="recipe-tags"><span class="tag">Lunch</span><span class="tag spice">Mild</span></div>
-              <h3>Jain Vegetable Kofta Curry</h3>
-              <p>Root-vegetable dumplings in a creamy tomato-cashew gravy, made without onion, garlic, or nightshade roots.</p>
+              <div class="recipe-tags">
+                <span class="tag">Curries &amp; Dals</span>
+                <span class="tag spice">mild</span>
+              </div>
+              <h3><a href="recipes/jain-vegetable-kofta-curry.html">Jain Vegetable Kofta Curry</a></h3>
+              <div class="recipe-meta"><span>⏱ 50 min</span><span>🍽 Serves 4</span></div>
+              <p>Bottle gourd dumplings simmered in a silky tomato-cashew gravy.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Gluten free">GF</span><span class="diet-badge" title="Jain-friendly">Jain</span></div>
+                <button class="save-btn" data-slug="jain-vegetable-kofta-curry" aria-label="Save Jain Vegetable Kofta Curry" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
             </div>
           </article>
-          <article class="recipe-card reveal" style="--reveal-delay:0.2s">
-            <div class="recipe-thumb" style="background:linear-gradient(160deg,#f3b79a,#c96f4a);"><span>🍲</span></div>
+          <article class="recipe-card reveal" data-category="curry" data-spice="mild" data-time="45" data-vegan="false" data-gf="true" data-jain="true" data-slug="no-onion-paneer-butter-masala" data-search="no-onion paneer butter masala curries &amp; dals the restaurant classic rebuilt on tomato, cashew, and butter — no allium at all. paneer, cubed ripe tomatoes, quartered raw cashews butter fresh ginger, grated asafoetida (hing) kashmiri red chili powder garam masala dried fenugreek leaves (kasuri methi), crushed sugar heavy cream salt, to taste">
+            <a class="recipe-card-link" href="recipes/no-onion-paneer-butter-masala.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#f3b79a,#c96f4a);"><span>🧀</span></div>
+            </a>
             <div class="recipe-body">
-              <div class="recipe-tags"><span class="tag">Comfort</span><span class="tag spice">Mild</span></div>
-              <h3>Ginger-Cumin Vegetable Stew</h3>
-              <p>A slow-simmered one-pot stew that gets all its savoriness from ginger, cumin, and toasted coriander.</p>
+              <div class="recipe-tags">
+                <span class="tag">Curries &amp; Dals</span>
+                <span class="tag spice">mild</span>
+              </div>
+              <h3><a href="recipes/no-onion-paneer-butter-masala.html">No-Onion Paneer Butter Masala</a></h3>
+              <div class="recipe-meta"><span>⏱ 45 min</span><span>🍽 Serves 4</span></div>
+              <p>The restaurant classic rebuilt on tomato, cashew, and butter — no allium at all.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Gluten free">GF</span><span class="diet-badge" title="Jain-friendly">Jain</span></div>
+                <button class="save-btn" data-slug="no-onion-paneer-butter-masala" aria-label="Save No-Onion Paneer Butter Masala" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
             </div>
           </article>
+          <article class="recipe-card reveal" data-category="breakfast" data-spice="mild" data-time="20" data-vegan="true" data-gf="true" data-jain="true" data-slug="cumin-curry-leaf-poha" data-search="cumin &amp; curry leaf poha breakfast flattened rice tossed with mustard seeds, peanuts, peas, and lemon. thick flattened rice (poha) oil mustard seeds cumin seeds raw peanuts curry leaves green chili, chopped green peas ground turmeric sugar salt, lemon juice, fresh coriander">
+            <a class="recipe-card-link" href="recipes/cumin-curry-leaf-poha.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#f0e2b8,#d9b45a);"><span>🫓</span></div>
+            </a>
+            <div class="recipe-body">
+              <div class="recipe-tags">
+                <span class="tag">Breakfast</span>
+                <span class="tag spice">mild</span>
+              </div>
+              <h3><a href="recipes/cumin-curry-leaf-poha.html">Cumin &amp; Curry Leaf Poha</a></h3>
+              <div class="recipe-meta"><span>⏱ 20 min</span><span>🍽 Serves 2</span></div>
+              <p>Flattened rice tossed with mustard seeds, peanuts, peas, and lemon.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Vegan">Vegan</span><span class="diet-badge" title="Gluten free">GF</span><span class="diet-badge" title="Jain-friendly">Jain</span></div>
+                <button class="save-btn" data-slug="cumin-curry-leaf-poha" aria-label="Save Cumin &amp; Curry Leaf Poha" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="recipe-card reveal" data-category="dessert" data-spice="sweet" data-time="50" data-vegan="false" data-gf="true" data-jain="true" data-slug="cardamom-rice-kheer" data-search="cardamom rice kheer sweets slow-simmered milk pudding scented with cardamom, saffron, and pistachio. basmati rice, rinsed whole milk sugar green cardamom pods, crushed generous pinch of saffron pistachios and almonds, slivered ghee">
+            <a class="recipe-card-link" href="recipes/cardamom-rice-kheer.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#f5c9c9,#d98a8a);"><span>🍮</span></div>
+            </a>
+            <div class="recipe-body">
+              <div class="recipe-tags">
+                <span class="tag">Sweets</span>
+                <span class="tag spice">sweet</span>
+              </div>
+              <h3><a href="recipes/cardamom-rice-kheer.html">Cardamom Rice Kheer</a></h3>
+              <div class="recipe-meta"><span>⏱ 50 min</span><span>🍽 Serves 6</span></div>
+              <p>Slow-simmered milk pudding scented with cardamom, saffron, and pistachio.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Gluten free">GF</span><span class="diet-badge" title="Jain-friendly">Jain</span></div>
+                <button class="save-btn" data-slug="cardamom-rice-kheer" aria-label="Save Cardamom Rice Kheer" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
+            </div>
+          </article>
+<!-- /BUILD:featured -->
         </div>
         <div class="text-center mt-lg">
           <a href="recipes.html" class="btn btn-primary">See All Recipes</a>
@@ -135,6 +243,36 @@
 
     <section class="section">
       <div class="container">
+        <div class="section-head reveal">
+          <span class="eyebrow">The swap guide</span>
+          <h2>What we reach for instead</h2>
+          <p>Three techniques replace almost everything onion and garlic were doing.</p>
+        </div>
+        <div class="feature-grid">
+          <div class="feature-card reveal" style="--reveal-delay:0s">
+            <div class="feature-icon" aria-hidden="true">🌾</div>
+            <h3>Asafoetida for garlic</h3>
+            <p>A pinch of hing bloomed in hot ghee turns savory and pungent in seconds — the single most important substitution in this kitchen.</p>
+          </div>
+          <div class="feature-card reveal" style="--reveal-delay:0.1s">
+            <div class="feature-icon" aria-hidden="true">🫚</div>
+            <h3>Ginger for bite</h3>
+            <p>Fresh ginger and green chili bring the heat and brightness raw garlic normally would, without any of the harshness.</p>
+          </div>
+          <div class="feature-card reveal" style="--reveal-delay:0.2s">
+            <div class="feature-icon" aria-hidden="true">🍅</div>
+            <h3>Slow tomato for body</h3>
+            <p>Cooked down until the oil separates, tomato builds the sweet, savory base that onion paste usually provides.</p>
+          </div>
+        </div>
+        <div class="text-center mt-lg">
+          <a href="about.html" class="btn btn-outline">See the full swap table</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
         <div class="testimonial reveal">
           <blockquote>&ldquo;I didn't think you could make a curry taste this rich without onion and garlic. This site proved me completely wrong.&rdquo;</blockquote>
           <cite>&mdash; Priya M., home cook</cite>
@@ -142,28 +280,30 @@
       </div>
     </section>
 
-    <section class="section section-alt">
+    <section class="section">
       <div class="container">
         <div class="newsletter reveal">
           <h2>Get a new no-allium recipe every week</h2>
           <p>Join our free newsletter for weekly recipes, ingredient swap guides, and meal-planning tips.</p>
           <form class="newsletter-form">
-            <input type="email" placeholder="you@example.com" required aria-label="Email address" />
+            <label class="visually-hidden" for="nl-email">Email address</label>
+            <input type="email" id="nl-email" placeholder="you@example.com" required />
             <button type="submit" class="btn btn-primary">Subscribe</button>
           </form>
-          <p class="form-success">Thanks! Check your inbox to confirm your subscription.</p>
+          <p class="form-success" role="status">Thanks! Check your inbox to confirm your subscription.</p>
           <p class="form-note">No spam, unsubscribe anytime.</p>
         </div>
       </div>
     </section>
   </main>
 
+<!-- BUILD:footer -->
   <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <a href="index.html" class="brand" style="color:#fff;">
-            <span class="brand-mark">🌿</span> Sattva Table
+          <a href="index.html" class="brand footer-brand-link">
+            <span class="brand-mark" aria-hidden="true">🌿</span> Sattva Table
           </a>
           <p>Vegetarian recipes made without onion, garlic, leeks, shallots, or chives — for sattvic, Jain, and allium-sensitive kitchens.</p>
         </div>
@@ -171,16 +311,18 @@
           <h4>Explore</h4>
           <ul>
             <li><a href="index.html">Home</a></li>
-            <li><a href="recipes.html">Recipes</a></li>
-            <li><a href="about.html">About No-Allium</a></li>
+            <li><a href="recipes.html">All recipes</a></li>
+            <li><a href="about.html">About no-allium</a></li>
+            <li><a href="saved.html">Saved recipes</a></li>
           </ul>
         </div>
         <div>
           <h4>Recipe types</h4>
           <ul>
-            <li><a href="recipes.html">Breakfast</a></li>
-            <li><a href="recipes.html">Curries &amp; Dals</a></li>
-            <li><a href="recipes.html">Snacks</a></li>
+            <li><a href="recipes.html#breakfast">Breakfast</a></li>
+            <li><a href="recipes.html#curry">Curries &amp; dals</a></li>
+            <li><a href="recipes.html#snack">Snacks</a></li>
+            <li><a href="recipes.html#dessert">Sweets</a></li>
           </ul>
         </div>
         <div>
@@ -192,13 +334,13 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <span>&copy; 2026 Sattva Table. All recipes vegetarian &amp; allium-free.</span>
+        <span>&copy; 2026 Sattva Table. 28 recipes, all vegetarian &amp; allium-free.</span>
         <span>Made with ginger, not garlic.</span>
       </div>
     </div>
   </footer>
-
   <button class="back-to-top" aria-label="Back to top">&#8593;</button>
+<!-- /BUILD:footer -->
   <script src="js/script.js"></script>
 </body>
 </html>

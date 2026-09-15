@@ -10,27 +10,44 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%237c8f6e'/%3E%3Ctext x='50' y='68' font-size='58' text-anchor='middle'%3E%F0%9F%8C%BF%3C/text%3E%3C/svg%3E" />
   <link rel="stylesheet" href="css/style.css" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("st-theme");
+        if (t === "dark" || (!t && matchMedia("(prefers-color-scheme: dark)").matches)) {
+          document.documentElement.dataset.theme = "dark";
+        }
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
+<!-- BUILD:header -->
+  <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
-    <nav class="nav">
+    <nav class="nav" aria-label="Main">
       <a href="index.html" class="brand">
-        <span class="brand-mark">🌿</span> Sattva Table
+        <span class="brand-mark" aria-hidden="true">🌿</span> Sattva Table
       </a>
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
-        <li><a href="about.html" aria-current="page">About No-Allium</a></li>
         <li><a href="recipes.html">Recipes</a></li>
+        <li><a href="about.html" aria-current="page">About No-Allium</a></li>
+        <li><a href="saved.html">Saved</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
       <div class="nav-cta">
-        <a href="recipes.html" class="btn btn-outline">Browse Recipes</a>
-        <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+        <button class="theme-toggle" aria-label="Switch to dark theme" title="Toggle theme">
+          <span class="theme-icon" aria-hidden="true">◐</span>
+        </button>
+        <a href="recipes.html" class="btn btn-outline nav-browse">Browse Recipes</a>
+        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">&#9776;</button>
       </div>
     </nav>
   </header>
+<!-- /BUILD:header -->
 
-  <main>
+  <main id="main">
     <section class="page-hero">
       <div class="container">
         <span class="eyebrow reveal">Understanding the diet</span>
@@ -187,29 +204,32 @@
     </section>
   </main>
 
+<!-- BUILD:footer -->
   <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <a href="index.html" class="brand" style="color:#fff;">
-            <span class="brand-mark">🌿</span> Sattva Table
+          <a href="index.html" class="brand footer-brand-link">
+            <span class="brand-mark" aria-hidden="true">🌿</span> Sattva Table
           </a>
-          <p>Vegetarian recipes made without onion, garlic, leeks, shallots, or chives.</p>
+          <p>Vegetarian recipes made without onion, garlic, leeks, shallots, or chives — for sattvic, Jain, and allium-sensitive kitchens.</p>
         </div>
         <div>
           <h4>Explore</h4>
           <ul>
             <li><a href="index.html">Home</a></li>
-            <li><a href="recipes.html">Recipes</a></li>
-            <li><a href="about.html">About No-Allium</a></li>
+            <li><a href="recipes.html">All recipes</a></li>
+            <li><a href="about.html">About no-allium</a></li>
+            <li><a href="saved.html">Saved recipes</a></li>
           </ul>
         </div>
         <div>
           <h4>Recipe types</h4>
           <ul>
-            <li><a href="recipes.html">Breakfast</a></li>
-            <li><a href="recipes.html">Curries &amp; Dals</a></li>
-            <li><a href="recipes.html">Snacks</a></li>
+            <li><a href="recipes.html#breakfast">Breakfast</a></li>
+            <li><a href="recipes.html#curry">Curries &amp; dals</a></li>
+            <li><a href="recipes.html#snack">Snacks</a></li>
+            <li><a href="recipes.html#dessert">Sweets</a></li>
           </ul>
         </div>
         <div>
@@ -221,13 +241,13 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <span>&copy; 2026 Sattva Table. All recipes vegetarian &amp; allium-free.</span>
+        <span>&copy; 2026 Sattva Table. 28 recipes, all vegetarian &amp; allium-free.</span>
         <span>Made with ginger, not garlic.</span>
       </div>
     </div>
   </footer>
-
   <button class="back-to-top" aria-label="Back to top">&#8593;</button>
+<!-- /BUILD:footer -->
   <script src="js/script.js"></script>
 </body>
 </html>

@@ -3,307 +3,720 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Recipes — Sattva Table</title>
-  <meta name="description" content="Browse vegetarian, onion- and garlic-free recipes: breakfasts, curries, dals, snacks, and more." />
+  <title>All Recipes — No Onion, No Garlic | Sattva Table</title>
+  <meta name="description" content="Browse every vegetarian, onion- and garlic-free recipe: breakfasts, curries and dals, rice, breads, snacks, chutneys, sweets, and drinks. Filter by spice, time, and diet." />
+  <link rel="canonical" href="https://chamoweee.github.io/claude-code/recipes.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Sattva Table" />
+  <meta property="og:title" content="All Recipes — No Onion, No Garlic | Sattva Table" />
+  <meta property="og:description" content="Every recipe is vegetarian and free of onion, garlic, leek, shallot, and chive." />
+  <meta property="og:url" content="https://chamoweee.github.io/claude-code/recipes.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="All Recipes — No Onion, No Garlic | Sattva Table" />
+  <meta name="twitter:description" content="Every recipe is vegetarian and free of onion, garlic, leek, shallot, and chive." />
+  <meta name="theme-color" content="#fbf6ee" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%237c8f6e'/%3E%3Ctext x='50' y='68' font-size='58' text-anchor='middle'%3E%F0%9F%8C%BF%3C/text%3E%3C/svg%3E" />
   <link rel="stylesheet" href="css/style.css" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("st-theme");
+        if (t === "dark" || (!t && matchMedia("(prefers-color-scheme: dark)").matches)) {
+          document.documentElement.dataset.theme = "dark";
+        }
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
+<!-- BUILD:header -->
+  <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
-    <nav class="nav">
+    <nav class="nav" aria-label="Main">
       <a href="index.html" class="brand">
-        <span class="brand-mark">🌿</span> Sattva Table
+        <span class="brand-mark" aria-hidden="true">🌿</span> Sattva Table
       </a>
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About No-Allium</a></li>
         <li><a href="recipes.html" aria-current="page">Recipes</a></li>
+        <li><a href="about.html">About No-Allium</a></li>
+        <li><a href="saved.html">Saved</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
       <div class="nav-cta">
-        <a href="contact.html" class="btn btn-outline">Submit a Recipe</a>
-        <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+        <button class="theme-toggle" aria-label="Switch to dark theme" title="Toggle theme">
+          <span class="theme-icon" aria-hidden="true">◐</span>
+        </button>
+        <a href="recipes.html" class="btn btn-outline nav-browse">Browse Recipes</a>
+        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">&#9776;</button>
       </div>
     </nav>
   </header>
+<!-- /BUILD:header -->
 
-  <main>
+  <main id="main">
     <section class="page-hero">
       <div class="container">
         <span class="eyebrow reveal">The recipe box</span>
         <h1 class="reveal" style="--reveal-delay:0.05s">No onion, no garlic, no compromise</h1>
-        <p class="reveal" style="--reveal-delay:0.1s">Every recipe below is 100% vegetarian and free of onion, garlic, leek, shallot, and chive — flavored instead with ginger, asafoetida (hing), and toasted whole spices.</p>
+        <p class="reveal" style="--reveal-delay:0.1s">Every recipe here is 100% vegetarian and free of onion, garlic, leek, shallot, and chive — flavored instead with ginger, asafoetida, and toasted whole spices.</p>
       </div>
     </section>
 
     <section class="section" style="padding-top:0;">
       <div class="container">
-        <div class="filter-bar" role="tablist" aria-label="Filter recipes by category">
-          <button class="filter-btn active" data-filter="all">All</button>
-          <button class="filter-btn" data-filter="breakfast">Breakfast</button>
-          <button class="filter-btn" data-filter="curry">Curries &amp; Dals</button>
-          <button class="filter-btn" data-filter="snack">Snacks</button>
-          <button class="filter-btn" data-filter="rice">Rice &amp; Grains</button>
-          <button class="filter-btn" data-filter="dessert">Sweets</button>
+        <div class="search-bar">
+          <label class="visually-hidden" for="recipe-search">Search recipes</label>
+          <span class="search-icon" aria-hidden="true">⌕</span>
+          <input type="search" id="recipe-search" placeholder="Search recipes or ingredients — try &ldquo;hing&rdquo; or &ldquo;paneer&rdquo;" autocomplete="off" />
+          <button class="search-clear" aria-label="Clear search" hidden>&times;</button>
         </div>
 
-        <div class="recipe-grid">
+        <div class="filter-bar" aria-label="Filter recipes by category">
+<!-- BUILD:filters -->
+          <button class="filter-btn active" data-filter="all" aria-pressed="true">All</button>
+          <button class="filter-btn" data-filter="breakfast" aria-pressed="false">Breakfast</button>
+          <button class="filter-btn" data-filter="curry" aria-pressed="false">Curries & Dals</button>
+          <button class="filter-btn" data-filter="rice" aria-pressed="false">Rice & Grains</button>
+          <button class="filter-btn" data-filter="bread" aria-pressed="false">Breads</button>
+          <button class="filter-btn" data-filter="snack" aria-pressed="false">Snacks</button>
+          <button class="filter-btn" data-filter="side" aria-pressed="false">Sides & Chutneys</button>
+          <button class="filter-btn" data-filter="dessert" aria-pressed="false">Sweets</button>
+          <button class="filter-btn" data-filter="drink" aria-pressed="false">Drinks</button>
+<!-- /BUILD:filters -->
+        </div>
 
-          <article class="recipe-card reveal" style="--reveal-delay:0.0s" data-category="curry">
-            <div class="recipe-thumb" style="background:linear-gradient(160deg,#f6d9a8,#e0a831);"><span>🍛</span></div>
+        <details class="advanced-filters">
+          <summary>More filters</summary>
+          <div class="adv-grid">
+            <div class="adv-group">
+              <span class="adv-label">Diet</span>
+              <label class="chk"><input type="checkbox" data-diet="vegan" /> Vegan</label>
+              <label class="chk"><input type="checkbox" data-diet="gf" /> Gluten free</label>
+              <label class="chk"><input type="checkbox" data-diet="jain" /> Jain-friendly</label>
+            </div>
+            <div class="adv-group">
+              <span class="adv-label">Spice</span>
+              <label class="chk"><input type="checkbox" data-spice="mild" /> Mild</label>
+              <label class="chk"><input type="checkbox" data-spice="medium" /> Medium</label>
+              <label class="chk"><input type="checkbox" data-spice="sweet" /> Sweet</label>
+            </div>
+            <div class="adv-group">
+              <span class="adv-label">Max total time: <output id="time-output">any</output></span>
+              <input type="range" id="time-filter" min="15" max="90" step="5" value="90" />
+            </div>
+          </div>
+          <button class="btn btn-outline reset-filters">Reset all filters</button>
+        </details>
+
+<!-- BUILD:count -->
+        <p class="result-count"><span data-result-count>28</span> recipes</p>
+<!-- /BUILD:count -->
+
+        <div class="recipe-grid" id="recipe-grid">
+<!-- BUILD:grid -->
+          <article class="recipe-card reveal" data-category="curry" data-spice="medium" data-time="35" data-vegan="false" data-gf="true" data-jain="true" data-slug="hing-tempered-dal-tadka" data-search="hing-tempered dal tadka curries &amp; dals creamy yellow lentils finished with a sizzling asafoetida and cumin tempering. split pigeon peas (toor dal), rinsed water ground turmeric ghee (or oil for vegan) cumin seeds asafoetida (hing) fresh ginger, grated green chili, slit lengthwise tomato, finely chopped red chili powder salt, to taste fresh coriander, chopped">
+            <a class="recipe-card-link" href="recipes/hing-tempered-dal-tadka.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#f6d9a8,#e0a831);"><span>🍛</span></div>
+            </a>
             <div class="recipe-body">
-              <div class="recipe-tags"><span class="tag">Dinner</span><span class="tag spice">Medium spice</span></div>
-              <h3>Hing-Tempered Dal Tadka</h3>
+              <div class="recipe-tags">
+                <span class="tag">Curries &amp; Dals</span>
+                <span class="tag spice">medium</span>
+              </div>
+              <h3><a href="recipes/hing-tempered-dal-tadka.html">Hing-Tempered Dal Tadka</a></h3>
               <div class="recipe-meta"><span>⏱ 35 min</span><span>🍽 Serves 4</span></div>
               <p>Creamy yellow lentils finished with a sizzling asafoetida and cumin tempering.</p>
-              <details class="recipe-details">
-                <summary>Ingredients &amp; steps</summary>
-                <h4>Ingredients</h4>
-                <ul>
-                  <li>1 cup split yellow lentils (toor dal)</li>
-                  <li>1 tsp ghee or oil</li>
-                  <li>1/2 tsp cumin seeds</li>
-                  <li>Pinch of asafoetida (hing)</li>
-                  <li>1 tsp grated ginger</li>
-                  <li>1 tomato, chopped</li>
-                  <li>1/2 tsp turmeric, chili powder to taste</li>
-                  <li>Fresh coriander, salt</li>
-                </ul>
-                <h4>Steps</h4>
-                <ol>
-                  <li>Pressure-cook lentils with turmeric and salt until soft.</li>
-                  <li>Heat ghee, add cumin seeds and asafoetida until fragrant.</li>
-                  <li>Add ginger and tomato; cook until soft.</li>
-                  <li>Stir the tempering into the dal, simmer 5 minutes, and top with coriander.</li>
-                </ol>
-              </details>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Gluten free">GF</span><span class="diet-badge" title="Jain-friendly">Jain</span></div>
+                <button class="save-btn" data-slug="hing-tempered-dal-tadka" aria-label="Save Hing-Tempered Dal Tadka" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
             </div>
           </article>
-
-          <article class="recipe-card reveal" style="--reveal-delay:0.1s" data-category="curry">
-            <div class="recipe-thumb" style="background:linear-gradient(160deg,#cfe0b8,#7c8f6e);"><span>🥗</span></div>
+          <article class="recipe-card reveal" data-category="curry" data-spice="mild" data-time="50" data-vegan="false" data-gf="true" data-jain="true" data-slug="jain-vegetable-kofta-curry" data-search="jain vegetable kofta curry curries &amp; dals bottle gourd dumplings simmered in a silky tomato-cashew gravy. bottle gourd (lauki), grated and squeezed dry chickpea flour (besan) garam masala oil, for shallow frying raw cashews, soaked 20 minutes tomatoes, pureed ghee fresh ginger, grated ground coriander ground turmeric asafoetida (hing) cream or thick yogurt salt, to taste">
+            <a class="recipe-card-link" href="recipes/jain-vegetable-kofta-curry.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#cfe0b8,#7c8f6e);"><span>🥗</span></div>
+            </a>
             <div class="recipe-body">
-              <div class="recipe-tags"><span class="tag">Lunch</span><span class="tag spice">Mild</span></div>
-              <h3>Jain Vegetable Kofta Curry</h3>
+              <div class="recipe-tags">
+                <span class="tag">Curries &amp; Dals</span>
+                <span class="tag spice">mild</span>
+              </div>
+              <h3><a href="recipes/jain-vegetable-kofta-curry.html">Jain Vegetable Kofta Curry</a></h3>
               <div class="recipe-meta"><span>⏱ 50 min</span><span>🍽 Serves 4</span></div>
-              <p>Root-vegetable dumplings simmered in a creamy tomato-cashew gravy.</p>
-              <details class="recipe-details">
-                <summary>Ingredients &amp; steps</summary>
-                <h4>Ingredients</h4>
-                <ul>
-                  <li>2 cups grated raw banana &amp; bottle gourd (no potato)</li>
-                  <li>2 tbsp chickpea flour</li>
-                  <li>2 tomatoes, pureed</li>
-                  <li>10 cashews, soaked and blended</li>
-                  <li>1 tsp ginger paste, 1/2 tsp garam masala</li>
-                  <li>Oil for shallow-frying, salt, cilantro</li>
-                </ul>
-                <h4>Steps</h4>
-                <ol>
-                  <li>Mix grated vegetables with chickpea flour and salt; shape into small balls and shallow-fry until golden.</li>
-                  <li>Simmer tomato puree with cashew paste, ginger, and garam masala for 10 minutes.</li>
-                  <li>Add koftas just before serving so they stay tender; garnish with cilantro.</li>
-                </ol>
-              </details>
+              <p>Bottle gourd dumplings simmered in a silky tomato-cashew gravy.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Gluten free">GF</span><span class="diet-badge" title="Jain-friendly">Jain</span></div>
+                <button class="save-btn" data-slug="jain-vegetable-kofta-curry" aria-label="Save Jain Vegetable Kofta Curry" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
             </div>
           </article>
-
-          <article class="recipe-card reveal" style="--reveal-delay:0.2s" data-category="curry">
-            <div class="recipe-thumb" style="background:linear-gradient(160deg,#f3b79a,#c96f4a);"><span>🍲</span></div>
+          <article class="recipe-card reveal" data-category="curry" data-spice="mild" data-time="45" data-vegan="false" data-gf="true" data-jain="true" data-slug="no-onion-paneer-butter-masala" data-search="no-onion paneer butter masala curries &amp; dals the restaurant classic rebuilt on tomato, cashew, and butter — no allium at all. paneer, cubed ripe tomatoes, quartered raw cashews butter fresh ginger, grated asafoetida (hing) kashmiri red chili powder garam masala dried fenugreek leaves (kasuri methi), crushed sugar heavy cream salt, to taste">
+            <a class="recipe-card-link" href="recipes/no-onion-paneer-butter-masala.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#f3b79a,#c96f4a);"><span>🧀</span></div>
+            </a>
             <div class="recipe-body">
-              <div class="recipe-tags"><span class="tag">Comfort</span><span class="tag spice">Mild</span></div>
-              <h3>Ginger-Cumin Vegetable Stew</h3>
-              <div class="recipe-meta"><span>⏱ 40 min</span><span>🍽 Serves 4</span></div>
-              <p>A slow-simmered one-pot stew built on ginger, cumin, and toasted coriander.</p>
-              <details class="recipe-details">
-                <summary>Ingredients &amp; steps</summary>
-                <h4>Ingredients</h4>
-                <ul>
-                  <li>3 cups mixed vegetables (carrot, peas, beans, squash)</li>
-                  <li>1 tbsp oil, 1 tsp cumin seeds</li>
-                  <li>1 tbsp grated ginger</li>
-                  <li>1 tsp ground coriander, 1/2 tsp turmeric</li>
-                  <li>2 cups vegetable broth</li>
-                  <li>Salt, lemon juice, cilantro</li>
-                </ul>
-                <h4>Steps</h4>
-                <ol>
-                  <li>Toast cumin seeds in oil, add ginger and ground spices.</li>
-                  <li>Add vegetables and broth; simmer covered until tender, about 25 minutes.</li>
-                  <li>Finish with lemon juice and cilantro.</li>
-                </ol>
-              </details>
+              <div class="recipe-tags">
+                <span class="tag">Curries &amp; Dals</span>
+                <span class="tag spice">mild</span>
+              </div>
+              <h3><a href="recipes/no-onion-paneer-butter-masala.html">No-Onion Paneer Butter Masala</a></h3>
+              <div class="recipe-meta"><span>⏱ 45 min</span><span>🍽 Serves 4</span></div>
+              <p>The restaurant classic rebuilt on tomato, cashew, and butter — no allium at all.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Gluten free">GF</span><span class="diet-badge" title="Jain-friendly">Jain</span></div>
+                <button class="save-btn" data-slug="no-onion-paneer-butter-masala" aria-label="Save No-Onion Paneer Butter Masala" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
             </div>
           </article>
-
-          <article class="recipe-card reveal" style="--reveal-delay:0.0s" data-category="breakfast">
-            <div class="recipe-thumb" style="background:linear-gradient(160deg,#f0e2b8,#d9b45a);"><span>🫓</span></div>
+          <article class="recipe-card reveal" data-category="curry" data-spice="mild" data-time="30" data-vegan="false" data-gf="true" data-jain="true" data-slug="sattvic-palak-paneer" data-search="sattvic palak paneer curries &amp; dals bright green spinach gravy with soft paneer, kept vivid by a quick blanch. spinach, washed paneer, cubed ghee cumin seeds asafoetida (hing) fresh ginger, grated green chilies tomato, chopped garam masala cream or yogurt salt, to taste">
+            <a class="recipe-card-link" href="recipes/sattvic-palak-paneer.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#cfe0b8,#5f7052);"><span>🥬</span></div>
+            </a>
             <div class="recipe-body">
-              <div class="recipe-tags"><span class="tag">Breakfast</span><span class="tag spice">Mild</span></div>
-              <h3>Cumin-Curry Leaf Vegetable Poha</h3>
-              <div class="recipe-meta"><span>⏱ 20 min</span><span>🍽 Serves 2</span></div>
-              <p>Flattened rice tossed with mustard seeds, curry leaves, peanuts, and peas.</p>
-              <details class="recipe-details">
-                <summary>Ingredients &amp; steps</summary>
-                <h4>Ingredients</h4>
-                <ul>
-                  <li>2 cups thick poha (flattened rice), rinsed</li>
-                  <li>1 tbsp oil, 1/2 tsp mustard seeds</li>
-                  <li>8-10 curry leaves</li>
-                  <li>2 tbsp peanuts</li>
-                  <li>1/2 cup peas, 1 tsp turmeric</li>
-                  <li>Lemon juice, salt, cilantro</li>
-                </ul>
-                <h4>Steps</h4>
-                <ol>
-                  <li>Heat oil, splutter mustard seeds and curry leaves, then toast peanuts.</li>
-                  <li>Add peas and turmeric, cook briefly, then fold in the soaked poha.</li>
-                  <li>Season with salt and lemon juice; garnish with cilantro.</li>
-                </ol>
-              </details>
-            </div>
-          </article>
-
-          <article class="recipe-card reveal" style="--reveal-delay:0.1s" data-category="snack">
-            <div class="recipe-thumb" style="background:linear-gradient(160deg,#e8ddc7,#b7a37e);"><span>🥟</span></div>
-            <div class="recipe-body">
-              <div class="recipe-tags"><span class="tag">Snack</span><span class="tag spice">Medium spice</span></div>
-              <h3>Baked Vegetable Samosas</h3>
-              <div class="recipe-meta"><span>⏱ 45 min</span><span>🍽 Makes 12</span></div>
-              <p>Crisp baked pastry filled with spiced peas, carrots, and potato — no onion filling here.</p>
-              <details class="recipe-details">
-                <summary>Ingredients &amp; steps</summary>
-                <h4>Ingredients</h4>
-                <ul>
-                  <li>12 samosa pastry sheets or wrappers</li>
-                  <li>2 potatoes, boiled and cubed</li>
-                  <li>1/2 cup peas, 1 carrot, diced</li>
-                  <li>1 tsp grated ginger, 1 green chili, chopped</li>
-                  <li>1 tsp garam masala, 1/2 tsp amchur (dry mango powder)</li>
-                  <li>Oil, salt</li>
-                </ul>
-                <h4>Steps</h4>
-                <ol>
-                  <li>Sauté ginger and chili in oil, add carrots and peas until tender.</li>
-                  <li>Fold in potatoes and spices; cool the filling.</li>
-                  <li>Fill and fold pastry into samosas; brush with oil and bake at 400°F (200°C) for 22-25 minutes until golden.</li>
-                </ol>
-              </details>
-            </div>
-          </article>
-
-          <article class="recipe-card reveal" style="--reveal-delay:0.2s" data-category="rice">
-            <div class="recipe-thumb" style="background:linear-gradient(160deg,#d9e4c3,#8fa876);"><span>🍚</span></div>
-            <div class="recipe-body">
-              <div class="recipe-tags"><span class="tag">Dinner</span><span class="tag spice">Mild</span></div>
-              <h3>Jeera Vegetable Pulao</h3>
+              <div class="recipe-tags">
+                <span class="tag">Curries &amp; Dals</span>
+                <span class="tag spice">mild</span>
+              </div>
+              <h3><a href="recipes/sattvic-palak-paneer.html">Sattvic Palak Paneer</a></h3>
               <div class="recipe-meta"><span>⏱ 30 min</span><span>🍽 Serves 4</span></div>
-              <p>Fragrant basmati rice simmered with whole spices, cumin, and garden vegetables.</p>
-              <details class="recipe-details">
-                <summary>Ingredients &amp; steps</summary>
-                <h4>Ingredients</h4>
-                <ul>
-                  <li>1.5 cups basmati rice, rinsed</li>
-                  <li>1 tbsp ghee, 1 tsp cumin seeds</li>
-                  <li>1 bay leaf, 2 cloves, 1 cinnamon stick</li>
-                  <li>1 cup mixed vegetables (beans, carrot, peas)</li>
-                  <li>2.5 cups water, salt</li>
-                </ul>
-                <h4>Steps</h4>
-                <ol>
-                  <li>Toast whole spices in ghee until fragrant.</li>
-                  <li>Add vegetables and rice; stir to coat.</li>
-                  <li>Add water and salt, bring to a boil, then cover and simmer 15 minutes until rice is fluffy.</li>
-                </ol>
-              </details>
+              <p>Bright green spinach gravy with soft paneer, kept vivid by a quick blanch.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Gluten free">GF</span><span class="diet-badge" title="Jain-friendly">Jain</span></div>
+                <button class="save-btn" data-slug="sattvic-palak-paneer" aria-label="Save Sattvic Palak Paneer" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
             </div>
           </article>
-
-          <article class="recipe-card reveal" style="--reveal-delay:0.0s" data-category="dessert">
-            <div class="recipe-thumb" style="background:linear-gradient(160deg,#f5c9c9,#d98a8a);"><span>🍮</span></div>
+          <article class="recipe-card reveal" data-category="curry" data-spice="medium" data-time="45" data-vegan="true" data-gf="true" data-jain="true" data-slug="no-onion-chana-masala" data-search="no-onion chana masala curries &amp; dals tangy chickpea curry built on tomato, amchur, and toasted whole spices. cooked chickpeas (or 1 can, drained) oil cumin seeds asafoetida (hing) fresh ginger, julienned tomatoes, pureed ground coriander amchur (dried mango powder) chana masala spice blend red chili powder salt, to taste fresh coriander and lemon, to finish">
+            <a class="recipe-card-link" href="recipes/no-onion-chana-masala.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#e8ddc7,#b7a37e);"><span>🫘</span></div>
+            </a>
             <div class="recipe-body">
-              <div class="recipe-tags"><span class="tag">Dessert</span><span class="tag spice">Sweet</span></div>
-              <h3>Cardamom Rice Kheer</h3>
+              <div class="recipe-tags">
+                <span class="tag">Curries &amp; Dals</span>
+                <span class="tag spice">medium</span>
+              </div>
+              <h3><a href="recipes/no-onion-chana-masala.html">No-Onion Chana Masala</a></h3>
+              <div class="recipe-meta"><span>⏱ 45 min</span><span>🍽 Serves 4</span></div>
+              <p>Tangy chickpea curry built on tomato, amchur, and toasted whole spices.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Vegan">Vegan</span><span class="diet-badge" title="Gluten free">GF</span><span class="diet-badge" title="Jain-friendly">Jain</span></div>
+                <button class="save-btn" data-slug="no-onion-chana-masala" aria-label="Save No-Onion Chana Masala" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="recipe-card reveal" data-category="curry" data-spice="medium" data-time="55" data-vegan="true" data-gf="true" data-jain="true" data-slug="no-onion-rajma" data-search="no-onion rajma (kidney bean curry) curries &amp; dals slow-simmered kidney beans in a thick, warming tomato-ginger gravy. dried kidney beans, soaked overnight oil or ghee cumin seeds asafoetida (hing) fresh ginger, grated tomatoes, pureed ground coriander garam masala ground turmeric red chili powder salt, to taste">
+            <a class="recipe-card-link" href="recipes/no-onion-rajma.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#f3b79a,#a8552f);"><span>🍲</span></div>
+            </a>
+            <div class="recipe-body">
+              <div class="recipe-tags">
+                <span class="tag">Curries &amp; Dals</span>
+                <span class="tag spice">medium</span>
+              </div>
+              <h3><a href="recipes/no-onion-rajma.html">No-Onion Rajma (Kidney Bean Curry)</a></h3>
+              <div class="recipe-meta"><span>⏱ 55 min</span><span>🍽 Serves 4</span></div>
+              <p>Slow-simmered kidney beans in a thick, warming tomato-ginger gravy.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Vegan">Vegan</span><span class="diet-badge" title="Gluten free">GF</span><span class="diet-badge" title="Jain-friendly">Jain</span></div>
+                <button class="save-btn" data-slug="no-onion-rajma" aria-label="Save No-Onion Rajma (Kidney Bean Curry)" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="recipe-card reveal" data-category="curry" data-spice="medium" data-time="45" data-vegan="true" data-gf="true" data-jain="false" data-slug="no-onion-sambar" data-search="no-onion sambar curries &amp; dals tamarind-soured lentil stew loaded with vegetables and curry leaves. split pigeon peas (toor dal) mixed vegetables (carrot, drumstick, pumpkin, okra) tamarind paste sambar powder ground turmeric sesame or coconut oil mustard seeds asafoetida (hing) curry leaves dried red chilies salt and fresh coriander">
+            <a class="recipe-card-link" href="recipes/no-onion-sambar.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#f6e0b0,#e0a831);"><span>🥣</span></div>
+            </a>
+            <div class="recipe-body">
+              <div class="recipe-tags">
+                <span class="tag">Curries &amp; Dals</span>
+                <span class="tag spice">medium</span>
+              </div>
+              <h3><a href="recipes/no-onion-sambar.html">No-Onion Sambar</a></h3>
               <div class="recipe-meta"><span>⏱ 45 min</span><span>🍽 Serves 6</span></div>
-              <p>A slow-simmered milk rice pudding scented with cardamom, saffron, and pistachio.</p>
-              <details class="recipe-details">
-                <summary>Ingredients &amp; steps</summary>
-                <h4>Ingredients</h4>
-                <ul>
-                  <li>1/2 cup basmati rice</li>
-                  <li>4 cups whole milk</li>
-                  <li>1/3 cup sugar</li>
-                  <li>4 green cardamom pods, crushed</li>
-                  <li>Pinch of saffron, chopped pistachios</li>
-                </ul>
-                <h4>Steps</h4>
-                <ol>
-                  <li>Simmer rice in milk over low heat, stirring often, until thickened (about 30 minutes).</li>
-                  <li>Stir in sugar, cardamom, and saffron; cook 5 more minutes.</li>
-                  <li>Chill or serve warm, topped with pistachios.</li>
-                </ol>
-              </details>
+              <p>Tamarind-soured lentil stew loaded with vegetables and curry leaves.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Vegan">Vegan</span><span class="diet-badge" title="Gluten free">GF</span></div>
+                <button class="save-btn" data-slug="no-onion-sambar" aria-label="Save No-Onion Sambar" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
             </div>
           </article>
-
-          <article class="recipe-card reveal" style="--reveal-delay:0.1s" data-category="snack">
-            <div class="recipe-thumb" style="background:linear-gradient(160deg,#f6e0b0,#e0a831);"><span>🥙</span></div>
+          <article class="recipe-card reveal" data-category="breakfast" data-spice="mild" data-time="20" data-vegan="true" data-gf="true" data-jain="true" data-slug="cumin-curry-leaf-poha" data-search="cumin &amp; curry leaf poha breakfast flattened rice tossed with mustard seeds, peanuts, peas, and lemon. thick flattened rice (poha) oil mustard seeds cumin seeds raw peanuts curry leaves green chili, chopped green peas ground turmeric sugar salt, lemon juice, fresh coriander">
+            <a class="recipe-card-link" href="recipes/cumin-curry-leaf-poha.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#f0e2b8,#d9b45a);"><span>🫓</span></div>
+            </a>
             <div class="recipe-body">
-              <div class="recipe-tags"><span class="tag">Snack</span><span class="tag spice">Medium spice</span></div>
-              <h3>Chickpea Flour Vegetable Uttapam</h3>
-              <div class="recipe-meta"><span>⏱ 25 min</span><span>🍽 Serves 3</span></div>
-              <p>Savory chickpea-flour pancakes studded with grated carrot, cabbage, and cilantro.</p>
-              <details class="recipe-details">
-                <summary>Ingredients &amp; steps</summary>
-                <h4>Ingredients</h4>
-                <ul>
-                  <li>1.5 cups chickpea flour (besan)</li>
-                  <li>Water to make a thick batter</li>
-                  <li>1/2 cup grated carrot &amp; cabbage</li>
-                  <li>1 green chili, chopped, 1/2 tsp cumin seeds</li>
-                  <li>Salt, oil for cooking</li>
-                </ul>
-                <h4>Steps</h4>
-                <ol>
-                  <li>Whisk chickpea flour with water into a smooth, thick batter; season with salt and cumin.</li>
-                  <li>Stir in vegetables and chili.</li>
-                  <li>Pour onto a hot, oiled griddle and cook both sides until golden and crisp at the edges.</li>
-                </ol>
-              </details>
+              <div class="recipe-tags">
+                <span class="tag">Breakfast</span>
+                <span class="tag spice">mild</span>
+              </div>
+              <h3><a href="recipes/cumin-curry-leaf-poha.html">Cumin &amp; Curry Leaf Poha</a></h3>
+              <div class="recipe-meta"><span>⏱ 20 min</span><span>🍽 Serves 2</span></div>
+              <p>Flattened rice tossed with mustard seeds, peanuts, peas, and lemon.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Vegan">Vegan</span><span class="diet-badge" title="Gluten free">GF</span><span class="diet-badge" title="Jain-friendly">Jain</span></div>
+                <button class="save-btn" data-slug="cumin-curry-leaf-poha" aria-label="Save Cumin &amp; Curry Leaf Poha" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
             </div>
           </article>
+          <article class="recipe-card reveal" data-category="breakfast" data-spice="mild" data-time="25" data-vegan="true" data-gf="false" data-jain="true" data-slug="vegetable-rava-upma" data-search="vegetable rava upma breakfast fluffy semolina with carrots, peas, ginger, and a mustard-seed tempering. coarse semolina (rava/sooji) water ghee or oil mustard seeds split black gram (urad dal) curry leaves fresh ginger, minced green chili, chopped diced carrot and peas salt, lemon, coriander">
+            <a class="recipe-card-link" href="recipes/vegetable-rava-upma.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#e8ddc7,#b7a37e);"><span>🍚</span></div>
+            </a>
+            <div class="recipe-body">
+              <div class="recipe-tags">
+                <span class="tag">Breakfast</span>
+                <span class="tag spice">mild</span>
+              </div>
+              <h3><a href="recipes/vegetable-rava-upma.html">Vegetable Rava Upma</a></h3>
+              <div class="recipe-meta"><span>⏱ 25 min</span><span>🍽 Serves 3</span></div>
+              <p>Fluffy semolina with carrots, peas, ginger, and a mustard-seed tempering.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Vegan">Vegan</span><span class="diet-badge" title="Jain-friendly">Jain</span></div>
+                <button class="save-btn" data-slug="vegetable-rava-upma" aria-label="Save Vegetable Rava Upma" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="recipe-card reveal" data-category="breakfast" data-spice="medium" data-time="25" data-vegan="true" data-gf="true" data-jain="true" data-slug="besan-chilla" data-search="besan chilla (chickpea pancakes) breakfast savory chickpea-flour pancakes studded with grated vegetables. chickpea flour (besan) water, approximately grated carrot and cabbage fresh ginger, grated green chili, finely chopped carom seeds (ajwain) asafoetida (hing) ground turmeric salt and oil for cooking">
+            <a class="recipe-card-link" href="recipes/besan-chilla.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#f6e0b0,#e0a831);"><span>🥙</span></div>
+            </a>
+            <div class="recipe-body">
+              <div class="recipe-tags">
+                <span class="tag">Breakfast</span>
+                <span class="tag spice">medium</span>
+              </div>
+              <h3><a href="recipes/besan-chilla.html">Besan Chilla (Chickpea Pancakes)</a></h3>
+              <div class="recipe-meta"><span>⏱ 25 min</span><span>🍽 Serves 3</span></div>
+              <p>Savory chickpea-flour pancakes studded with grated vegetables.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Vegan">Vegan</span><span class="diet-badge" title="Gluten free">GF</span><span class="diet-badge" title="Jain-friendly">Jain</span></div>
+                <button class="save-btn" data-slug="besan-chilla" aria-label="Save Besan Chilla (Chickpea Pancakes)" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="recipe-card reveal" data-category="breakfast" data-spice="mild" data-time="40" data-vegan="true" data-gf="false" data-jain="true" data-slug="rava-dosa" data-search="crispy rava dosa breakfast lacy, shatteringly crisp semolina crepes — no fermentation needed. fine semolina (rava) rice flour all-purpose flour water cumin seeds black peppercorns, crushed curry leaves, torn fresh ginger, minced salt and oil">
+            <a class="recipe-card-link" href="recipes/rava-dosa.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#f0e2b8,#d9b45a);"><span>🥞</span></div>
+            </a>
+            <div class="recipe-body">
+              <div class="recipe-tags">
+                <span class="tag">Breakfast</span>
+                <span class="tag spice">mild</span>
+              </div>
+              <h3><a href="recipes/rava-dosa.html">Crispy Rava Dosa</a></h3>
+              <div class="recipe-meta"><span>⏱ 40 min</span><span>🍽 Serves 4</span></div>
+              <p>Lacy, shatteringly crisp semolina crepes — no fermentation needed.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Vegan">Vegan</span><span class="diet-badge" title="Jain-friendly">Jain</span></div>
+                <button class="save-btn" data-slug="rava-dosa" aria-label="Save Crispy Rava Dosa" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="recipe-card reveal" data-category="rice" data-spice="mild" data-time="30" data-vegan="false" data-gf="true" data-jain="true" data-slug="jeera-vegetable-pulao" data-search="jeera vegetable pulao rice &amp; grains fragrant basmati simmered with whole spices, cumin, and garden vegetables. basmati rice, rinsed and soaked 20 minutes water ghee cumin seeds bay leaf cloves cinnamon stick green cardamom pods mixed vegetables (beans, carrot, peas) fresh ginger, julienned salt, to taste">
+            <a class="recipe-card-link" href="recipes/jeera-vegetable-pulao.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#d9e4c3,#8fa876);"><span>🍚</span></div>
+            </a>
+            <div class="recipe-body">
+              <div class="recipe-tags">
+                <span class="tag">Rice &amp; Grains</span>
+                <span class="tag spice">mild</span>
+              </div>
+              <h3><a href="recipes/jeera-vegetable-pulao.html">Jeera Vegetable Pulao</a></h3>
+              <div class="recipe-meta"><span>⏱ 30 min</span><span>🍽 Serves 4</span></div>
+              <p>Fragrant basmati simmered with whole spices, cumin, and garden vegetables.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Gluten free">GF</span><span class="diet-badge" title="Jain-friendly">Jain</span></div>
+                <button class="save-btn" data-slug="jeera-vegetable-pulao" aria-label="Save Jeera Vegetable Pulao" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="recipe-card reveal" data-category="rice" data-spice="mild" data-time="20" data-vegan="true" data-gf="true" data-jain="true" data-slug="lemon-rice" data-search="lemon rice (chitranna) rice &amp; grains leftover rice transformed with turmeric, peanuts, curry leaves, and lemon. cooked rice, cooled and separated sesame or coconut oil mustard seeds split chickpeas (chana dal) split black gram (urad dal) raw peanuts curry leaves dried red chilies ground turmeric asafoetida (hing) lemon juice salt, to taste">
+            <a class="recipe-card-link" href="recipes/lemon-rice.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#f6e0b0,#e0a831);"><span>🍋</span></div>
+            </a>
+            <div class="recipe-body">
+              <div class="recipe-tags">
+                <span class="tag">Rice &amp; Grains</span>
+                <span class="tag spice">mild</span>
+              </div>
+              <h3><a href="recipes/lemon-rice.html">Lemon Rice (Chitranna)</a></h3>
+              <div class="recipe-meta"><span>⏱ 20 min</span><span>🍽 Serves 4</span></div>
+              <p>Leftover rice transformed with turmeric, peanuts, curry leaves, and lemon.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Vegan">Vegan</span><span class="diet-badge" title="Gluten free">GF</span><span class="diet-badge" title="Jain-friendly">Jain</span></div>
+                <button class="save-btn" data-slug="lemon-rice" aria-label="Save Lemon Rice (Chitranna)" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="recipe-card reveal" data-category="rice" data-spice="mild" data-time="20" data-vegan="false" data-gf="true" data-jain="true" data-slug="curd-rice" data-search="curd rice (thayir sadam) rice &amp; grains cooling yogurt rice with a mustard tempering, ginger, and pomegranate. cooked rice, slightly overcooked and mashed thick yogurt, whisked milk oil or ghee mustard seeds split black gram (urad dal) curry leaves fresh ginger, minced green chili, chopped asafoetida (hing) salt, pomegranate seeds, coriander">
+            <a class="recipe-card-link" href="recipes/curd-rice.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#e8ddc7,#b7a37e);"><span>🥛</span></div>
+            </a>
+            <div class="recipe-body">
+              <div class="recipe-tags">
+                <span class="tag">Rice &amp; Grains</span>
+                <span class="tag spice">mild</span>
+              </div>
+              <h3><a href="recipes/curd-rice.html">Curd Rice (Thayir Sadam)</a></h3>
+              <div class="recipe-meta"><span>⏱ 20 min</span><span>🍽 Serves 4</span></div>
+              <p>Cooling yogurt rice with a mustard tempering, ginger, and pomegranate.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Gluten free">GF</span><span class="diet-badge" title="Jain-friendly">Jain</span></div>
+                <button class="save-btn" data-slug="curd-rice" aria-label="Save Curd Rice (Thayir Sadam)" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="recipe-card reveal" data-category="snack" data-spice="medium" data-time="50" data-vegan="true" data-gf="false" data-jain="false" data-slug="baked-vegetable-samosas" data-search="baked vegetable samosas snacks crisp baked pastry filled with spiced peas, carrot, and potato. samosa pastry sheets potatoes, boiled and roughly crushed green peas fresh ginger, minced green chili, chopped cumin seeds amchur (dried mango powder) garam masala coriander seeds, crushed oil, plus more for brushing salt and fresh coriander">
+            <a class="recipe-card-link" href="recipes/baked-vegetable-samosas.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#e8ddc7,#b7a37e);"><span>🥟</span></div>
+            </a>
+            <div class="recipe-body">
+              <div class="recipe-tags">
+                <span class="tag">Snacks</span>
+                <span class="tag spice">medium</span>
+              </div>
+              <h3><a href="recipes/baked-vegetable-samosas.html">Baked Vegetable Samosas</a></h3>
+              <div class="recipe-meta"><span>⏱ 50 min</span><span>🍽 Serves 6</span></div>
+              <p>Crisp baked pastry filled with spiced peas, carrot, and potato.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Vegan">Vegan</span></div>
+                <button class="save-btn" data-slug="baked-vegetable-samosas" aria-label="Save Baked Vegetable Samosas" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="recipe-card reveal" data-category="snack" data-spice="medium" data-time="30" data-vegan="true" data-gf="true" data-jain="true" data-slug="masala-peanuts" data-search="crunchy masala peanuts snacks chickpea-flour-coated peanuts baked until shatteringly crisp. raw peanuts chickpea flour (besan) rice flour red chili powder chaat masala amchur (dried mango powder) asafoetida (hing) oil salt and a little water">
+            <a class="recipe-card-link" href="recipes/masala-peanuts.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#f6d9a8,#c96f4a);"><span>🥜</span></div>
+            </a>
+            <div class="recipe-body">
+              <div class="recipe-tags">
+                <span class="tag">Snacks</span>
+                <span class="tag spice">medium</span>
+              </div>
+              <h3><a href="recipes/masala-peanuts.html">Crunchy Masala Peanuts</a></h3>
+              <div class="recipe-meta"><span>⏱ 30 min</span><span>🍽 Serves 6</span></div>
+              <p>Chickpea-flour-coated peanuts baked until shatteringly crisp.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Vegan">Vegan</span><span class="diet-badge" title="Gluten free">GF</span><span class="diet-badge" title="Jain-friendly">Jain</span></div>
+                <button class="save-btn" data-slug="masala-peanuts" aria-label="Save Crunchy Masala Peanuts" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="recipe-card reveal" data-category="snack" data-spice="mild" data-time="30" data-vegan="true" data-gf="true" data-jain="false" data-slug="sabudana-khichdi" data-search="sabudana khichdi snacks pearly tapioca tossed with crushed peanuts, potato, and green chili. sago pearls (sabudana), soaked 4 hours and drained roasted peanuts, coarsely ground potato, diced small ghee or oil cumin seeds green chilies, chopped sugar salt, lemon juice, coriander">
+            <a class="recipe-card-link" href="recipes/sabudana-khichdi.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#e8ddc7,#b7a37e);"><span>⚪</span></div>
+            </a>
+            <div class="recipe-body">
+              <div class="recipe-tags">
+                <span class="tag">Snacks</span>
+                <span class="tag spice">mild</span>
+              </div>
+              <h3><a href="recipes/sabudana-khichdi.html">Sabudana Khichdi</a></h3>
+              <div class="recipe-meta"><span>⏱ 30 min</span><span>🍽 Serves 3</span></div>
+              <p>Pearly tapioca tossed with crushed peanuts, potato, and green chili.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Vegan">Vegan</span><span class="diet-badge" title="Gluten free">GF</span></div>
+                <button class="save-btn" data-slug="sabudana-khichdi" aria-label="Save Sabudana Khichdi" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="recipe-card reveal" data-category="bread" data-spice="medium" data-time="40" data-vegan="true" data-gf="false" data-jain="true" data-slug="methi-thepla" data-search="methi thepla breads soft fenugreek flatbreads that keep for days — the classic travel food. whole wheat flour fresh fenugreek leaves (methi), chopped yogurt (or water for vegan) oil, plus more for cooking fresh ginger, grated carom seeds (ajwain) ground turmeric red chili powder sesame seeds salt, to taste">
+            <a class="recipe-card-link" href="recipes/methi-thepla.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#d9e4c3,#8fa876);"><span>🫓</span></div>
+            </a>
+            <div class="recipe-body">
+              <div class="recipe-tags">
+                <span class="tag">Breads</span>
+                <span class="tag spice">medium</span>
+              </div>
+              <h3><a href="recipes/methi-thepla.html">Methi Thepla</a></h3>
+              <div class="recipe-meta"><span>⏱ 40 min</span><span>🍽 Serves 4</span></div>
+              <p>Soft fenugreek flatbreads that keep for days — the classic travel food.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Vegan">Vegan</span><span class="diet-badge" title="Jain-friendly">Jain</span></div>
+                <button class="save-btn" data-slug="methi-thepla" aria-label="Save Methi Thepla" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="recipe-card reveal" data-category="bread" data-spice="medium" data-time="40" data-vegan="true" data-gf="false" data-jain="true" data-slug="ginger-chili-paratha" data-search="ginger &amp; green chili paratha breads flaky layered flatbread with a bright ginger-chili filling. whole wheat flour warm water, approximately fresh ginger, finely minced green chilies, minced asafoetida (hing) carom seeds (ajwain) ghee or oil, for layering and cooking salt, to taste">
+            <a class="recipe-card-link" href="recipes/ginger-chili-paratha.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#f0e2b8,#d9b45a);"><span>🥖</span></div>
+            </a>
+            <div class="recipe-body">
+              <div class="recipe-tags">
+                <span class="tag">Breads</span>
+                <span class="tag spice">medium</span>
+              </div>
+              <h3><a href="recipes/ginger-chili-paratha.html">Ginger &amp; Green Chili Paratha</a></h3>
+              <div class="recipe-meta"><span>⏱ 40 min</span><span>🍽 Serves 4</span></div>
+              <p>Flaky layered flatbread with a bright ginger-chili filling.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Vegan">Vegan</span><span class="diet-badge" title="Jain-friendly">Jain</span></div>
+                <button class="save-btn" data-slug="ginger-chili-paratha" aria-label="Save Ginger &amp; Green Chili Paratha" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="recipe-card reveal" data-category="side" data-spice="mild" data-time="15" data-vegan="true" data-gf="true" data-jain="true" data-slug="coconut-chutney" data-search="fresh coconut chutney sides &amp; chutneys the essential dosa companion — coconut, roasted gram, ginger, and curry leaves. fresh grated coconut roasted gram dal (pottukadalai) fresh ginger green chilies water, or as needed coconut oil mustard seeds split black gram (urad dal) curry leaves dried red chili salt, to taste">
+            <a class="recipe-card-link" href="recipes/coconut-chutney.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#e8ddc7,#b7a37e);"><span>🥥</span></div>
+            </a>
+            <div class="recipe-body">
+              <div class="recipe-tags">
+                <span class="tag">Sides &amp; Chutneys</span>
+                <span class="tag spice">mild</span>
+              </div>
+              <h3><a href="recipes/coconut-chutney.html">Fresh Coconut Chutney</a></h3>
+              <div class="recipe-meta"><span>⏱ 15 min</span><span>🍽 Serves 4</span></div>
+              <p>The essential dosa companion — coconut, roasted gram, ginger, and curry leaves.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Vegan">Vegan</span><span class="diet-badge" title="Gluten free">GF</span><span class="diet-badge" title="Jain-friendly">Jain</span></div>
+                <button class="save-btn" data-slug="coconut-chutney" aria-label="Save Fresh Coconut Chutney" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="recipe-card reveal" data-category="side" data-spice="medium" data-time="30" data-vegan="true" data-gf="true" data-jain="true" data-slug="tomato-ginger-chutney" data-search="tomato &amp; ginger chutney sides &amp; chutneys sweet-sour cooked tomato chutney with a deep ginger backbone. tomatoes, chopped sesame oil mustard seeds cumin seeds fenugreek seeds fresh ginger, minced asafoetida (hing) red chili powder jaggery or sugar curry leaves salt, to taste">
+            <a class="recipe-card-link" href="recipes/tomato-ginger-chutney.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#f3b79a,#c96f4a);"><span>🍅</span></div>
+            </a>
+            <div class="recipe-body">
+              <div class="recipe-tags">
+                <span class="tag">Sides &amp; Chutneys</span>
+                <span class="tag spice">medium</span>
+              </div>
+              <h3><a href="recipes/tomato-ginger-chutney.html">Tomato &amp; Ginger Chutney</a></h3>
+              <div class="recipe-meta"><span>⏱ 30 min</span><span>🍽 Serves 6</span></div>
+              <p>Sweet-sour cooked tomato chutney with a deep ginger backbone.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Vegan">Vegan</span><span class="diet-badge" title="Gluten free">GF</span><span class="diet-badge" title="Jain-friendly">Jain</span></div>
+                <button class="save-btn" data-slug="tomato-ginger-chutney" aria-label="Save Tomato &amp; Ginger Chutney" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="recipe-card reveal" data-category="side" data-spice="mild" data-time="25" data-vegan="true" data-gf="true" data-jain="true" data-slug="cabbage-thoran" data-search="cabbage thoran sides &amp; chutneys keralan stir-fried cabbage with coconut, curry leaves, and mustard seeds. cabbage, finely shredded fresh grated coconut green chilies cumin seeds coconut oil mustard seeds curry leaves ground turmeric salt, to taste">
+            <a class="recipe-card-link" href="recipes/cabbage-thoran.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#cfe0b8,#7c8f6e);"><span>🥬</span></div>
+            </a>
+            <div class="recipe-body">
+              <div class="recipe-tags">
+                <span class="tag">Sides &amp; Chutneys</span>
+                <span class="tag spice">mild</span>
+              </div>
+              <h3><a href="recipes/cabbage-thoran.html">Cabbage Thoran</a></h3>
+              <div class="recipe-meta"><span>⏱ 25 min</span><span>🍽 Serves 4</span></div>
+              <p>Keralan stir-fried cabbage with coconut, curry leaves, and mustard seeds.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Vegan">Vegan</span><span class="diet-badge" title="Gluten free">GF</span><span class="diet-badge" title="Jain-friendly">Jain</span></div>
+                <button class="save-btn" data-slug="cabbage-thoran" aria-label="Save Cabbage Thoran" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="recipe-card reveal" data-category="dessert" data-spice="sweet" data-time="50" data-vegan="false" data-gf="true" data-jain="true" data-slug="cardamom-rice-kheer" data-search="cardamom rice kheer sweets slow-simmered milk pudding scented with cardamom, saffron, and pistachio. basmati rice, rinsed whole milk sugar green cardamom pods, crushed generous pinch of saffron pistachios and almonds, slivered ghee">
+            <a class="recipe-card-link" href="recipes/cardamom-rice-kheer.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#f5c9c9,#d98a8a);"><span>🍮</span></div>
+            </a>
+            <div class="recipe-body">
+              <div class="recipe-tags">
+                <span class="tag">Sweets</span>
+                <span class="tag spice">sweet</span>
+              </div>
+              <h3><a href="recipes/cardamom-rice-kheer.html">Cardamom Rice Kheer</a></h3>
+              <div class="recipe-meta"><span>⏱ 50 min</span><span>🍽 Serves 6</span></div>
+              <p>Slow-simmered milk pudding scented with cardamom, saffron, and pistachio.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Gluten free">GF</span><span class="diet-badge" title="Jain-friendly">Jain</span></div>
+                <button class="save-btn" data-slug="cardamom-rice-kheer" aria-label="Save Cardamom Rice Kheer" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="recipe-card reveal" data-category="dessert" data-spice="sweet" data-time="65" data-vegan="false" data-gf="true" data-jain="false" data-slug="gajar-halwa" data-search="gajar halwa (carrot pudding) sweets grated carrots slow-cooked in milk and ghee until jammy and rich. red carrots, grated whole milk sugar ghee green cardamom pods, crushed raisins cashews and almonds, chopped milk powder or khoya (optional)">
+            <a class="recipe-card-link" href="recipes/gajar-halwa.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#f3b79a,#c96f4a);"><span>🥕</span></div>
+            </a>
+            <div class="recipe-body">
+              <div class="recipe-tags">
+                <span class="tag">Sweets</span>
+                <span class="tag spice">sweet</span>
+              </div>
+              <h3><a href="recipes/gajar-halwa.html">Gajar Halwa (Carrot Pudding)</a></h3>
+              <div class="recipe-meta"><span>⏱ 65 min</span><span>🍽 Serves 6</span></div>
+              <p>Grated carrots slow-cooked in milk and ghee until jammy and rich.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Gluten free">GF</span></div>
+                <button class="save-btn" data-slug="gajar-halwa" aria-label="Save Gajar Halwa (Carrot Pudding)" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="recipe-card reveal" data-category="dessert" data-spice="sweet" data-time="35" data-vegan="false" data-gf="true" data-jain="true" data-slug="besan-ladoo" data-search="besan ladoo sweets roasted chickpea flour balls — four ingredients, endless patience. coarse chickpea flour (besan) ghee powdered sugar green cardamom pods, ground pistachios, chopped">
+            <a class="recipe-card-link" href="recipes/besan-ladoo.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#f6d9a8,#e0a831);"><span>🟡</span></div>
+            </a>
+            <div class="recipe-body">
+              <div class="recipe-tags">
+                <span class="tag">Sweets</span>
+                <span class="tag spice">sweet</span>
+              </div>
+              <h3><a href="recipes/besan-ladoo.html">Besan Ladoo</a></h3>
+              <div class="recipe-meta"><span>⏱ 35 min</span><span>🍽 Serves 12</span></div>
+              <p>Roasted chickpea flour balls — four ingredients, endless patience.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Gluten free">GF</span><span class="diet-badge" title="Jain-friendly">Jain</span></div>
+                <button class="save-btn" data-slug="besan-ladoo" aria-label="Save Besan Ladoo" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="recipe-card reveal" data-category="drink" data-spice="mild" data-time="15" data-vegan="false" data-gf="true" data-jain="true" data-slug="masala-chai" data-search="proper masala chai drinks strong, spiced, milky tea made the way it's actually made at home. water whole milk strong black tea leaves (assam) fresh ginger, crushed green cardamom pods, crushed cloves small cinnamon stick sugar, or to taste">
+            <a class="recipe-card-link" href="recipes/masala-chai.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#e8ddc7,#b7a37e);"><span>☕</span></div>
+            </a>
+            <div class="recipe-body">
+              <div class="recipe-tags">
+                <span class="tag">Drinks</span>
+                <span class="tag spice">mild</span>
+              </div>
+              <h3><a href="recipes/masala-chai.html">Proper Masala Chai</a></h3>
+              <div class="recipe-meta"><span>⏱ 15 min</span><span>🍽 Serves 2</span></div>
+              <p>Strong, spiced, milky tea made the way it's actually made at home.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Gluten free">GF</span><span class="diet-badge" title="Jain-friendly">Jain</span></div>
+                <button class="save-btn" data-slug="masala-chai" aria-label="Save Proper Masala Chai" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="recipe-card reveal" data-category="drink" data-spice="sweet" data-time="5" data-vegan="false" data-gf="true" data-jain="true" data-slug="mango-lassi" data-search="mango lassi drinks thick, cooling yogurt and mango drink with a hint of cardamom. ripe mango pulp (or 2 mangoes, peeled) thick plain yogurt, chilled cold milk sugar, or to taste ground cardamom crushed pistachios and saffron, to garnish">
+            <a class="recipe-card-link" href="recipes/mango-lassi.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#f6d9a8,#e0a831);"><span>🥭</span></div>
+            </a>
+            <div class="recipe-body">
+              <div class="recipe-tags">
+                <span class="tag">Drinks</span>
+                <span class="tag spice">sweet</span>
+              </div>
+              <h3><a href="recipes/mango-lassi.html">Mango Lassi</a></h3>
+              <div class="recipe-meta"><span>⏱ 5 min</span><span>🍽 Serves 2</span></div>
+              <p>Thick, cooling yogurt and mango drink with a hint of cardamom.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Gluten free">GF</span><span class="diet-badge" title="Jain-friendly">Jain</span></div>
+                <button class="save-btn" data-slug="mango-lassi" aria-label="Save Mango Lassi" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
+            </div>
+          </article>
+          <article class="recipe-card reveal" data-category="curry" data-spice="mild" data-time="40" data-vegan="true" data-gf="true" data-jain="false" data-slug="ginger-cumin-vegetable-stew" data-search="ginger-cumin vegetable stew curries &amp; dals a gentle one-pot stew leaning on ginger, cumin, and toasted coriander. mixed vegetables (carrot, beans, squash, peas) oil cumin seeds coriander seeds, toasted and crushed fresh ginger, grated asafoetida (hing) ground turmeric vegetable broth or water coconut milk salt, lemon juice, coriander">
+            <a class="recipe-card-link" href="recipes/ginger-cumin-vegetable-stew.html">
+              <div class="recipe-thumb" style="background:linear-gradient(160deg,#f3b79a,#c96f4a);"><span>🍲</span></div>
+            </a>
+            <div class="recipe-body">
+              <div class="recipe-tags">
+                <span class="tag">Curries &amp; Dals</span>
+                <span class="tag spice">mild</span>
+              </div>
+              <h3><a href="recipes/ginger-cumin-vegetable-stew.html">Ginger-Cumin Vegetable Stew</a></h3>
+              <div class="recipe-meta"><span>⏱ 40 min</span><span>🍽 Serves 4</span></div>
+              <p>A gentle one-pot stew leaning on ginger, cumin, and toasted coriander.</p>
+              <div class="recipe-foot">
+                <div class="diet-badges"><span class="diet-badge" title="Vegan">Vegan</span><span class="diet-badge" title="Gluten free">GF</span></div>
+                <button class="save-btn" data-slug="ginger-cumin-vegetable-stew" aria-label="Save Ginger-Cumin Vegetable Stew" title="Save recipe">
+                  <span class="save-icon" aria-hidden="true">♥</span>
+                </button>
+              </div>
+            </div>
+          </article>
+<!-- /BUILD:grid -->
+        </div>
 
+        <div class="empty-state" hidden>
+          <div class="empty-icon" aria-hidden="true">🌿</div>
+          <h2>No recipes match that</h2>
+          <p>Try a different search term, or clear your filters to see everything.</p>
+          <button class="btn btn-primary reset-filters">Clear filters</button>
         </div>
       </div>
     </section>
   </main>
 
+<!-- BUILD:footer -->
   <footer class="site-footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <a href="index.html" class="brand" style="color:#fff;">
-            <span class="brand-mark">🌿</span> Sattva Table
+          <a href="index.html" class="brand footer-brand-link">
+            <span class="brand-mark" aria-hidden="true">🌿</span> Sattva Table
           </a>
-          <p>Vegetarian recipes made without onion, garlic, leeks, shallots, or chives.</p>
+          <p>Vegetarian recipes made without onion, garlic, leeks, shallots, or chives — for sattvic, Jain, and allium-sensitive kitchens.</p>
         </div>
         <div>
           <h4>Explore</h4>
           <ul>
             <li><a href="index.html">Home</a></li>
-            <li><a href="recipes.html">Recipes</a></li>
-            <li><a href="about.html">About No-Allium</a></li>
+            <li><a href="recipes.html">All recipes</a></li>
+            <li><a href="about.html">About no-allium</a></li>
+            <li><a href="saved.html">Saved recipes</a></li>
           </ul>
         </div>
         <div>
           <h4>Recipe types</h4>
           <ul>
-            <li><a href="recipes.html">Breakfast</a></li>
-            <li><a href="recipes.html">Curries &amp; Dals</a></li>
-            <li><a href="recipes.html">Snacks</a></li>
+            <li><a href="recipes.html#breakfast">Breakfast</a></li>
+            <li><a href="recipes.html#curry">Curries &amp; dals</a></li>
+            <li><a href="recipes.html#snack">Snacks</a></li>
+            <li><a href="recipes.html#dessert">Sweets</a></li>
           </ul>
         </div>
         <div>
@@ -315,13 +728,13 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <span>&copy; 2026 Sattva Table. All recipes vegetarian &amp; allium-free.</span>
+        <span>&copy; 2026 Sattva Table. 28 recipes, all vegetarian &amp; allium-free.</span>
         <span>Made with ginger, not garlic.</span>
       </div>
     </div>
   </footer>
-
   <button class="back-to-top" aria-label="Back to top">&#8593;</button>
+<!-- /BUILD:footer -->
   <script src="js/script.js"></script>
 </body>
 </html>
