@@ -135,13 +135,69 @@ sample, and this non-monotonic pattern is exactly what fragile,
 path-dependent overfitting looks like from the outside. The semi-annual
 number is promising, not proven.
 
-**Stopping the hand-picking here.** The honest next step is
-`validation/sensitivity.py` and `validation/walk_forward.py` (not yet
-built) — checking whether performance holds up across a neighborhood of
-lookback/rebalance parameters and across multiple sub-periods, not
-cherry-picking whichever single configuration happened to score best on
-one historical path. Until that exists, none of rounds 1-3 should be
-treated as a confirmed edge, including the semi-annual momentum number.
+### Round 4: sensitivity sweep + walk-forward (`scripts/validate_momentum.py`)
+
+Built `validation/sensitivity.py` (grid-sweeps lookback x rebalance, checks
+whether the surface is broadly stable or spikes at one lucky cell) and
+`validation/walk_forward.py` (splits in-sample into sequential windows,
+runs one fixed config on each independently). Still in-sample only.
+
+**Sensitivity sweep** (lookback in {63,126,189} x rebalance in
+{21,63,126,189}, 12 combos): every 21-day (monthly) rebalance is a heavy
+loss regardless of lookback (-28% to -100%) — confirms the fee-drag finding
+again. But past that, there's a clear, broadly monotonic pattern: longer
+rebalance periods do better, consistently, across all three lookback
+values, not just at one cell. 7/12 combos profitable, median +60.8% across
+the whole grid. That's a materially different signature than a single
+spike surrounded by noise — this looks like a real relationship (trade
+less, keep more of the edge), not a fluke.
+
+**Walk-forward** on the specific (lookback=126, rebalance=126) config —
+i.e. the one behind the earlier +135.8% headline number — split into 4
+independent ~4-year windows: **+3.3%, +64.8%, +20.8%, +1.7%**. Every single
+window is positive. Modest in three of the four, strong in one, but never
+negative — a strategy that only worked in one lucky stretch would show at
+least one deeply negative window here, and it doesn't.
+
+**What this does and doesn't establish**: the (126,126) config now has two
+independent pieces of evidence behind it (stable neighbourhood, positive
+in every walk-forward window) that the earlier single-number rounds
+didn't. The flashier +402-420% results at 189-day rebalance in the sweep
+were NOT walk-forward tested and should not be treated as "the best config"
+without the same scrutiny — chasing the biggest number in a sensitivity
+grid is exactly the mistake this step exists to catch. (126,126) is the
+candidate that earned the next step, not the highest number in the table.
+
+**Next**: run (126,126) exactly once against the untouched holdout 20%,
+and report that number as final regardless of outcome — see below.
+
+### Round 5: the one-shot holdout check (`scripts/check_holdout.py`)
+
+Holdout window: 2022-10-05 to 2026-09-16 (the last ~4 years, never touched
+until this run).
+
+| Approach | Holdout return |
+|---|---|
+| Cross-sectional momentum (126,126,top3) | **+27.4%** |
+| Equal-weight buy-and-hold basket | +44.7% |
+| VAS buy-and-hold | +44.6% |
+
+**The candidate loses to both fair benchmarks on holdout**, despite
+passing both the sensitivity-neighbourhood check and the walk-forward
+consistency check in-sample. Per the rule stated when this script was
+written, this result is final — it is not being re-run with a different
+config, and no other configuration is being tested against this same
+holdout set now (doing so would just turn the holdout into another
+in-sample set optimized by hand).
+
+**This is the real value of a holdout set**: everything in round 4 looked
+genuinely more robust than rounds 1-3 (broad sensitivity, positive in
+every walk-forward window) and still didn't survive contact with data the
+strategy had never influenced. That's not a failure of this project — it's
+the methodology doing exactly what it's for. As of this run, **no
+strategy across 5 rounds of testing has beaten a passive, diversified
+benchmark on genuinely out-of-sample ASX data**, after realistic costs, on
+a $2,000 account.
 
 ## Running the tests
 
