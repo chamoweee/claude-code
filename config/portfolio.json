@@ -1,0 +1,40 @@
+{
+  "contribution": 500,
+  "min_order": 200,
+  "max_order": 999,
+  "max_etfs_per_fortnight": 2,
+  "limit_buffer": 0.002,
+  "drift_alert_pp": 10,
+  "fees_verified": "2026-09-16",
+  "sleeves": [
+    {
+      "name": "Australian shares",
+      "ticker": "A200",
+      "target": 0.40,
+      "mgmt_fee": 0.0004,
+      "alternates": [
+        { "ticker": "IOZ", "mgmt_fee": 0.0005 },
+        { "ticker": "VAS", "mgmt_fee": 0.0010 }
+      ]
+    },
+    {
+      "name": "Global developed ex-AU",
+      "ticker": "BGBL",
+      "target": 0.45,
+      "mgmt_fee": 0.0008,
+      "alternates": [
+        { "ticker": "VGS", "mgmt_fee": 0.0018 }
+      ]
+    },
+    {
+      "name": "Global value tilt",
+      "ticker": "VVLU",
+      "target": 0.15,
+      "mgmt_fee": 0.0028,
+      "alternates": [
+        { "ticker": "VLUE", "mgmt_fee": 0.0040 },
+        { "ticker": "IVLU", "mgmt_fee": 0.0025 }
+      ]
+    }
+  ]
+}
