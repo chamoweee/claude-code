@@ -86,6 +86,34 @@ any of these three at the current trade frequency on a $2,000 account, and
 don't conclude anything about raw signal quality without separating it from
 fee drag first, the way we just did.
 
+### Round 2: fewer, higher-conviction trades (`scripts/search_strategies.py`)
+
+Acting on that diagnosis, four lower-frequency variants were tried —
+**in-sample only** (`tradesys/validation/holdout.py` splits off the last
+20% of each symbol's history; it was not touched for this search): a
+50/200 "golden cross" MA, a wider 55/20 Donchian channel, a 20/10 breakout
+gated to only fire >=1.5 ATR clear of the range, and mean reversion
+requiring RSI *and* price both oversold instead of either.
+
+Result: trade counts dropped a lot (24-81 vs. 100-230 before) and losses
+shrank a lot (+1% to -38% vs. -41% to -93% before) — the fee-drag diagnosis
+holds up. **But 0 of the 4 variants beat buy-and-hold on any of the 14
+symbols.** Buy-and-hold averaged +342% in-sample; even the best variant
+(MA 50/200) only managed +1.3% average.
+
+This is reported as a real result, not a prompt to keep grid-searching
+parameters until something crosses zero — that's exactly the overfitting
+this project is structured to avoid. The more useful next questions are
+probably: (a) these are total-return comparisons only — risk-adjusted
+metrics (Sharpe, max drawdown) aren't built yet and could tell a different
+story even without beating raw buy-and-hold return; (b) mean
+reversion/breakout strategies are generally expected to show an edge in
+choppier, range-bound markets, not a one-directional multi-decade blue-chip
+bull run — the current universe/period may simply be a bad test bed for
+them; (c) for a $2,000 account, buy-and-hold plus disciplined fortnightly
+contributions may honestly be the better answer to "what strategy" than
+any active timing rule tested so far.
+
 ## Running the tests
 
 ```bash

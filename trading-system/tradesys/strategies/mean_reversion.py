@@ -6,6 +6,11 @@ This is a state machine, not a per-bar snapshot rule — "oversold today" is
 an entry trigger, not a instruction to be flat again the moment it's no
 longer true. The exit condition is deliberately different and looser than
 the entry condition.
+
+`require_both_conditions` is an optional conviction filter: entering only
+when RSI AND price are both signalling oversold (not either alone) is a
+strictly rarer, stronger-dislocation event than either condition on its
+own — fewer trades, each a bigger anomaly.
 """
 
 from __future__ import annotations
@@ -28,6 +33,7 @@ class MeanReversion(Strategy):
         bb_window: int = 20,
         bb_std: float = 2.0,
         stop_loss_pct: float = 0.06,
+        require_both_conditions: bool = False,
     ):
         self.rsi_period = rsi_period
         self.oversold_rsi = oversold_rsi
@@ -35,7 +41,9 @@ class MeanReversion(Strategy):
         self.bb_window = bb_window
         self.bb_std = bb_std
         self.stop_loss_pct = stop_loss_pct
-        self.name = f"mean_reversion_{rsi_period}_{bb_window}"
+        self.require_both_conditions = require_both_conditions
+        mode = "and" if require_both_conditions else "or"
+        self.name = f"mean_reversion_{rsi_period}_{bb_window}_{mode}"
 
     def generate_signals(self, bars: pd.DataFrame) -> pd.Series:
         close = bars["close"]
@@ -43,7 +51,12 @@ class MeanReversion(Strategy):
         middle_band, _, lower_band = bollinger_bands(close, self.bb_window, self.bb_std)
 
         ready = rsi_values.notna() & middle_band.notna()
-        oversold = (rsi_values < self.oversold_rsi) | (close < lower_band)
+        rsi_oversold = rsi_values < self.oversold_rsi
+        price_oversold = close < lower_band
+        if self.require_both_conditions:
+            oversold = rsi_oversold & price_oversold
+        else:
+            oversold = rsi_oversold | price_oversold
         reverted = (rsi_values > self.exit_rsi) | (close >= middle_band)
 
         signal = [0] * len(bars)

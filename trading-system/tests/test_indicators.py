@@ -1,6 +1,6 @@
 import pandas as pd
 
-from tradesys.strategies.indicators import bollinger_bands, rolling_high, rolling_low, rsi
+from tradesys.strategies.indicators import atr, bollinger_bands, rolling_high, rolling_low, rsi
 
 
 def test_rsi_is_100_when_no_losses():
@@ -40,3 +40,21 @@ def test_rolling_low_excludes_current_bar():
     closes = pd.Series([10, 9, 8, 0], dtype=float)
     low = rolling_low(closes, window=3)
     assert low.iloc[3] == 8.0
+
+
+def test_atr_is_zero_for_flat_series():
+    bars = pd.DataFrame({"high": [10.0] * 20, "low": [10.0] * 20, "close": [10.0] * 20})
+    values = atr(bars, period=14)
+    assert values.iloc[-1] == 0.0
+
+
+def test_atr_rises_with_larger_ranges():
+    calm = pd.DataFrame({"high": [10.2] * 20, "low": [9.8] * 20, "close": [10.0] * 20})
+    volatile = pd.DataFrame({"high": [12.0] * 20, "low": [8.0] * 20, "close": [10.0] * 20})
+    assert atr(volatile, period=14).iloc[-1] > atr(calm, period=14).iloc[-1]
+
+
+def test_atr_nan_before_period_fills():
+    bars = pd.DataFrame({"high": [10.0] * 5, "low": [9.0] * 5, "close": [9.5] * 5})
+    values = atr(bars, period=14)
+    assert values.isna().all()

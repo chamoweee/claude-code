@@ -89,3 +89,32 @@ def test_momentum_breakout_rejects_invalid_windows():
         assert False, "expected ValueError"
     except ValueError:
         pass
+
+
+def test_momentum_breakout_atr_filter_rejects_a_weak_breakout():
+    # Calm, tight range (small ATR) followed by a breakout that only just
+    # clears the prior high by a hair — real, but tiny relative to noise.
+    flat = [10.0, 10.05, 9.95, 10.02, 9.98] * 6  # low-volatility base (30 bars)
+    weak_breakout = [10.06]  # clears the prior high, but barely
+    bars = make_bars(flat + weak_breakout)
+
+    unfiltered = MomentumBreakout(entry_window=20, exit_window=10).generate_signals(bars)
+    filtered = MomentumBreakout(
+        entry_window=20, exit_window=10, min_breakout_atr_multiple=5.0
+    ).generate_signals(bars)
+
+    assert unfiltered.iloc[-1] == 1
+    assert filtered.iloc[-1] == 0
+
+
+def test_mean_reversion_require_both_is_stricter_than_either():
+    # Oversold on RSI only (steady mild decline), never actually breaks the
+    # lower Bollinger Band because the decline is smooth, not a sharp spike.
+    closes = [100 - 0.5 * i for i in range(30)]
+    bars = make_bars(closes)
+
+    either = MeanReversion(rsi_period=10, bb_window=15, require_both_conditions=False).generate_signals(bars)
+    both = MeanReversion(rsi_period=10, bb_window=15, require_both_conditions=True).generate_signals(bars)
+
+    assert 1 in list(either)
+    assert 1 not in list(both)

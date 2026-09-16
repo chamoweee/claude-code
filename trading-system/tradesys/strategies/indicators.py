@@ -35,3 +35,15 @@ def rolling_high(series: pd.Series, window: int) -> pd.Series:
 
 def rolling_low(series: pd.Series, window: int) -> pd.Series:
     return series.rolling(window, min_periods=window).min().shift(1)
+
+
+def atr(bars: pd.DataFrame, period: int = 14) -> pd.Series:
+    """Average True Range (Wilder smoothing) — a volatility measure used
+    here to size "how big is this move relative to normal noise", not to
+    predict direction."""
+    high, low, close = bars["high"], bars["low"], bars["close"]
+    prev_close = close.shift(1)
+    true_range = pd.concat(
+        [high - low, (high - prev_close).abs(), (low - prev_close).abs()], axis=1
+    ).max(axis=1)
+    return true_range.ewm(alpha=1 / period, min_periods=period, adjust=False).mean()
