@@ -1,0 +1,9 @@
+{
+  "name": "trading-agent",
+  "description": "Paper-trading research agent that analyzes stocks, ETFs, forex, and crypto using live market data and simulates trades against a virtual portfolio",
+  "version": "1.0.0",
+  "author": {
+    "name": "Anthropic",
+    "email": "support@anthropic.com"
+  }
+}
