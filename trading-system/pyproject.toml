@@ -1,0 +1,23 @@
+[project]
+name = "tradesys"
+version = "0.1.0"
+description = "Disciplined, testable trading research system: backtest -> paper trade -> gated live execution"
+requires-python = ">=3.11"
+dependencies = [
+  "pandas>=2.2",
+  "numpy>=1.26",
+  "requests>=2.31",
+  "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+yfinance = ["yfinance>=0.2"]
+ibkr = ["ib_async>=1.0"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
