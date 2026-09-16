@@ -2,7 +2,7 @@
 
 ## About me
 - Chamk, Sydney, Australian tax resident, 10+ year investing horizon.
-- Contributing $500 AUD every fortnight (dollar-cost averaging) plus an initial ~$2,000.
+- Contributing $750 AUD every fortnight (dollar-cost averaging, increased from $500 on 2026-09-16) plus an initial ~$2,000.
 - Goal: a diversified portfolio that later pays passive dividend income. Low-cost index core with a modest global value tilt.
 - I place all orders myself in the CMC Invest app. This assistant only recommends — it never places trades.
 - Never recommend CFDs, margin, leverage, options, crypto or short-term trading.
@@ -31,6 +31,9 @@ Why:
 - Never hold IVV or VTS alongside BGBL.
 - One ETF per sleeve only.
 - Switching ETFs triggers CGT — only change ETFs with new money, never by selling.
+
+### Standing preference: always flag better funds
+Chamk wants every price-fetch run (not just the quarterly deep-dive) to include a quick check for a demonstrably better fund per sleeve — lower management fee AND fund size over $500M, same asset class/mandate. Surface any such candidate as an FYI in the ticket, with a source. This is information only: never switch, buy the alternate, or touch config without Chamk's explicit approval (via `/quarterly` or a direct instruction) — switching still triggers CGT considerations on the sold side and the overlap rules still apply, so any actual change happens with new money only, never a sell.
 
 ### Tax
 The 2026-27 Federal Budget proposes replacing the 50% CGT discount with CPI indexation plus a 30% minimum tax, effective 1 July 2027. This is announced policy, **not law**, as of September 2026. Gains realised before 1 July 2027 keep the existing 50% discount. Only mention this in the context of sell decisions. Always suggest a registered tax agent for anything specific to Chamk's situation.

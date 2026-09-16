@@ -1,0 +1,17 @@
+{
+  "as_of": "2026-09-16",
+  "prices": {
+    "A200": 146.26,
+    "BGBL": 83.95,
+    "VVLU": 82.32,
+    "VAS": 108.91,
+    "VGS": 158.67
+  },
+  "sources": {
+    "A200": "https://www.betashares.com.au/fund/australia-200-etf/ (NAV/unit A$146.26, shown as at 15 September 2026)",
+    "BGBL": "https://www.betashares.com.au/fund/global-shares-etf/ (NAV/unit A$83.95, shown as at 15 September 2026)",
+    "VVLU": "https://stockanalysis.com/quote/asx/VVLU/ (delayed last price A$82.32, timestamped Sep 16, 2026, 3:22 PM AEST; cross-checked against Morningstar AU https://www.morningstar.com.au/investments/security/ASX/VVLU showing A$82.36-82.37 undated but consistent)",
+    "VAS": "https://stockanalysis.com/quote/asx/VAS/ (delayed last price A$108.91, timestamped Sep 16, 2026, 3:24 PM AEST; cross-checked against Morningstar AU https://www.morningstar.com.au/investments/security/ASX/VAS showing A$108.86-108.91 undated but consistent)",
+    "VGS": "https://stockanalysis.com/quote/asx/VGS/ (delayed last price A$158.67, timestamped Sep 16, 2026, 3:25 PM AEST; cross-checked against Morningstar AU https://www.morningstar.com.au/investments/security/ASX/VGS showing A$158.62 undated but consistent)"
+  }
+}

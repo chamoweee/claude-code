@@ -120,9 +120,32 @@ def main():
     carry_forward = load_cash()
 
     sleeves = config["sleeves"]
+
+    # A sleeve's current value is fulfilled by its primary ticker OR any of
+    # its listed alternates (e.g. Chamk may already hold VAS/VGS instead of
+    # A200/BGBL). New orders always target the primary ticker — per the
+    # "switch with new money only" rule, existing alternate holdings are
+    # never sold, just counted so the gap calc doesn't double-fund a sleeve.
+    ticker_to_sleeve = {}
     for s in sleeves:
-        if s["ticker"] not in prices:
-            error(f"missing price for {s['ticker']}")
+        ticker_to_sleeve[s["ticker"]] = s["ticker"]
+        for alt in s.get("alternates", []):
+            ticker_to_sleeve[alt["ticker"]] = s["ticker"]
+
+    required_prices = {s["ticker"] for s in sleeves}
+    for ticker, h in holdings.items():
+        if h["units"] == 0:
+            continue
+        if ticker not in ticker_to_sleeve:
+            error(
+                f"holdings.csv has {h['units']} units of {ticker}, which isn't a "
+                "recognised sleeve ticker or alternate in config/portfolio.json — "
+                "reconcile holdings or config before allocating"
+            )
+        required_prices.add(ticker)
+    for t in required_prices:
+        if t not in prices:
+            error(f"missing price for {t}")
 
     contribution = float(config["contribution"])
     min_order = float(config["min_order"])
@@ -131,11 +154,21 @@ def main():
     LIMIT_BUFFER = float(config["limit_buffer"])
     drift_alert_pp = float(config["drift_alert_pp"])
 
-    current_value = {}
-    for s in sleeves:
-        t = s["ticker"]
-        units = holdings.get(t, {}).get("units", 0.0)
-        current_value[t] = units * prices[t]
+    current_value = {s["ticker"]: 0.0 for s in sleeves}
+    holdings_detail = []
+    for ticker, h in holdings.items():
+        if h["units"] == 0:
+            continue
+        sleeve_key = ticker_to_sleeve[ticker]
+        value = h["units"] * prices[ticker]
+        current_value[sleeve_key] += value
+        holdings_detail.append({
+            "ticker": ticker,
+            "sleeve_ticker": sleeve_key,
+            "units": h["units"],
+            "price": prices[ticker],
+            "value": round_cents(value),
+        })
 
     portfolio_value = sum(current_value.values())
     cash = round_cents(contribution + carry_forward)
@@ -200,6 +233,7 @@ def main():
         "as_of": as_of,
         "portfolio_value": round_cents(portfolio_value),
         "cash_available": cash,
+        "holdings_detail": holdings_detail,
         "orders": [
             {"ticker": t, "units": o["units"], "limit": o["limit"], "amount": o["amount"]}
             for t, o in orders.items() if o["units"] > 0
