@@ -4,9 +4,9 @@ A research agent that scans for money-making trends, investment flows and income
 opportunities each week, watches for market alerts each weekday, and emails a
 report. See [CLAUDE.md](CLAUDE.md) for the rules and architecture.
 
-**Stages 1-3 of 5 are built.** Everything below runs today with no API key
-and no cost; the research engine is built and tested but has not yet been run
-live.
+**Stages 1-4 of 5 are built.** Everything below runs today with no API key
+and no cost. The research engine and the email sender are built and tested but
+have not yet been run against the real API or a real inbox.
 
 ---
 
@@ -14,7 +14,7 @@ live.
 
 ```bash
 cd opportunity-radar
-python3 -m pytest                     # 231 tests, no network
+python3 -m pytest                     # 277 tests, no network
 python3 -m radar.cli seed             # write the 16 Sep 2026 baseline
 python3 -m radar.cli status           # what it knows, when it runs, what it costs
 ```
@@ -32,6 +32,8 @@ third-party runtime dependency; `pytest` is the only dev dependency.
 | `radar.cli prices [--store]` | Live macro + watchlist fetch and alert preview (free) |
 | `radar.cli research weekly\|daily` | Price the research passes without calling the API |
 | `radar.cli research weekly --live` | Run the real deep scan (spends money) |
+| `radar.cli preview` | Render a sample weekly email to a file (free, sends nothing) |
+| `radar.cli send-test` | Send one test email, to prove Gmail works |
 | `radar.cli baseline-gaps` | Baseline claims still lacking a real source |
 | `radar.cli reset --yes` | Delete all history and re-seed from empty |
 
@@ -94,8 +96,18 @@ the console steps to do beforehand.
    reads mail.
 4. **Credentials → Create credentials → OAuth client ID → Desktop app.** Download
    the JSON; note the client ID and client secret.
-5. Run the Stage 4 helper once locally to mint a refresh token:
-   `python3 -m radar.mail.authorize`.
+5. Run the helper once locally to mint a refresh token — it opens the consent
+   screen, catches the redirect and prints the token:
+   `python3 -m radar.mail.authorize`
+
+Then check it end to end:
+
+```bash
+export GMAIL_CLIENT_ID=... GMAIL_CLIENT_SECRET=... GMAIL_REFRESH_TOKEN=...
+export GMAIL_SENDER="<your gmail address>"
+export RADAR_RECIPIENT="<where reports should go>"
+python3 -m radar.cli send-test
+```
 
 ### 4. GitHub Secrets (needed from Stage 5)
 
@@ -134,9 +146,11 @@ opportunity-radar/
 │   ├── seed_baseline.py    snapshot #1
 │   ├── sources/            Yahoo price source, macro metrics, watchlist quotes
 │   ├── alerts/rules.py     the 8% / 3% threshold engine
-│   └── research/           Claude client, prompts, validation, scoring, engine
+│   ├── research/           Claude client, prompts, validation, scoring, engine
+│   ├── report/             mobile-first HTML + plain text rendering
+│   └── mail/               Gmail API sender and the refresh-token helper
 ├── data/radar.db           committed history
-└── tests/  fixtures/       231 tests, no network
+└── tests/  fixtures/       277 tests, no network
 ```
 
 ---

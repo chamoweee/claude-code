@@ -168,6 +168,29 @@ collapse, regulation, a platform opening to Australians).
 
 ---
 
+## Email
+
+Built for a phone, because that is where a 7am email is read. The constraints
+are email-client realities, not preferences:
+
+- **Inline styles only.** Gmail strips `<style>` blocks, hardest on mobile.
+- **Tables for layout.** Flexbox and grid are unreliable across clients.
+- **No external resources** — no web fonts, no images, no tracking pixels.
+- **A real plain-text alternative**, which is what survives forwarding.
+- **Wide tables stack into rows** rather than scrolling sideways.
+- **Under 90KB.** Gmail clips at about 102KB, and the spend and sources section
+  at the bottom would be the first thing lost. A test enforces this.
+
+Gmail is reached through its REST API with nothing but the standard library —
+two HTTP calls, so `google-api-python-client` and its dependency tree are not
+worth it. Scope is `gmail.send` only: the agent cannot read mail. Credentials
+come from the environment, are never written to disk, never logged, and are
+hidden in `GmailCredentials.__repr__`.
+
+**The weekly report is always sent, even in a quiet week.** A missing Monday
+email must mean something broke, never that nothing happened. The daily alert
+is the opposite: it sends only when a rule fires.
+
 ## Claude API notes
 
 - Model: `claude-sonnet-5` ($2 / $10 per MTok). `claude-opus-5` is priced in
@@ -199,8 +222,10 @@ collapse, regulation, a platform opening to Australians).
       weekly passes, discovery, the scoring rubric with both caps, source
       validation, and cost accounting. 231 tests against a fake SDK, so the
       whole engine is covered at zero spend. Not yet run live.
-- [ ] **Stage 4 — Report and email.** Mobile-friendly HTML, Gmail API sender,
-      error-notice path.
+- [x] **Stage 4 — Report and email.** Mobile-first HTML in the seven-section
+      format, plain-text alternative, Gmail API sender on the standard library
+      alone, the refresh-token helper, and the error-notice path. 277 tests.
+      Never yet sent — no credentials in the build session.
 - [ ] **Stage 5 — Automation.** Both workflows, history persistence, secrets
       runbook, dry runs.
 

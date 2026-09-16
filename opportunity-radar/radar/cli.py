@@ -21,6 +21,7 @@ from . import budget as budget_mod
 from . import gate as gate_mod
 from . import seed_baseline
 from .config import (
+    REPORTS_DIR,
     ConfigError,
     load_recipient,
     load_settings,
@@ -353,6 +354,128 @@ def _print_opportunity(opportunity, result) -> None:
               f"{item.source_date}\n       {item.source_url}")
 
 
+def cmd_preview(args: argparse.Namespace) -> int:
+    """Render a sample weekly email from real history plus placeholder research.
+
+    Costs nothing and sends nothing. The macro, theme, watchlist and spend
+    sections are real; the opportunities are illustrative, so the layout can be
+    checked on a phone before any money is spent.
+    """
+    from . import budget as budget
+    from .report import build, render
+    from .research import scoring
+    from .research.schemas import Action, Evidence, Opportunity, SubScores
+
+    settings = load_settings()
+    local = gate_mod.sydney_now(settings, _parse_now(args.now))
+    sydney_date = local.date().isoformat()
+    conn = connect(settings.db_path)
+    run = start_run(conn, "manual", sydney_date)
+    run.log_source("https://www.rba.gov.au/", "Reserve Bank of Australia", "primary")
+    run.log_source("https://www.cleanenergyregulator.gov.au/", "Clean Energy Regulator",
+                   "primary")
+
+    def sample(slug, title, *, fit, individual, strength="primary", flags=""):
+        return Opportunity(
+            slug=slug, title=title,
+            summary="Illustrative placeholder so the layout can be reviewed.",
+            who_earns="platform takes a margin; the worker is paid hourly",
+            platform_revenue_evidence="Reported run rate, with a source and a date.",
+            individual_earnings_evidence=individual,
+            startup_cost_aud_min=0, startup_cost_aud_max=450,
+            time_to_first_dollar_days=21, skills_required="domain expertise",
+            saturation="rising", red_flags=flags,
+            au_eligibility="open to Australian tax residents",
+            evidence=(Evidence("Reported annualised run rate", "Reuters",
+                               "https://www.reuters.com/example", "2026-09-02",
+                               strength, "US$2B"),),
+            scores=SubScores(evidence_strength=8, personal_fit=fit, capital_fit=9,
+                             hours_fit=7, speed_to_dollar=6, risk=7,
+                             reasons={"evidence_strength": "two independent reports",
+                                      "personal_fit": "fits evenings and weekends"
+                                      if fit >= 5 else "needs a licence not held",
+                                      "capital_fit": "nothing up front"}))
+
+    scored = scoring.rank(
+        [sample("example-fit", "AI evaluation contracts", fit=7,
+                individual="Contributors report A$120/hr on published rate cards."),
+         sample("example-nofit", "Grid battery maintenance contracts", fit=2,
+                individual="", flags="Most loud advocates sell a training course."),
+         sample("example-weak", "Short-form content agency work", fit=6,
+                individual="Operators claim $5k/month.", strength="weak")],
+        settings.research, settings.research.no_individual_evidence_cap)
+    actionable, other = scoring.split_by_fit(scored, settings.research.personal_fit_threshold)
+
+    class Sample:
+        result = type("R", (), {
+            "summary": ["Battery rebate step-down confirmed for 1 January 2027.",
+                        "Nothing else among the tracked themes moved this week.",
+                        "AUD flat; gold off its peak but still historically high."],
+            "actions": [
+                Action(1, "Read the battery rebate step-down schedule",
+                       "Sets the real deadline for any battery-related move.", 45),
+                Action(2, "Check whether the AI evaluation platform accepts "
+                          "Australian tax residents",
+                       "Decides whether this lead is real for you or not at all.", 60),
+            ],
+            "rejected": ["opportunity dropshipping-2026: DROPPED — no evidence survived "
+                         "validation (every source was a course seller)"],
+        })()
+        actionable, other, failures = [], [], []
+
+    weekly = Sample()
+    weekly.actionable, weekly.other = actionable, other
+    data = build.build_weekly(conn, settings, run, weekly, sydney_date)
+
+    REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+    html_path = REPORTS_DIR / f"preview-{sydney_date}.html"
+    text_path = REPORTS_DIR / f"preview-{sydney_date}.txt"
+    rows_for = scoring.format_scoring_table
+    html_path.write_text(render.render_weekly_html(data, rows_for), encoding="utf-8")
+    text_path.write_text(render.render_weekly_text(data), encoding="utf-8")
+
+    print(f"Subject: {render.weekly_subject(data)}")
+    print(f"  HTML   {html_path}  ({html_path.stat().st_size:,} bytes)")
+    print(f"  Text   {text_path}  ({text_path.stat().st_size:,} bytes)")
+    print(f"\n  Sections rendered from real history: "
+          f"{len(data.macro)} macro, {len(data.themes)} themes, "
+          f"{len(data.watchlist)} watchlist quotes")
+    print(f"  Opportunities are placeholders: {len(actionable)} for you, "
+          f"{len(other)} real-but-not-a-fit")
+    print("\n(nothing sent — these files are git-ignored)")
+    run.finish("ok", notes="report preview")
+    conn.close()
+    return 0
+
+
+def cmd_send_test(args: argparse.Namespace) -> int:
+    """Send one short email, to prove the Gmail credentials work end to end."""
+    from .mail import gmail
+    from .report import render
+
+    settings = load_settings()
+    local = gate_mod.sydney_now(settings, _parse_now(args.now))
+    sydney_date = local.date().isoformat()
+    try:
+        recipient = load_recipient()
+        credentials = gmail.GmailCredentials.from_env()
+    except (ConfigError, gmail.MailError) as exc:
+        print(f"Cannot send: {exc}", file=sys.stderr)
+        return 2
+
+    html = render.render_error_html(
+        "connectivity test", sydney_date,
+        ["This is a test, not a real failure. If you are reading this, the Gmail "
+         "credentials work and the agent can reach your inbox."], run_id=0)
+    text = render.render_error_text("connectivity test", sydney_date,
+                                    ["Gmail credentials work."], run_id=0)
+    message_id = gmail.send_email(recipient=recipient,
+                                  subject=f"Radar test — {sydney_date}",
+                                  html=html, text=text, credentials=credentials)
+    print(f"Sent. Gmail message id: {message_id}")
+    return 0
+
+
 def cmd_reset(args: argparse.Namespace) -> int:
     """Rebuild the history database from empty, then re-seed.
 
@@ -433,6 +556,12 @@ def build_parser() -> argparse.ArgumentParser:
     p_research.add_argument("--show-prompt", action="store_true",
                             help="print the assembled prompts")
     p_research.set_defaults(func=cmd_research)
+
+    p_preview = sub.add_parser("preview", help="render a sample weekly email to a file")
+    p_preview.set_defaults(func=cmd_preview)
+
+    p_send = sub.add_parser("send-test", help="send one test email via Gmail")
+    p_send.set_defaults(func=cmd_send_test)
 
     p_reset = sub.add_parser("reset", help="delete all history and re-seed from empty")
     p_reset.add_argument("--yes", action="store_true", help="confirm the deletion")

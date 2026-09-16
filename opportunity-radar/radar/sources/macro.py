@@ -152,9 +152,14 @@ def store_macro(conn: sqlite3.Connection, run_id: int, as_of_date: str,
             "INSERT INTO macro_snapshots (run_id, as_of_date, metric, value, unit, "
             "value_text, source_name, source_url, source_date, source_strength, note) "
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) "
+            # The unit and note must move with the value. Updating the number
+            # but keeping an earlier row's unit produced a fresh copper price
+            # labelled "% y/y", which is worse than no reading at all.
             "ON CONFLICT (as_of_date, metric) DO UPDATE SET "
-            "value = excluded.value, value_text = excluded.value_text, "
-            "source_url = excluded.source_url, source_date = excluded.source_date, "
+            "value = excluded.value, unit = excluded.unit, "
+            "value_text = excluded.value_text, note = excluded.note, "
+            "source_name = excluded.source_name, source_url = excluded.source_url, "
+            "source_date = excluded.source_date, source_strength = excluded.source_strength, "
             "run_id = excluded.run_id",
             (run_id, as_of_date, metric.key, reading.value, metric.unit,
              f"{reading.value:,.4g} {metric.unit}", SOURCE_NAME, reading.source_url,
