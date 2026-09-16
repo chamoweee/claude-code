@@ -208,6 +208,151 @@ def cmd_prices(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_research(args: argparse.Namespace) -> int:
+    """Estimate or run a research pass.
+
+    Defaults to a dry run: it assembles the real prompts from real history and
+    prices the calls, without contacting the API. Pass ``--live`` to actually
+    spend money.
+    """
+    from . import budget as budget
+    from .research import engine
+    from .research.client import ResearchClient, load_prompt, render
+
+    settings = load_settings()
+    local = gate_mod.sydney_now(settings, _parse_now(args.now))
+    sydney_date = local.date().isoformat()
+    conn = connect(settings.db_path)
+    run = start_run(conn, "manual", sydney_date)
+    guard = budget.BudgetGuard(conn, settings, sydney_date, run_id=run.id)
+    client = ResearchClient(settings, guard, run)
+    research = settings.research
+
+    passes = [
+        ("theme_update", research.max_searches_themes, 16_000),
+        ("discovery", research.max_searches_discovery, 16_000),
+        ("synthesis", 0, 8_000),
+    ] if args.kind == "weekly" else [("daily_news", research.max_searches_daily, 4_000)]
+
+    print(f"{args.kind} research — {sydney_date} Sydney, model {research.model}\n")
+    system = engine.system_prompt(settings, sydney_date)
+    print(f"  system prompt        {len(system):,} chars"
+          f"{' (profile: REDACTED EXAMPLE)' if not profile_is_real() else ''}")
+
+    total_estimate = 0.0
+    print(f"\n  {'Pass':<14} {'Searches':>9} {'Max out':>9} {'Est. ceiling':>13}")
+    for name, searches, max_tokens in passes:
+        estimate = client.estimate_aud(searches, max_tokens)
+        total_estimate += estimate
+        print(f"  {name:<14} {searches:>9} {max_tokens:>9,} {'$' + format(estimate, '.2f'):>13}")
+    print(f"  {'':<14} {'':>9} {'':>9} {'$' + format(total_estimate, '.2f'):>13}  worst case")
+    print(f"\n  Real cost is normally well under this — the estimate assumes every\n"
+          f"  search is used and every response hits its token ceiling.")
+
+    st = guard.status()
+    print(f"\n  Month to date        ${st.spent_aud:.2f} of ${st.cap_aud:.2f} AUD")
+    print(f"  Headroom             ${st.remaining_aud:.2f}")
+    if st.remaining_aud < total_estimate:
+        print("  ! The worst case exceeds the remaining budget; the guard would halt "
+              "partway.")
+
+    if args.show_prompt:
+        print(f"\n--- system prompt ---\n{system}")
+        if args.kind == "weekly":
+            print("\n--- theme_update user prompt ---\n" + render(
+                load_prompt("theme_update"), themes_block=engine.themes_block(conn),
+                macro_block=engine.macro_block(conn, sydney_date),
+                verify_block=engine.verify_block(conn)))
+
+    if not args.live:
+        print("\n(dry run — nothing was sent and nothing was spent. "
+              "Pass --live to run for real.)")
+        run.finish("skipped", notes="research dry run")
+        conn.close()
+        return 0
+
+    if not os.environ.get("ANTHROPIC_API_KEY"):
+        print("\nANTHROPIC_API_KEY is not set — cannot run live.", file=sys.stderr)
+        run.finish("failed", notes="no API key")
+        conn.close()
+        return 2
+
+    try:
+        if args.kind == "weekly":
+            out = engine.run_weekly(conn, settings, run, client, sydney_date)
+            engine.store_theme_updates(conn, run.id, sydney_date, out.result.theme_updates)
+            engine.store_opportunities(conn, run.id, sydney_date, out.scored)
+            engine.store_actions(conn, run.id, sydney_date, out.result.actions)
+            for update in out.result.theme_updates:
+                engine.retire_baseline_claims(conn, update.slug)
+            _print_weekly(out)
+        else:
+            alerts, rejected = engine.run_daily(conn, settings, run, client, sydney_date)
+            print(f"\nAlerts found: {len(alerts)}")
+            for alert in alerts:
+                print(f"  [{alert.severity}] {alert.headline}\n      {alert.source_url}")
+            for reason in rejected:
+                print(f"  rejected: {reason}")
+        run.finish("ok")
+    except Exception as exc:  # noqa: BLE001 — recorded, then re-raised
+        run.log_error("research run failed", exc)
+        run.finish("failed", notes=f"{type(exc).__name__}: {exc}"[:500])
+        raise
+    finally:
+        print(f"\nActual spend this run: ${guard.status().spent_aud:.2f} AUD "
+              f"month to date")
+        conn.close()
+    return 0
+
+
+def _print_weekly(out) -> None:
+    print("\n=== Summary ===")
+    for line in out.result.summary:
+        print(f"  {line}")
+
+    print("\n=== Themes ===")
+    for update in out.result.theme_updates:
+        print(f"  {update.status:<7} {update.slug:<24} {update.reason}")
+
+    print(f"\n=== Leads for you ({len(out.actionable)}) ===")
+    for opportunity, result in out.actionable:
+        _print_opportunity(opportunity, result)
+
+    print(f"\n=== Real, but a poor fit for you ({len(out.other)}) ===")
+    for opportunity, result in out.other:
+        _print_opportunity(opportunity, result)
+
+    print("\n=== Top actions ===")
+    for action in out.result.actions:
+        print(f"  {action.rank}. {action.title} ({action.est_minutes} min)")
+        print(f"     {action.why}")
+
+    if out.result.rejected:
+        print(f"\n=== Discarded ({len(out.result.rejected)}) ===")
+        for reason in out.result.rejected[:15]:
+            print(f"  - {reason}")
+    for failure in out.failures:
+        print(f"  ! pass failed: {failure}")
+    print(f"\nSearches: {out.searches}   Cost: ${out.cost_aud:.2f} AUD")
+
+
+def _print_opportunity(opportunity, result) -> None:
+    print(f"\n  {result.total:.1f}/10  {opportunity.title}")
+    print(f"     {opportunity.summary}")
+    print(f"     Who earns: {opportunity.who_earns}")
+    print(f"     Platform:   {opportunity.platform_revenue_evidence or '—'}")
+    individual = (opportunity.individual_earnings_evidence
+                  or "NO EVIDENCE FOUND that individuals actually earn")
+    print(f"     Individual: {individual}")
+    if opportunity.red_flags:
+        print(f"     Red flags:  {opportunity.red_flags}")
+    if result.was_capped:
+        print(f"     Capped:     {result.capped_reason}")
+    for item in opportunity.evidence:
+        print(f"     [{item.source_strength}] {item.claim} — {item.source_name}, "
+              f"{item.source_date}\n       {item.source_url}")
+
+
 def cmd_reset(args: argparse.Namespace) -> int:
     """Rebuild the history database from empty, then re-seed.
 
@@ -280,6 +425,14 @@ def build_parser() -> argparse.ArgumentParser:
     p_prices.add_argument("--store", action="store_true",
                           help="write the readings into history")
     p_prices.set_defaults(func=cmd_prices)
+
+    p_research = sub.add_parser("research", help="estimate or run a research pass")
+    p_research.add_argument("kind", choices=["weekly", "daily"])
+    p_research.add_argument("--live", action="store_true",
+                            help="actually call the API and spend money")
+    p_research.add_argument("--show-prompt", action="store_true",
+                            help="print the assembled prompts")
+    p_research.set_defaults(func=cmd_research)
 
     p_reset = sub.add_parser("reset", help="delete all history and re-seed from empty")
     p_reset.add_argument("--yes", action="store_true", help="confirm the deletion")

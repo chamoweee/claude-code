@@ -81,6 +81,12 @@ class ResearchConfig:
     max_new_trends: int
     evidence_max_age_days: int
     weak_source_score_cap: float
+    no_individual_evidence_cap: float
+    personal_fit_threshold: int
+    max_action_minutes: int
+    max_searches_themes: int
+    max_searches_discovery: int
+    max_searches_daily: int
 
 
 @dataclass(frozen=True)
@@ -192,6 +198,13 @@ def load_settings(config_dir: Path | None = None, db_path: Path | None = None) -
             max_new_trends=int(research.get("max_new_trends", 5)),
             evidence_max_age_days=int(research.get("evidence_max_age_days", 90)),
             weak_source_score_cap=float(research.get("weak_source_score_cap", 5.0)),
+            no_individual_evidence_cap=float(
+                research.get("no_individual_evidence_cap", 6.0)),
+            personal_fit_threshold=int(research.get("personal_fit_threshold", 5)),
+            max_action_minutes=int(research.get("max_action_minutes", 180)),
+            max_searches_themes=int(research.get("max_searches_themes", 14)),
+            max_searches_discovery=int(research.get("max_searches_discovery", 16)),
+            max_searches_daily=int(research.get("max_searches_daily", 6)),
         ),
         pricing=pricing,
         baseline_date=str(general.get("baseline_date", "2026-09-16")),

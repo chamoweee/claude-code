@@ -4,8 +4,9 @@ A research agent that scans for money-making trends, investment flows and income
 opportunities each week, watches for market alerts each weekday, and emails a
 report. See [CLAUDE.md](CLAUDE.md) for the rules and architecture.
 
-**Stages 1 and 2 of 5 are built.** Everything below runs today with no API key
-and no cost.
+**Stages 1-3 of 5 are built.** Everything below runs today with no API key
+and no cost; the research engine is built and tested but has not yet been run
+live.
 
 ---
 
@@ -13,7 +14,7 @@ and no cost.
 
 ```bash
 cd opportunity-radar
-python3 -m pytest                     # 127 tests, no network
+python3 -m pytest                     # 231 tests, no network
 python3 -m radar.cli seed             # write the 16 Sep 2026 baseline
 python3 -m radar.cli status           # what it knows, when it runs, what it costs
 ```
@@ -29,6 +30,8 @@ third-party runtime dependency; `pytest` is the only dev dependency.
 | `radar.cli seed [--force]` | Write the baseline snapshot (idempotent) |
 | `radar.cli gate weekly\|daily [--force]` | Would a run fire right now? |
 | `radar.cli prices [--store]` | Live macro + watchlist fetch and alert preview (free) |
+| `radar.cli research weekly\|daily` | Price the research passes without calling the API |
+| `radar.cli research weekly --live` | Run the real deep scan (spends money) |
 | `radar.cli baseline-gaps` | Baseline claims still lacking a real source |
 | `radar.cli reset --yes` | Delete all history and re-seed from empty |
 
@@ -67,10 +70,17 @@ Create a key at <https://console.anthropic.com/settings/keys>, then:
 export ANTHROPIC_API_KEY="sk-ant-..."
 ```
 
-Budget note: at `claude-sonnet-5` pricing a weekly deep scan with 15–25 web
-searches costs roughly $1–3 AUD, and a daily check costs cents. The $30 AUD
-monthly cap is enforced in code before every call, so an unexpected loop cannot
-run up a bill.
+Measured worst-case ceilings, from `radar.cli research`:
+
+| Pass | Searches | Worst case |
+|---|---|---|
+| Weekly deep scan (3 calls) | 30 | **$2.16 AUD** |
+| Daily check (1 call) | 6 | **$0.40 AUD** |
+
+A full month — four weekly scans plus about 21 daily checks — has a worst case
+near **$17 AUD** against the $30 cap, and real runs come in well under, since
+the estimate assumes every search is used and every response hits its token
+ceiling. The cap is enforced before each call, so a loop cannot run up a bill.
 
 ### 3. Gmail API (needed from Stage 4)
 
@@ -123,9 +133,10 @@ opportunity-radar/
 │   ├── runlog.py           run and event logging
 │   ├── seed_baseline.py    snapshot #1
 │   ├── sources/            Yahoo price source, macro metrics, watchlist quotes
-│   └── alerts/rules.py     the 8% / 3% threshold engine
+│   ├── alerts/rules.py     the 8% / 3% threshold engine
+│   └── research/           Claude client, prompts, validation, scoring, engine
 ├── data/radar.db           committed history
-└── tests/  fixtures/       127 tests, no network
+└── tests/  fixtures/       231 tests, no network
 ```
 
 ---

@@ -134,8 +134,20 @@ Six sub-scores, 1–10, each with a one-line reason from the model:
 | `speed_to_dollar` | first dollar within days |
 | `risk` | little to lose if it fails (10 = low risk) |
 
-`scoring.py` computes the weighted total and applies the weak-source cap. The
-report shows the sub-scores, not just the total — the working is the point.
+`scoring.py` computes the weighted total from these weights — evidence 0.25,
+personal fit 0.20, capital 0.15, hours 0.15, risk 0.15, speed 0.10 — and then
+applies two caps, each judged against the raw total so both reasons are
+reported even when only the lower one sets the number:
+
+- **`weak_source_score_cap` (5.0)** — nothing better than a blog or a marketing
+  page supports it.
+- **`no_individual_evidence_cap` (6.0)** — the evidence shows the *platform*
+  earns but not that *individuals* do. This is the most common failure mode in
+  this space and the brief's central concern, so it is arithmetic, not prose.
+
+The report shows the sub-scores, not just the total — the working is the point.
+Opportunities scoring below `personal_fit_threshold` are reported in their own
+section rather than dropped or buried.
 
 **Opportunities must not be limited to Chamk's current skills.** Score a poor fit
 honestly as a poor fit; do not narrow the search to make the scores look good.
@@ -183,8 +195,10 @@ collapse, regulation, a platform opening to Australians).
       week-on-week change, watchlist quotes, and the alert rule engine. All
       three watchlist tickers resolved. 127 tests, offline fixtures, no API
       spend.
-- [ ] **Stage 3 — Research engine.** Claude client with web search, theme
-      updates, discovery, scoring, source validation, cost accounting.
+- [x] **Stage 3 — Research engine.** Claude client with web search, the three
+      weekly passes, discovery, the scoring rubric with both caps, source
+      validation, and cost accounting. 231 tests against a fake SDK, so the
+      whole engine is covered at zero spend. Not yet run live.
 - [ ] **Stage 4 — Report and email.** Mobile-friendly HTML, Gmail API sender,
       error-notice path.
 - [ ] **Stage 5 — Automation.** Both workflows, history persistence, secrets
