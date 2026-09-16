@@ -1,0 +1,79 @@
+# Opportunity Radar — weekday light check, 07:00 Australia/Sydney.
+#
+# THE SCHEDULE IS DEACTIVATED ON PURPOSE. Until the secrets below are set, this
+# workflow only runs when you trigger it by hand (Actions → Radar daily → Run
+# workflow). To go live, uncomment the `schedule:` block.
+#
+# This job is silent by design: on most days nothing breaches a threshold, no
+# rate decision lands, and no email is sent. A green run with no email is the
+# normal outcome, not a failure.
+#
+# Two cron lines for the same reason as the weekly workflow — cron is UTC,
+# Sydney is not, and `radar.gate` decides which firing is the real 7am one.
+
+name: Radar daily
+
+on:
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Run even if it is not a weekday 7am in Sydney"
+        type: boolean
+        default: true
+      dry_run:
+        description: "Do everything except send the email"
+        type: boolean
+        default: false
+
+  # Uncomment to go live. Monday-Friday 07:00 in Sydney is Sunday-Thursday in
+  # UTC, hence days 0-4: 20:00 under AEDT, 21:00 under AEST.
+  # schedule:
+  #   - cron: "0 20 * * 0-4"
+  #   - cron: "0 21 * * 0-4"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: radar-daily
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    defaults:
+      run:
+        working-directory: opportunity-radar
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install --quiet -r requirements.txt
+
+      - name: Restore history
+        run: ../.github/scripts/radar-history.sh restore
+
+      - name: Run the daily check
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          RADAR_RECIPIENT: ${{ secrets.RADAR_RECIPIENT }}
+          RADAR_PROFILE: ${{ secrets.RADAR_PROFILE }}
+          GMAIL_CLIENT_ID: ${{ secrets.GMAIL_CLIENT_ID }}
+          GMAIL_CLIENT_SECRET: ${{ secrets.GMAIL_CLIENT_SECRET }}
+          GMAIL_REFRESH_TOKEN: ${{ secrets.GMAIL_REFRESH_TOKEN }}
+          GMAIL_SENDER: ${{ secrets.GMAIL_SENDER }}
+          RADAR_FORCE: ${{ inputs.force && '1' || '' }}
+        run: |
+          python -m radar.jobs.daily ${{ inputs.dry_run && '--dry-run' || '' }}
+
+      - name: Save history
+        if: always()
+        run: ../.github/scripts/radar-history.sh save "daily check"

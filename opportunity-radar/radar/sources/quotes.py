@@ -37,10 +37,16 @@ class SkippedSymbol:
 
 
 def fetch_watchlist(run: Run, entries: Iterable[WatchlistEntry],
-                    fetcher=fetch_quote) -> tuple[list[WatchlistReading],
-                                                  list[SkippedSymbol],
-                                                  list[str]]:
-    """Fetch quotable entries. Returns readings, deliberate skips, and failures."""
+                    fetcher=None) -> tuple[list[WatchlistReading],
+                                           list[SkippedSymbol],
+                                           list[str]]:
+    """Fetch quotable entries. Returns readings, deliberate skips, and failures.
+
+    ``fetcher`` is resolved here rather than defaulted in the signature, so that
+    patching this module's ``fetch_quote`` actually takes effect. See the note
+    in ``macro.fetch_macro``.
+    """
+    fetcher = fetcher or globals()["fetch_quote"]
     readings: list[WatchlistReading] = []
     skipped: list[SkippedSymbol] = []
     failures: list[str] = []

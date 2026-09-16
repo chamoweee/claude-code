@@ -168,6 +168,33 @@ collapse, regulation, a platform opening to Australians).
 
 ---
 
+## Degradation
+
+What survives a partial failure is a design decision, not an accident:
+
+- **A research failure never costs a price alert.** The 8% and 3% rules are the
+  part that cannot wait, they cost nothing, and they run first. A broken or
+  unaffordable news check degrades the daily job to price-only alerts plus a
+  recorded failure — it does not lose the email.
+- **Prices are stored before research is attempted**, so a failed weekly scan
+  still leaves real macro and watchlist numbers in history.
+- **One bad symbol never loses the rest.** Fetch failures are collected per
+  symbol and reported, not raised.
+- **Hitting the budget cap exits 0**, because a rule working is not a fault.
+  The notice is sent once per month, not every weekday until the 1st.
+- **A failed run always tries to email.** `notify_failure` cannot raise; if even
+  it fails, the traceback goes to the Actions log and the exit code stays 1.
+
+## Testing
+
+`tests/conftest.py` blocks outbound sockets for every test, so "no test touches
+the network" is enforced rather than claimed. This was not hypothetical: the job
+tests looked offline because the price fetchers were patched at module level,
+but `fetch_macro` bound its default fetcher in the signature, so the patch did
+nothing and every run hit Yahoo for real. It passed, it was just slow. Both
+fetchers now resolve their default at call time, and the suite runs in ~5s
+instead of ~45s.
+
 ## Email
 
 Built for a phone, because that is where a 7am email is read. The constraints
@@ -226,8 +253,10 @@ is the opposite: it sends only when a rule fires.
       format, plain-text alternative, Gmail API sender on the standard library
       alone, the refresh-token helper, and the error-notice path. 277 tests.
       Never yet sent — no credentials in the build session.
-- [ ] **Stage 5 — Automation.** Both workflows, history persistence, secrets
-      runbook, dry runs.
+- [x] **Stage 5 — Automation.** Both jobs, both workflows with the two-firing
+      DST gate, history on a dedicated `radar-data` branch, the failure-notice
+      path, and a network guard over the test suite. 302 tests. Schedules ship
+      deactivated until the secrets are set.
 
 ## Conventions
 

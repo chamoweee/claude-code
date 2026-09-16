@@ -4,9 +4,10 @@ A research agent that scans for money-making trends, investment flows and income
 opportunities each week, watches for market alerts each weekday, and emails a
 report. See [CLAUDE.md](CLAUDE.md) for the rules and architecture.
 
-**Stages 1-4 of 5 are built.** Everything below runs today with no API key
-and no cost. The research engine and the email sender are built and tested but
-have not yet been run against the real API or a real inbox.
+**All five stages are built.** Everything below runs today with no API key
+and no cost. The research engine and the email sender are tested but have not
+yet been run against the real API or a real inbox, and **both workflow schedules
+ship deactivated** — see *Going live* below.
 
 ---
 
@@ -14,7 +15,7 @@ have not yet been run against the real API or a real inbox.
 
 ```bash
 cd opportunity-radar
-python3 -m pytest                     # 277 tests, no network
+python3 -m pytest                     # 302 tests, network blocked by conftest
 python3 -m radar.cli seed             # write the 16 Sep 2026 baseline
 python3 -m radar.cli status           # what it knows, when it runs, what it costs
 ```
@@ -148,9 +149,10 @@ opportunity-radar/
 │   ├── alerts/rules.py     the 8% / 3% threshold engine
 │   ├── research/           Claude client, prompts, validation, scoring, engine
 │   ├── report/             mobile-first HTML + plain text rendering
-│   └── mail/               Gmail API sender and the refresh-token helper
+│   ├── mail/               Gmail API sender and the refresh-token helper
+│   └── jobs/               weekly.py, daily.py, and the shared failure path
 ├── data/radar.db           committed history
-└── tests/  fixtures/       277 tests, no network
+└── tests/  fixtures/       302 tests; conftest blocks all sockets
 ```
 
 ---
@@ -185,3 +187,68 @@ European Partners in 2021. It is kept in the watchlist marked `active = false`
 so the gap in history explains itself, and is never quoted. The successor entity
 is Coca-Cola Europacific Partners (NASDAQ/LSE: CCEP) if that business is still
 of interest.
+
+
+---
+
+## Going live
+
+Both workflows ship with their `schedule:` blocks commented out, so nothing
+fires until you turn it on. Work through this in order.
+
+**1. Add the secrets** (the table above). `radar.cli status` tells you which are
+still missing.
+
+**2. Prove email works.**
+
+```bash
+python3 -m radar.cli send-test
+```
+
+**3. Run each workflow by hand.** Actions → *Radar daily* → Run workflow, with
+**dry run** ticked. Then *Radar weekly* the same way. A dry run does everything
+except send, so you can read the log and the uploaded report artifact first.
+
+**4. Run the weekly for real** — untick dry run. This is the first time money is
+spent. Expect roughly $1–3 AUD; the log prints the exact figure.
+
+**5. Uncomment the `schedule:` blocks** in
+`.github/workflows/radar-weekly.yml` and `radar-daily.yml`, and push.
+
+### What the schedule means
+
+| Workflow | Cron (UTC) | Sydney |
+|---|---|---|
+| Weekly | `0 20 * * 0` and `0 21 * * 0` | Monday 07:00 |
+| Daily | `0 20 * * 0-4` and `0 21 * * 0-4` | Mon–Fri 07:00 |
+
+Two firings each because cron only speaks UTC and Sydney moves between UTC+10
+and UTC+11. Both start the job; `radar.gate` asks `zoneinfo` what time it
+actually is in Sydney and the wrong one exits 0 in about a second, having spent
+nothing. No maintenance across any future daylight-saving change.
+
+### Where history lives
+
+`.github/scripts/radar-history.sh` moves `data/radar.db` between the runner and
+a dedicated **`radar-data`** branch, so a weekday of bot commits never lands in
+your code history. It uses git plumbing rather than checking the branch out, so
+it never switches branch and cannot leave a run on the wrong ref. That branch
+holds exactly one file, `radar.db`, with one commit per run that changed it.
+
+To inspect it locally:
+
+```bash
+git fetch origin radar-data
+git cat-file blob origin/radar-data:radar.db > /tmp/radar.db
+sqlite3 /tmp/radar.db "SELECT sydney_date, kind, status, notes FROM runs ORDER BY id DESC LIMIT 10;"
+```
+
+### Reading the Actions result
+
+| Outcome | Means |
+|---|---|
+| Green, no email (daily) | Nothing breached a threshold. The normal weekday. |
+| Green, no email (weekly) | Should not happen — the weekly always sends. |
+| Green, "skip:" in the log | The wrong UTC firing. The other one did the work. |
+| Green, budget notice | The $30 cap was reached. Runs resume on the 1st. |
+| Red | Something broke, and a notice email was attempted. |

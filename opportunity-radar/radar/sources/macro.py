@@ -118,12 +118,18 @@ class MetricChange:
 
 
 def fetch_macro(run: Run, metrics: Iterable[MacroMetric] = METRICS,
-                fetcher=fetch_quote) -> tuple[list[MacroReading], list[str]]:
+                fetcher=None) -> tuple[list[MacroReading], list[str]]:
     """Fetch every metric. Returns the readings plus one message per failure.
 
     One bad symbol must not lose the whole macro section, so failures are
     collected and reported rather than raised.
+
+    ``fetcher`` defaults to ``None`` and is resolved here rather than in the
+    signature. A default of ``fetcher=fetch_quote`` would bind the function at
+    import time, so patching this module's attribute would silently have no
+    effect and a test believing itself offline would hit the live network.
     """
+    fetcher = fetcher or globals()["fetch_quote"]
     readings: list[MacroReading] = []
     failures: list[str] = []
     for metric in metrics:

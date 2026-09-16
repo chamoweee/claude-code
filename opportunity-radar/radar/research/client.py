@@ -136,8 +136,15 @@ class ResearchClient:
     @property
     def client(self) -> Any:
         if self._client is None:
+            import os
+
             import anthropic  # imported lazily so offline commands need no SDK
 
+            if not os.environ.get("ANTHROPIC_API_KEY"):
+                raise ResearchError(
+                    "ANTHROPIC_API_KEY is not set, so no research can run. In CI "
+                    "this means the secret is missing; locally, export it. The "
+                    "price-driven alerts do not need it and run regardless.")
             self._client = anthropic.Anthropic()
         return self._client
 
