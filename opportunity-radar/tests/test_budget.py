@@ -136,11 +136,12 @@ def test_record_writes_a_row_and_converts_to_aud(guard, settings, conn):
     assert row["cost_usd"] == pytest.approx(2.0)
 
 
-def test_recorded_spend_feeds_straight_back_into_the_gate(guard):
+def test_recorded_spend_feeds_straight_back_into_the_gate(guard, settings):
     for _ in range(3):
         guard.record(Usage(output_tokens=1_000_000), purpose="discovery")
     assert guard.status().spent_aud > 0
-    assert guard.status().spent_aud == pytest.approx(3 * 10.0 * 1.52)
+    assert guard.status().spent_aud == pytest.approx(
+        3 * 10.0 * settings.budget.usd_to_aud)
 
 
 def test_warning_fires_at_eighty_percent(guard, conn):

@@ -4,7 +4,7 @@ A research agent that scans for money-making trends, investment flows and income
 opportunities each week, watches for market alerts each weekday, and emails a
 report. See [CLAUDE.md](CLAUDE.md) for the rules and architecture.
 
-**Stage 1 of 5 is built.** Everything below runs today, offline, with no API key
+**Stages 1 and 2 of 5 are built.** Everything below runs today with no API key
 and no cost.
 
 ---
@@ -13,7 +13,7 @@ and no cost.
 
 ```bash
 cd opportunity-radar
-python3 -m pytest                     # 70 tests, no network
+python3 -m pytest                     # 127 tests, no network
 python3 -m radar.cli seed             # write the 16 Sep 2026 baseline
 python3 -m radar.cli status           # what it knows, when it runs, what it costs
 ```
@@ -28,6 +28,7 @@ third-party runtime dependency; `pytest` is the only dev dependency.
 | `radar.cli status` | History counts, next run times, spend, config gaps |
 | `radar.cli seed [--force]` | Write the baseline snapshot (idempotent) |
 | `radar.cli gate weekly\|daily [--force]` | Would a run fire right now? |
+| `radar.cli prices [--store]` | Live macro + watchlist fetch and alert preview (free) |
 | `radar.cli baseline-gaps` | Baseline claims still lacking a real source |
 | `radar.cli reset --yes` | Delete all history and re-seed from empty |
 
@@ -120,25 +121,42 @@ opportunity-radar/
 │   ├── gate.py             the daylight-saving gate
 │   ├── budget.py           pre-flight spend ceiling
 │   ├── runlog.py           run and event logging
-│   └── seed_baseline.py    snapshot #1
+│   ├── seed_baseline.py    snapshot #1
+│   ├── sources/            Yahoo price source, macro metrics, watchlist quotes
+│   └── alerts/rules.py     the 8% / 3% threshold engine
 ├── data/radar.db           committed history
-└── tests/                  70 tests, no network
+└── tests/  fixtures/       127 tests, no network
 ```
 
 ---
 
-## Known gaps carried into Stage 2
+## Data sources
 
-`radar.cli status` surfaces both of these every run; neither is silently ignored.
+Prices come from the Yahoo Finance chart API: no key, no rate limit to manage,
+and it covers ASX and US listings plus commodity futures and FX in one shape.
+Quotes are dated in the exchange's own timezone. Yahoo is an aggregator rather
+than the exchange, so readings are recorded at `reputable_media` strength.
 
-**Three watchlist tickers are unresolved** and are marked `confirmed = false` in
-`config/watchlist.toml`, which stops the price fetcher from quoting a guess:
+`uranium_ura_proxy` is the one deliberate compromise. No free U3O8 spot feed
+exists, so the Global X Uranium ETF stands in — stored with a `PROXY —` note and
+excluded from the alert rules, because a miner ETF moving 10% is not a uranium
+price move. The real uranium price is handled by research in Stage 3.
 
-- `HVLU` — no listing identified.
-- `CCL` — Carnival Corp on the NYSE, or the Coca-Cola Amatil ticker that left
-  the ASX in 2021?
-- `EG` — no unambiguous listing identified.
+Interest-rate decisions and CPI are not market ticks and are not fetched here;
+they come from primary sources via research.
+
+## Known gaps carried into Stage 3
 
 **Thirteen baseline claims rest on the brief alone.** They are seeded at
 strength `weak` and the first weekly deep scan must replace each with a primary
 source. `python3 -m radar.cli baseline-gaps` lists them.
+
+**`EG` was resolved by lookup, not by the brief.** It is set to Everest Group,
+Ltd. (NYSE) — the only equity trading under that ticker. Correct
+`config/watchlist.toml` if a different security was meant.
+
+**`CCL` is recorded as delisted.** Coca-Cola Amatil was acquired by Coca-Cola
+European Partners in 2021. It is kept in the watchlist marked `active = false`
+so the gap in history explains itself, and is never quoted. The successor entity
+is Coca-Cola Europacific Partners (NASDAQ/LSE: CCEP) if that business is still
+of interest.

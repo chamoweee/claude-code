@@ -88,6 +88,13 @@ GitHub Actions (UTC cron, two firings)
 - **Numbers are fetched, not generated.** The 8% / 3% alert thresholds run over
   quotes in SQLite with no model in the loop, so an alert cannot be hallucinated
   or missed. Claude supplies news and interpretation, never arithmetic.
+- **Quotes are dated by the exchange, not by Sydney.** A NYSE close and an ASX
+  close reached in one 7am fetch belong to different calendar days; dating both
+  locally would corrupt every day-on-day change on the US half of the watchlist.
+- **A proxy series is labelled as one and never raises an alert.** There is no
+  free uranium spot feed, so `URA` (a miner ETF) stands in — stored with a
+  `PROXY —` note and excluded from the alert rules. The real uranium price is a
+  research question, not a tick.
 - **Two cron firings, one gate.** Cron is UTC; Sydney is UTC+10 or UTC+11. Both
   workflows fire at 20:00 *and* 21:00 UTC and `gate.py` asks `zoneinfo` what time
   it actually is in Sydney. Exactly one firing passes on any day, across the
@@ -171,9 +178,11 @@ collapse, regulation, a platform opening to Australians).
 ## Stage status
 
 - [x] **Stage 1 — Foundation.** Config, schema, DST gate, budget guard, run log,
-      baseline seed, CLI. No network, no API spend. 70 tests.
-- [ ] **Stage 2 — Data layer.** Macro and quote fetchers, week-on-week change,
-      the alert rule engine, offline fixtures.
+      baseline seed, CLI. No network, no API spend.
+- [x] **Stage 2 — Data layer.** Yahoo price source, macro metrics with
+      week-on-week change, watchlist quotes, and the alert rule engine. All
+      three watchlist tickers resolved. 127 tests, offline fixtures, no API
+      spend.
 - [ ] **Stage 3 — Research engine.** Claude client with web search, theme
       updates, discovery, scoring, source validation, cost accounting.
 - [ ] **Stage 4 — Report and email.** Mobile-friendly HTML, Gmail API sender,

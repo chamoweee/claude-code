@@ -1,9 +1,10 @@
 # Research watchlist — tickers only, no positions, no holdings, no amounts.
 #
-# `confirmed = false` means the ticker string is ambiguous and the price fetcher
-# will refuse to quote it until it is resolved. `radar status` lists these.
-# `quote_symbol` is what the Stage 2 price source is queried with (Yahoo-style:
-# ASX tickers take a .AX suffix).
+# `confirmed` means the ticker has been resolved to a specific listed security.
+# `active` means it currently trades and may be quoted. The price fetcher quotes
+# only entries where both are true, so an ambiguous or delisted ticker can never
+# be silently priced against the wrong instrument. `radar status` lists the rest.
+# `quote_symbol` is the Yahoo symbol (ASX tickers take a .AX suffix).
 
 [[holding]]
 symbol = "VVLU"
@@ -25,12 +26,13 @@ thesis = "US large-cap value factor exposure, unhedged AUD."
 
 [[holding]]
 symbol = "HVLU"
-name = "UNRESOLVED — global value ETF, hedged share class?"
+name = "VanEck MSCI International Value (AUD Hedged) ETF"
 kind = "etf"
-exchange = ""
-quote_symbol = ""
-confirmed = false
-thesis = "Ticker not resolved to a listed security. Needs confirmation."
+exchange = "ASX"
+quote_symbol = "HVLU.AX"
+confirmed = true
+active = true
+thesis = "International value factor with the AUD exposure hedged out — the currency-hedged counterpart to the unhedged global value sleeve."
 
 [[holding]]
 symbol = "SDR"
@@ -61,21 +63,27 @@ thesis = "Australian retail REIT; rate-sensitive, foot-traffic dependent."
 
 [[holding]]
 symbol = "CCL"
-name = "UNRESOLVED — Carnival Corp (NYSE) or the delisted Coca-Cola Amatil (ASX)?"
+name = "Coca-Cola Amatil (ASX:CCL) — DELISTED 2021"
 kind = "equity"
-exchange = ""
+exchange = "ASX"
 quote_symbol = ""
-confirmed = false
-thesis = "Coca-Cola Amatil left the ASX in 2021, so ASX:CCL no longer trades. Needs confirmation."
+confirmed = true
+active = false
+thesis = """Acquired by Coca-Cola European Partners in 2021; the ticker has not traded \
+since. Kept as a record so the gap in history explains itself. The successor entity is \
+Coca-Cola Europacific Partners (NASDAQ/LSE: CCEP) if that business is still of interest."""
 
 [[holding]]
 symbol = "EG"
-name = "UNRESOLVED — no unambiguous listing for this ticker"
+name = "Everest Group, Ltd."
 kind = "equity"
-exchange = ""
-quote_symbol = ""
-confirmed = false
-thesis = "Ticker not resolved to a listed security. Needs confirmation."
+exchange = "NYSE"
+quote_symbol = "EG"
+confirmed = true
+active = true
+thesis = """Reinsurer, formerly Everest Re. Resolved by lookup, not stated in the brief: \
+it is the only equity trading under this ticker. Correct it if a different security was \
+meant. Book value vs price is the usual value lens here."""
 
 [[holding]]
 symbol = "VICI"

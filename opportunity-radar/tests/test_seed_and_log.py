@@ -143,11 +143,15 @@ def test_watchlist_covers_the_brief(settings):
     assert symbols == {"VVLU", "VLUE", "HVLU", "SDR", "AMC", "SCG", "CCL", "EG", "VICI", "LEN"}
 
 
-def test_ambiguous_tickers_are_flagged_not_guessed(settings):
-    unconfirmed = {w.symbol for w in load_watchlist() if not w.confirmed}
-    assert unconfirmed == {"HVLU", "CCL", "EG"}
-    assert all(not w.quote_symbol for w in load_watchlist() if not w.confirmed), \
-        "an unconfirmed ticker must have no quote symbol, so it cannot be silently priced"
+def test_unquotable_tickers_cannot_be_silently_priced(settings):
+    """Whatever the reason an entry is unquotable — ambiguous or delisted — it must
+    carry no quote symbol, so no code path can price it against the wrong security."""
+    for entry in load_watchlist():
+        if entry.quotable:
+            continue
+        assert not entry.quote_symbol, (
+            f"{entry.symbol} is not quotable but still has quote_symbol="
+            f"{entry.quote_symbol!r}")
 
 
 def test_theme_seeds_have_status_and_watch_for(settings):

@@ -90,8 +90,14 @@ class WatchlistEntry:
     kind: str  # 'equity' | 'etf' | 'reit'
     exchange: str
     quote_symbol: str  # what the price source is queried with
-    confirmed: bool  # False means the ticker is ambiguous and needs Chamk to confirm
+    confirmed: bool  # False means the ticker is ambiguous and needs confirming
+    active: bool = True  # False means resolved but no longer trading
     thesis: str = ""
+
+    @property
+    def quotable(self) -> bool:
+        """Only a resolved, still-trading entry with a symbol may be priced."""
+        return self.confirmed and self.active and bool(self.quote_symbol)
 
 
 @dataclass(frozen=True)
@@ -232,6 +238,7 @@ def load_watchlist(config_dir: Path | None = None) -> list[WatchlistEntry]:
                 exchange=item.get("exchange", ""),
                 quote_symbol=item.get("quote_symbol", item["symbol"]),
                 confirmed=bool(item.get("confirmed", False)),
+                active=bool(item.get("active", True)),
                 thesis=item.get("thesis", ""),
             )
         )

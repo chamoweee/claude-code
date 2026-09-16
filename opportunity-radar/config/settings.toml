@@ -22,9 +22,11 @@ monthly_cap_aud = 30.0
 warn_at_fraction = 0.8
 # Held back from the cap so a halted run can still render and email its notice.
 reserve_aud = 1.0
-# Refreshed each weekly run from the AUD/USD macro fetch (Stage 2). The rate
-# actually used is stored on every ledger row, so old reports stay re-derivable.
-usd_to_aud = 1.52
+# Refreshed each weekly run from the AUD/USD macro fetch. The rate actually used
+# is stored on every ledger row, so old reports stay re-derivable. This committed
+# default is the fallback for the first run, taken from AUD/USD 0.7128 on
+# 16 Sep 2026; a test guards it against drifting far from reality.
+usd_to_aud = 1.403
 
 [alerts]
 # Daily check emails only when one of these is breached.

@@ -3,9 +3,11 @@
     python -m radar.cli status          # what the agent knows and what it will cost
     python -m radar.cli seed            # write the 16 Sep 2026 baseline snapshot
     python -m radar.cli gate weekly     # would a run fire right now?
+    python -m radar.cli prices          # live macro + watchlist fetch, free
     python -m radar.cli baseline-gaps   # baseline claims still lacking a real source
 
-Stage 1 commands only. None of them touch the network or the Claude API.
+No command here calls the Claude API, so none of them costs anything. Only
+`prices` touches the network.
 """
 
 from __future__ import annotations
@@ -26,6 +28,7 @@ from .config import (
     profile_is_real,
 )
 from .db import SCHEMA_VERSION, connect, table_counts
+from .runlog import start_run
 
 
 def _parse_now(value: str | None) -> datetime | None:
@@ -124,6 +127,87 @@ def cmd_seed(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_prices(args: argparse.Namespace) -> int:
+    """Live price fetch: macro, watchlist, and any alerts that would fire.
+
+    Costs nothing — no Claude API call is involved. Prints only; pass ``--store``
+    to write the readings into history the way the daily job will.
+    """
+    from .alerts import rules
+    from .sources import macro as macro_mod
+    from .sources import quotes as quotes_mod
+
+    settings = load_settings()
+    local = gate_mod.sydney_now(settings, _parse_now(args.now))
+    sydney_date = local.date().isoformat()
+    conn = connect(settings.db_path)
+    run = start_run(conn, "manual", sydney_date)
+
+    try:
+        macro_readings, macro_failures = macro_mod.fetch_macro(run)
+        changes = macro_mod.changes_since_last_snapshot(conn, sydney_date, macro_readings)
+
+        print(f"Macro — {sydney_date} Sydney\n")
+        print(f"  {'Metric':<26} {'Level':>12}  {'Day':>8}  {'Since last':>11}")
+        by_key = {r.metric.key: r for r in macro_readings}
+        for change in changes:
+            reading = by_key[change.metric]
+            day = reading.quote.pct_change
+            day_text = f"{day:+.1f}%" if day is not None else "n/a"
+            label = change.label + (" *" if change.is_proxy else "")
+            print(f"  {label:<26} {change.latest:>12,.4g}  {day_text:>8}  "
+                  f"{change.format_change():>11}")
+        if any(c.is_proxy for c in changes):
+            print("\n  * proxy series, not the underlying price — see the note in history")
+
+        rate = macro_mod.usd_to_aud_from(macro_readings)
+        if rate:
+            print(f"\n  USD->AUD for costing: {rate:.4f} "
+                  f"(config default {settings.budget.usd_to_aud:.4f})")
+
+        entries = load_watchlist()
+        readings, skipped, quote_failures = quotes_mod.fetch_watchlist(run, entries)
+        print(f"\nWatchlist — {len(readings)} quoted, {len(skipped)} skipped\n")
+        print(f"  {'Sym':<6} {'Close':>10} {'Cur':<4} {'Day':>8}  {'Date':<11} Exchange")
+        for reading in sorted(readings, key=lambda r: r.entry.symbol):
+            quote, pct = reading.quote, reading.pct_change
+            print(f"  {reading.entry.symbol:<6} {quote.close:>10,.2f} {quote.currency:<4} "
+                  f"{f'{pct:+.1f}%' if pct is not None else 'n/a':>8}  "
+                  f"{quote.as_of_date:<11} {quote.exchange}")
+        for skip in skipped:
+            print(f"  {skip.symbol:<6} {'—':>10}      {'':>8}  not quoted: {skip.reason}")
+
+        alerts = rules.evaluate(readings, macro_readings, settings.alerts, sydney_date)
+        print(f"\nAlerts: {len(alerts)} would fire "
+              f"(thresholds {settings.alerts.watchlist_move_pct:.0f}% stocks, "
+              f"{settings.alerts.commodity_move_pct:.0f}% commodities/FX)")
+        for alert in alerts:
+            print(f"  [{alert.severity}] {alert.headline}")
+        if not alerts:
+            print("  Nothing breached a threshold — the daily job would send no email.")
+
+        for failure in macro_failures + quote_failures:
+            print(f"  ! fetch failed: {failure}")
+
+        if args.store:
+            macro_mod.store_macro(conn, run.id, sydney_date, macro_readings)
+            quotes_mod.store_quotes(conn, run.id, readings)
+            fresh = rules.store_new_alerts(conn, run.id, alerts)
+            print(f"\nStored: {len(macro_readings)} macro, {len(readings)} quotes, "
+                  f"{len(fresh)} new alerts")
+        else:
+            print("\n(nothing stored — pass --store to write these into history)")
+
+        run.finish("partial" if (macro_failures or quote_failures) else "ok")
+    except Exception as exc:  # noqa: BLE001 — recorded, then re-raised
+        run.log_error("price fetch failed", exc)
+        run.finish("failed", notes=f"{type(exc).__name__}: {exc}"[:500])
+        raise
+    finally:
+        conn.close()
+    return 0
+
+
 def cmd_reset(args: argparse.Namespace) -> int:
     """Rebuild the history database from empty, then re-seed.
 
@@ -191,6 +275,11 @@ def build_parser() -> argparse.ArgumentParser:
     p_seed.add_argument("--force", action="store_true",
                         help="clear and rewrite an existing baseline")
     p_seed.set_defaults(func=cmd_seed)
+
+    p_prices = sub.add_parser("prices", help="live macro + watchlist fetch (free, no API)")
+    p_prices.add_argument("--store", action="store_true",
+                          help="write the readings into history")
+    p_prices.set_defaults(func=cmd_prices)
 
     p_reset = sub.add_parser("reset", help="delete all history and re-seed from empty")
     p_reset.add_argument("--yes", action="store_true", help="confirm the deletion")
