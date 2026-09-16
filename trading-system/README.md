@@ -103,16 +103,45 @@ symbols.** Buy-and-hold averaged +342% in-sample; even the best variant
 
 This is reported as a real result, not a prompt to keep grid-searching
 parameters until something crosses zero — that's exactly the overfitting
-this project is structured to avoid. The more useful next questions are
-probably: (a) these are total-return comparisons only — risk-adjusted
-metrics (Sharpe, max drawdown) aren't built yet and could tell a different
-story even without beating raw buy-and-hold return; (b) mean
-reversion/breakout strategies are generally expected to show an edge in
-choppier, range-bound markets, not a one-directional multi-decade blue-chip
-bull run — the current universe/period may simply be a bad test bed for
-them; (c) for a $2,000 account, buy-and-hold plus disciplined fortnightly
-contributions may honestly be the better answer to "what strategy" than
-any active timing rule tested so far.
+this project is structured to avoid.
+
+### Round 3: a structurally different strategy — cross-sectional momentum
+
+Single-symbol time-series rules (MA/RSI/breakout on one stock at a time)
+were never a fair test against that stock's own buy-and-hold, especially
+for a concentrated multi-decade compounder like CSL. `scripts/
+run_cross_sectional_momentum.py` + `tradesys/backtest/portfolio_engine.py`
+try something genuinely different: each month, rank all 12 universe stocks
+by trailing 6-month return, hold the top 3, go to cash for any slot where
+nothing has positive momentum. This is the actual mechanism behind
+published cross-sectional/dual-momentum research, not a retuned version of
+the earlier rules — and it's compared against two FAIR benchmarks (VAS
+buy-and-hold, and an equal-weight buy-and-hold basket of the same 12
+stocks), not against any single stock's own return.
+
+In-sample, monthly rebalancing: **-28.5%**, badly losing to both VAS
+(+156.5%) and the equal-weight basket (+326.5%), with 326 trades. But a
+zero-fee re-run of the exact same signal returned **+371.8%** — beating
+both benchmarks. So unlike the earlier single-symbol rules, this signal
+has genuine edge; fees are what's destroying it, not a flawed idea.
+
+Reducing rebalance frequency to fight that fee drag (a specific, motivated
+hypothesis, not blind tuning): monthly -28.5% -> quarterly **-47.3%**
+(worse) -> semi-annual **+135.8%** (much better, though still short of both
+benchmarks). The quarterly result being *worse* than monthly, not a smooth
+improvement, is a genuine warning sign — with only ~20 rebalance decisions
+across the whole backtest, a single historical path is a small, noisy
+sample, and this non-monotonic pattern is exactly what fragile,
+path-dependent overfitting looks like from the outside. The semi-annual
+number is promising, not proven.
+
+**Stopping the hand-picking here.** The honest next step is
+`validation/sensitivity.py` and `validation/walk_forward.py` (not yet
+built) — checking whether performance holds up across a neighborhood of
+lookback/rebalance parameters and across multiple sub-periods, not
+cherry-picking whichever single configuration happened to score best on
+one historical path. Until that exists, none of rounds 1-3 should be
+treated as a confirmed edge, including the semi-annual momentum number.
 
 ## Running the tests
 
