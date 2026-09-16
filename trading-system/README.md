@@ -33,12 +33,16 @@ upgraded, **yfinance is the practical data source** for the ASX universe.
 still supply a `TwelveDataClient` as `primary_client` once a suitable plan
 is in place.
 
-**Known data quality issue**: `IVV.AX` (S&P 500 exposure) has bad early
-history in Yahoo Finance — its pre-2011 data doesn't match its actual ASX
-listing (which started ~2011) and there's an unexplained ~20x price drop
-around August 2011. Don't trust `period="max"` blindly for cross-listed
-ETFs; this needs a start-date guard or anomaly check before IVV backtests
-are meaningful (tracked as a follow-up, not yet built).
+**Data quality guard (fixed)**: `IVV.AX` had bad early history in Yahoo
+Finance. `tradesys/data/quality.py` now detects any unexplained >3x (or
+<1/3x) single-day price jump and truncates everything before the *last*
+such jump, keeping only the most recent clean stretch. For IVV this cut off
+data before 2015-12-29 (there were actually two bad discontinuities, not
+just the one near its 2011 ASX listing — the guard conservatively keeps
+only what's after the last one). That leaves ~11 years of usable IVV
+history instead of the bogus ~18. This is a blunt, single-symbol guard, not
+a general data-vendor reconciliation — worth remembering if a similar
+issue shows up in the wider universe later.
 
 ## Running a backtest
 
@@ -47,18 +51,40 @@ source .venv/bin/activate
 python scripts/run_backtest.py
 ```
 
-Compares buy-and-hold against a 20/50-day MA crossover across the
-configured universe (`tradesys/universe.py`), using real fee/spread/
+Compares buy-and-hold against three candidate strategies (MA(20/50)
+crossover, RSI/Bollinger mean reversion, Donchian momentum breakout) across
+the configured universe (`tradesys/universe.py`), using real fee/spread/
 slippage assumptions from `tradesys/config.py`.
 
-**Current honest result**: the naive MA(20,50) crossover loses to
-buy-and-hold on every symbol tested, after realistic fees. That is not a
-bug to "fix" by tuning parameters until it looks better — a strategy that
-only wins after parameter search on the same data it's judged by is
-exactly the overfitting this project is structured to avoid (see
-`validation/`, not yet built, for walk-forward + out-of-sample holdout).
-Right now this is a plain result: on this universe and cost model, MA
-crossover is not yet a candidate for real money.
+**Current honest result**: all three strategies lose to buy-and-hold on
+every symbol tested, after realistic fees — often losing 40-90% while
+buy-and-hold gains hundreds of percent. That is not a bug to "fix" by
+tuning parameters until it looks better (see `validation/`, not yet built,
+for walk-forward + out-of-sample holdout — the real defence against that).
+
+Two genuinely separate causes, isolated by re-running CBA with fees zeroed
+out (not a permanent code change, just a diagnostic):
+
+1. **Fee drag is severe at this account size.** All three strategies trade
+   100-230 times over ~20 years at average notional of only ~$100-200 a
+   trade. The $9.90 minimum brokerage alone is 5-10% of a typical trade's
+   notional — total fees paid over the backtest exceed half the starting
+   $2,000 capital. Zero-fee, the strategies are roughly flat-to-slightly-
+   positive (MA +13%, mean reversion +18%, breakout +6.5% on CBA); with
+   real fees applied, all three go deeply negative. **A $2,000 account
+   cannot absorb this many round trips regardless of strategy quality** —
+   this is a capacity/design constraint, not something a better entry rule
+   fixes.
+2. **Even fee-free, none of them get close to buy-and-hold** (+13-18% vs
+   +775% on CBA over the same window). Spending time out of the market
+   during a multi-decade one-directional bull run in a strong compounder
+   like CBA is extremely costly — a well-documented property of timing
+   strategies, not obviously a flaw in these three specific rules.
+
+Neither finding says "this approach can never work" — they say: don't trust
+any of these three at the current trade frequency on a $2,000 account, and
+don't conclude anything about raw signal quality without separating it from
+fee drag first, the way we just did.
 
 ## Running the tests
 
@@ -76,9 +102,10 @@ See inline module docstrings. Rough shape:
 - `tradesys/universe.py` — fixed symbol list, chosen up front to avoid
   survivorship bias from "today's index membership" lookups.
 - `tradesys/data/` — loading (Twelve Data + yfinance fallback), caching,
-  split/dividend back-adjustment.
+  split/dividend back-adjustment, and a basic bad-data-jump guard.
 - `tradesys/strategies/` — pluggable `Strategy` interface; `buy_and_hold`
-  (the benchmark every strategy must beat) and `ma_crossover` so far.
+  (the benchmark every strategy must beat), `ma_crossover`, `mean_reversion`
+  (RSI + Bollinger Bands), `momentum_breakout` (Donchian channel).
 - `tradesys/backtest/` — event-driven engine (next-bar execution only, no
   look-ahead), transaction cost model, portfolio ledger.
 - `tradesys/risk/` — fee-aware position sizing (1% account risk per trade).

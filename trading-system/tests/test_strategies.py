@@ -2,6 +2,8 @@ import pandas as pd
 
 from tradesys.strategies.buy_and_hold import BuyAndHold
 from tradesys.strategies.ma_crossover import MACrossover
+from tradesys.strategies.mean_reversion import MeanReversion
+from tradesys.strategies.momentum_breakout import MomentumBreakout
 
 
 def make_bars(closes):
@@ -41,6 +43,49 @@ def test_ma_crossover_goes_long_when_fast_crosses_above_slow():
 def test_ma_crossover_rejects_invalid_windows():
     try:
         MACrossover(fast_window=10, slow_window=5)
+        assert False, "expected ValueError"
+    except ValueError:
+        pass
+
+
+def test_mean_reversion_flat_before_indicators_ready():
+    bars = make_bars([10] * 15)  # fewer bars than bb_window(20)/rsi_period(14) need
+    signals = MeanReversion().generate_signals(bars)
+    assert list(signals) == [0] * 15
+
+
+def test_mean_reversion_enters_on_oversold_and_holds_until_reversion():
+    # Sharp decline (oversold trigger) then recovers back to the mean.
+    closes = [100.0] * 20 + [90, 80, 70, 65] + [70, 80, 90, 100, 105, 108, 110]
+    bars = make_bars(closes)
+    signals = MeanReversion(rsi_period=5, bb_window=10).generate_signals(bars)
+
+    # Should be long at some point after the drop, and flat again once it
+    # has clearly reverted back above the recent mean.
+    assert 1 in list(signals)
+    assert signals.iloc[-1] == 0
+
+
+def test_momentum_breakout_flat_before_indicators_ready():
+    bars = make_bars([10] * 15)
+    signals = MomentumBreakout(entry_window=20, exit_window=10).generate_signals(bars)
+    assert list(signals) == [0] * 15
+
+
+def test_momentum_breakout_enters_on_new_high_and_exits_on_breakdown():
+    flat = [10.0] * 25
+    breakout = [11, 12, 13, 14, 15]  # new highs above the prior 20-day range
+    breakdown = [10, 9, 8]  # falls below the recent 10-day low
+    bars = make_bars(flat + breakout + breakdown)
+    signals = MomentumBreakout(entry_window=20, exit_window=10).generate_signals(bars)
+
+    assert 1 in list(signals)
+    assert signals.iloc[-1] == 0
+
+
+def test_momentum_breakout_rejects_invalid_windows():
+    try:
+        MomentumBreakout(entry_window=5, exit_window=10)
         assert False, "expected ValueError"
     except ValueError:
         pass

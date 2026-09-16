@@ -16,6 +16,7 @@ import requests
 from tradesys.config import TWELVE_DATA_API_KEY
 from tradesys.data import cache as bar_cache
 from tradesys.data.adjustments import adjust_ohlcv
+from tradesys.data.quality import TruncationReport, truncate_before_anomaly
 
 TWELVE_DATA_BASE = "https://api.twelvedata.com"
 
@@ -101,6 +102,7 @@ class YFinanceClient:
 class LoadResult:
     bars: pd.DataFrame
     source: str  # "cache" | "twelve_data" | "yfinance"
+    quality: TruncationReport | None = None
 
 
 def load_symbol_bars(
@@ -128,22 +130,24 @@ def load_symbol_bars(
             splits = primary_client.get_splits(symbol, exchange)
             dividends = primary_client.get_dividends(symbol, exchange)
             adjusted = adjust_ohlcv(raw, splits=splits, dividends=dividends)
+            adjusted, quality = truncate_before_anomaly(adjusted)
             if cache_dir:
                 bar_cache.save_bars(symbol, adjusted, cache_dir=cache_dir)
             else:
                 bar_cache.save_bars(symbol, adjusted)
-            return LoadResult(bars=adjusted, source="twelve_data")
+            return LoadResult(bars=adjusted, source="twelve_data", quality=quality)
         except Exception as exc:  # noqa: BLE001 - deliberately broad, we fall back
             errors.append(f"twelve_data: {exc}")
 
     if fallback_client is not None:
         try:
             bars = fallback_client.get_time_series(symbol, exchange)
+            bars, quality = truncate_before_anomaly(bars)
             if cache_dir:
                 bar_cache.save_bars(symbol, bars, cache_dir=cache_dir)
             else:
                 bar_cache.save_bars(symbol, bars)
-            return LoadResult(bars=bars, source="yfinance")
+            return LoadResult(bars=bars, source="yfinance", quality=quality)
         except Exception as exc:  # noqa: BLE001
             errors.append(f"yfinance: {exc}")
 
