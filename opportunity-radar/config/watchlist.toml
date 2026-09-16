@@ -1,0 +1,96 @@
+# Research watchlist — tickers only, no positions, no holdings, no amounts.
+#
+# `confirmed = false` means the ticker string is ambiguous and the price fetcher
+# will refuse to quote it until it is resolved. `radar status` lists these.
+# `quote_symbol` is what the Stage 2 price source is queried with (Yahoo-style:
+# ASX tickers take a .AX suffix).
+
+[[holding]]
+symbol = "VVLU"
+name = "Vanguard Global Value Equity Active ETF"
+kind = "etf"
+exchange = "ASX"
+quote_symbol = "VVLU.AX"
+confirmed = true
+thesis = "Rules-based global value tilt; core of the value sleeve."
+
+[[holding]]
+symbol = "VLUE"
+name = "iShares MSCI USA Value Factor ETF"
+kind = "etf"
+exchange = "NYSEARCA"
+quote_symbol = "VLUE"
+confirmed = true
+thesis = "US large-cap value factor exposure, unhedged AUD."
+
+[[holding]]
+symbol = "HVLU"
+name = "UNRESOLVED — global value ETF, hedged share class?"
+kind = "etf"
+exchange = ""
+quote_symbol = ""
+confirmed = false
+thesis = "Ticker not resolved to a listed security. Needs confirmation."
+
+[[holding]]
+symbol = "SDR"
+name = "SiteMinder Limited"
+kind = "equity"
+exchange = "ASX"
+quote_symbol = "SDR.AX"
+confirmed = true
+thesis = "Hotel commerce platform; revenue growth vs path to profitability."
+
+[[holding]]
+symbol = "AMC"
+name = "Amcor plc (ASX CDIs)"
+kind = "equity"
+exchange = "ASX"
+quote_symbol = "AMC.AX"
+confirmed = true
+thesis = "Defensive packaging; dividend plus input-cost sensitivity."
+
+[[holding]]
+symbol = "SCG"
+name = "Scentre Group"
+kind = "reit"
+exchange = "ASX"
+quote_symbol = "SCG.AX"
+confirmed = true
+thesis = "Australian retail REIT; rate-sensitive, foot-traffic dependent."
+
+[[holding]]
+symbol = "CCL"
+name = "UNRESOLVED — Carnival Corp (NYSE) or the delisted Coca-Cola Amatil (ASX)?"
+kind = "equity"
+exchange = ""
+quote_symbol = ""
+confirmed = false
+thesis = "Coca-Cola Amatil left the ASX in 2021, so ASX:CCL no longer trades. Needs confirmation."
+
+[[holding]]
+symbol = "EG"
+name = "UNRESOLVED — no unambiguous listing for this ticker"
+kind = "equity"
+exchange = ""
+quote_symbol = ""
+confirmed = false
+thesis = "Ticker not resolved to a listed security. Needs confirmation."
+
+[[holding]]
+symbol = "VICI"
+name = "VICI Properties Inc."
+kind = "reit"
+exchange = "NYSE"
+quote_symbol = "VICI"
+confirmed = true
+thesis = "Triple-net gaming REIT; long leases with CPI escalators vs rate risk."
+
+[[holding]]
+symbol = "LEN"
+name = "Lennar Corporation"
+kind = "equity"
+exchange = "NYSE"
+quote_symbol = "LEN"
+confirmed = true
+thesis = "US homebuilder; rate cuts and housing starts drive the thesis."

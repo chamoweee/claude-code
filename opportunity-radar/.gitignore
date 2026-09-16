@@ -1,0 +1,20 @@
+# Private configuration — never committed. This repo is public.
+config/profile.local.md
+config/*.local.toml
+config/*.local.md
+.env
+
+# Rendered reports contain personal fit scoring and are emailed, not committed.
+data/reports/*.html
+data/reports/*.txt
+
+# Local Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+
+# SQLite side files (journal_mode is DELETE, but belt and braces)
+data/*.db-wal
+data/*.db-shm
+data/*.db-journal

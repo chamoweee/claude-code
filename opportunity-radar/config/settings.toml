@@ -1,0 +1,61 @@
+# Opportunity Radar — public configuration.
+#
+# Nothing personal belongs in this file: it lives in a public repository.
+# The report recipient and the personal profile arrive from GitHub Secrets
+# (RADAR_RECIPIENT, RADAR_PROFILE). See README.md § Secrets.
+
+[general]
+timezone = "Australia/Sydney"
+baseline_date = "2026-09-16"
+
+[schedule]
+# Monday is 0, matching datetime.weekday().
+weekly_weekday = 0
+weekly_hour = 7
+daily_weekdays = [0, 1, 2, 3, 4]
+daily_hour = 7
+
+[budget]
+# Hard rule: all runs stop when this is reached.
+monthly_cap_aud = 30.0
+# Flag the spend section of the report once this fraction is used.
+warn_at_fraction = 0.8
+# Held back from the cap so a halted run can still render and email its notice.
+reserve_aud = 1.0
+# Refreshed each weekly run from the AUD/USD macro fetch (Stage 2). The rate
+# actually used is stored on every ledger row, so old reports stay re-derivable.
+usd_to_aud = 1.52
+
+[alerts]
+# Daily check emails only when one of these is breached.
+watchlist_move_pct = 8.0
+commodity_move_pct = 3.0
+fx_move_pct = 3.0
+
+[research]
+model = "claude-sonnet-5"
+weekly_effort = "high"
+daily_effort = "low"
+max_new_trends = 5
+# Discovery rejects anything whose evidence is older than this.
+evidence_max_age_days = 90
+# An opportunity supported only by weak sources (blogs, agency marketing)
+# cannot score above this, no matter how good the story sounds.
+weak_source_score_cap = 5.0
+
+# USD per million tokens, from the Anthropic pricing table.
+# web_search_per_1k_usd is the server-side web search tool charge per 1,000
+# searches — confirm against anthropic.com/pricing before the first live run.
+[pricing.claude-sonnet-5]
+input_per_mtok_usd = 2.00
+output_per_mtok_usd = 10.00
+cache_read_per_mtok_usd = 0.20
+cache_write_per_mtok_usd = 2.50
+web_search_per_1k_usd = 10.00
+
+[pricing.claude-opus-5]
+input_per_mtok_usd = 5.00
+output_per_mtok_usd = 25.00
+cache_read_per_mtok_usd = 0.50
+cache_write_per_mtok_usd = 6.25
+web_search_per_1k_usd = 10.00

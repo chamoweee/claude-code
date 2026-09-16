@@ -1,0 +1,124 @@
+# The seven baseline themes, as stated in the 16 Sep 2026 brief.
+#
+# The `evidence` entries below are Chamk's own starting figures. They carry no
+# source URL, so they are seeded at strength "weak" and the first weekly deep
+# scan must re-verify each one against a primary source before it is repeated in
+# any report. That is the source rule applied to our own baseline, not just to
+# what the model finds.
+
+[[theme]]
+slug = "ai-expert-training"
+title = "AI expert-training work"
+status = "STABLE"
+description = """Platforms paying subject-matter experts to produce training data and \
+evaluations for AI labs. Key question is not whether the platforms earn — it is \
+whether an individual in Australia can get on the roster and be paid."""
+watch_for = """Australian eligibility opening or closing; published average pay \
+changing; a platform cutting rates or its expert pool; a new entrant."""
+  [[theme.evidence]]
+  claim = "Mercor annualised revenue run rate"
+  number_value = "~$2B"
+  note = "Needs a primary source — company statement or reputable financial media."
+  [[theme.evidence]]
+  claim = "Average hourly rate paid to experts"
+  number_value = "~$85/hr"
+  note = "Unclear whether this is a platform-wide mean or a headline top rate. Verify."
+  [[theme.evidence]]
+  claim = "Handshake AI valuation or revenue"
+  number_value = "$1B"
+  note = "Figure type ambiguous in the brief. Verify what the $1B actually measures."
+
+[[theme]]
+slug = "home-batteries"
+title = "Home battery installs and the declining rebate"
+status = "RISING"
+description = """Australian home battery uptake under the federal rebate, whose value \
+steps down every six months. Western Sydney postcodes are among the highest-volume."""
+watch_for = """Rebate rule or rate changes; the next step-down date; install volume \
+updates; state-level scheme changes in NSW; installer capacity and pricing."""
+  [[theme.evidence]]
+  claim = "Cumulative installs reached"
+  number_value = "500,000 by 14 Aug 2026"
+  note = "Verify against the Clean Energy Regulator or DCCEEW — this is a primary-source figure."
+  [[theme.evidence]]
+  claim = "Rebate factor declines every 6 months"
+  number_value = "6-month step-down"
+  note = "Confirm the exact step-down schedule and the next date from the scheme rules."
+
+[[theme]]
+slug = "data-centres"
+title = "Australian data centre build-out"
+status = "RISING"
+description = """AI-driven demand for Australian data centre capacity, and the listed \
+and private vehicles capturing it."""
+watch_for = """New site announcements and anchor tenants; the rumoured Firmus IPO; \
+capacity and capex guidance; grid connection or planning constraints; power pricing."""
+  [[theme.evidence]]
+  claim = "NEXTDC Eastern Creek linked to OpenAI"
+  number_value = "site/tenant claim"
+  note = "Verify the tenant relationship from an ASX announcement before repeating it."
+  [[theme.evidence]]
+  claim = "Firmus IPO rumoured"
+  number_value = "rumour"
+  note = "Rumour, not evidence. Report as unconfirmed until a prospectus or ASX filing exists."
+
+[[theme]]
+slug = "glp1-food-shift"
+title = "GLP-1 driven food demand shift"
+status = "STABLE"
+description = """Weight-loss drug adoption shifting food demand toward protein, fibre and \
+smaller portions. Directly relevant to Zen Oasis menu and portion design."""
+watch_for = """Australian prescription or adoption data; supermarket or food-service \
+category data; PBS listing changes; any AU-specific consumption study."""
+  [[theme.evidence]]
+  claim = "Demand shift toward protein, fibre, small portions"
+  number_value = "directional"
+  note = "US-centric so far. The open question is Australian adoption data — no AU figure yet."
+
+[[theme]]
+slug = "ai-automation-services"
+title = "AI automation services for small business"
+status = "FADING"
+description = """Selling AI automation build-outs to small businesses. Flagged in the \
+brief as weak evidence, and the category is dense with course-sellers."""
+watch_for = """Real revenue data from operators, not from people selling courses about \
+it; platform or agency financials; ABS small-business technology adoption data."""
+  [[theme.evidence]]
+  claim = "Individuals earning from SMB AI automation"
+  number_value = "unquantified"
+  note = "Brief marks this weak. Verify with real data only; treat course-sellers as a red flag."
+
+[[theme]]
+slug = "commodities"
+title = "Gold, copper and uranium"
+status = "STABLE"
+description = """The three commodity threads being tracked for both macro signal and \
+direct investment leads."""
+watch_for = """Price moves beyond the daily alert thresholds; supply disruptions; \
+central bank gold buying; grid and data-centre copper demand; reactor approvals."""
+  [[theme.evidence]]
+  claim = "Gold price, down from peak"
+  number_value = "~$4,290 (peak ~$5,300)"
+  note = "Verify spot and the peak date from a primary market source."
+  [[theme.evidence]]
+  claim = "Copper year-on-year change"
+  number_value = "+38% y/y"
+  note = "Verify the reference date for the y/y window."
+
+[[theme]]
+slug = "sydney-rental-market"
+title = "Sydney rental market, western suburbs"
+status = "STABLE"
+description = """Vacancy and rent growth across Sydney and its western suburbs, which set \
+achievable income for small secondary dwellings. The private profile supplies why this \
+matters; it is not recorded here."""
+watch_for = """Vacancy rate changes; rent growth by western Sydney postcode; NSW tenancy \
+law changes; secondary dwelling planning or approval rule changes."""
+  [[theme.evidence]]
+  claim = "Sydney vacancy rate"
+  number_value = "2.2%"
+  note = "Verify against SQM Research or Domain/CoreLogic, with the reference month."
+  [[theme.evidence]]
+  claim = "Rent growth slowing"
+  number_value = "directional"
+  note = "Needs a rate and a period. Postcode-level figures matter more than Sydney-wide."
