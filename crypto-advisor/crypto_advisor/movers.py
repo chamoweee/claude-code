@@ -31,6 +31,13 @@ class MoverRow:
 
 
 def _liquidity_pass(row: dict, config: dict) -> bool:
+    """The movers scan covers the wide candidate pool (see universe.build_universe's
+    `stage0`), most of which never gets a 30d-average-volume figure computed (that
+    requires the full per-coin history fetch reserved for the investable universe).
+    So this liquidity gate uses each coin's current 24h volume against the
+    `min_liquidity_avg_volume_aud_30d` threshold as a same-order-of-magnitude proxy,
+    not a literal 30d average -- coins that already have the real 30d average (i.e.
+    they're also in the investable universe) still show it in `volume_vs_30d_avg`."""
     mcfg = config["movers"]
     market_cap = row.get("market_cap") or 0
     volume_24h = row.get("total_volume") or 0
