@@ -30,8 +30,9 @@ api/
   create-checkout-session.js   the only server-side code
 scripts/
   build-shop.js         generates the pages
+  build-preview.js      generates the single-page Artifact preview
   serve-shop.js         local dev server (static + the API)
-  test-shop.js          39 checks
+  test-shop.js          40 checks
 ```
 
 ## Running it locally
@@ -107,6 +108,29 @@ server ignores it.
 Order details the payment doesn't cover — pickup date, delivery address, cake
 message — are attached to the session as metadata and appear on the payment in
 your Stripe dashboard.
+
+## The clickable preview
+
+`shop/preview.html` is a single-page version of the storefront, published as a
+Claude Artifact so the shop can be clicked through without deploying:
+
+https://claude.ai/artifact/JdLNUDY345N3bmJyeEhs1P
+
+An Artifact is one page, so the preview collapses the multi-page site into a
+single screen with the cart as a slide-over instead of its own route. It is
+generated from the same `products.json`, so prices, pack sizes and lead times
+can't drift from the real shop.
+
+```
+node scripts/build-preview.js
+```
+
+Then republish `shop/preview.html` to the URL above. The test suite fails if the
+committed preview no longer matches the catalogue, so a price change can't leave
+a stale demo quoting the old figure.
+
+Edit `shop/preview.template.html` to change the preview itself — the `__PRODUCTS__`,
+`__GROUPS__` and `__RULES__` placeholders are filled at build time.
 
 ## Testing
 

@@ -116,6 +116,18 @@ function freshnessCheck() {
   execFileSync("node", [path.join(ROOT, "scripts", "build-shop.js")], { stdio: "pipe" });
   const stale = tracked.filter((f) => fs.readFileSync(path.join(SHOP, f), "utf8") !== before.get(f));
   check("generated files match products.json (run build-shop.js and commit)", stale.length === 0, stale.slice(0, 4).join(", "));
+
+  // The published Artifact preview is generated from the same data; if it
+  // drifts, the clickable demo shows prices the shop no longer charges.
+  const previewPath = path.join(SHOP, "preview.html");
+  if (fs.existsSync(previewPath)) {
+    const previewBefore = fs.readFileSync(previewPath, "utf8");
+    execFileSync("node", [path.join(ROOT, "scripts", "build-preview.js")], { stdio: "pipe" });
+    check(
+      "preview.html matches products.json (run build-preview.js and republish)",
+      fs.readFileSync(previewPath, "utf8") === previewBefore
+    );
+  }
 }
 
 /* ---------- server ---------- */
