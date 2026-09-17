@@ -7,6 +7,7 @@ from crypto_advisor.metrics import (
     annualized_volatility_pct,
     compute_ccxt_volume_check,
     correlation_and_beta,
+    historical_weekly_return_range,
     max_drawdown_pct,
     sma,
 )
@@ -113,3 +114,39 @@ def test_ccxt_volume_check_converts_base_volume_to_usd_notional():
 def test_ccxt_volume_check_returns_none_without_client():
     coin = make_coin(coin_id="bitcoin")
     assert compute_ccxt_volume_check(None, coin, usd_to_aud_rate=1.5) == (None, None, None)
+
+
+def test_historical_weekly_return_range_insufficient_history_returns_none():
+    assert historical_weekly_return_range([100.0] * 5) is None
+    assert historical_weekly_return_range([100.0] * 12) is None  # <10 weekly samples
+
+
+def test_historical_weekly_return_range_zero_for_constant_prices():
+    rng = historical_weekly_return_range([100.0] * 50)
+    assert rng is not None
+    assert rng["p10"] == pytest.approx(0.0)
+    assert rng["median"] == pytest.approx(0.0)
+    assert rng["p90"] == pytest.approx(0.0)
+    assert rng["samples"] == 50 - 7
+
+
+def test_historical_weekly_return_range_known_step_series():
+    # Every 7th day the price doubles, held flat in between -> every trailing
+    # 7-day return is exactly +100%.
+    prices = []
+    price = 100.0
+    for week in range(15):
+        for _ in range(7):
+            prices.append(price)
+        price *= 2
+    rng = historical_weekly_return_range(prices)
+    assert rng["median"] == pytest.approx(100.0, rel=0.05)
+
+
+def test_historical_weekly_return_range_never_uses_future_data():
+    # The stat is a description of the past, not a prediction: it must be
+    # computable purely from a prefix of history (no look-ahead).
+    rng_full = historical_weekly_return_range(list(range(100, 200)))
+    rng_prefix = historical_weekly_return_range(list(range(100, 150)))
+    assert rng_full is not None and rng_prefix is not None
+    assert rng_full != rng_prefix  # different history -> different (real) stat, no leakage from the future

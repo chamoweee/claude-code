@@ -69,10 +69,21 @@ copy from `portfolio.example.yaml`. All figures are AUD.
 ```bash
 python main.py screen      # build the investable universe -> output/screen.csv (no advisory)
 python main.py advise      # full pipeline incl. actions   -> output/actions.md, live_report.html
+python main.py simple      # condensed view: top movers/losers + BUY/ADD potentials -> prints to terminal
 python main.py backtest    # walk-forward backtest vs benchmarks -> output/report.md
 python main.py live        # runs `advise` on a loop (default every 5 min), with alerts + digests
 streamlit run dashboard.py # mobile-friendly live dashboard (reads output/state.json)
 ```
+
+`simple` is the quickest way to check in: it prints (and writes to
+`output/simple_report.md`) just the top movers beyond
+`config.yaml`'s `simple_report.mover_threshold_pct` (default +/-20%), the top
+losers beyond it, and the coins currently eligible for BUY/ADD -- each with a
+real historical 1-week return range (the actual 10th-90th percentile of that
+coin's trailing 7-day returns), not a forecast. If nothing currently clears
+the BUY/ADD bar, it shows the closest candidates by score instead, clearly
+labelled as such. Every other command also writes `simple_report.md` as part
+of its normal output, so it's always there to re-read.
 
 `live` and the dashboard are meant to run together: `python main.py live` in
 one terminal (or as a background service, see below) keeps

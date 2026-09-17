@@ -21,8 +21,9 @@ from .classify import CORE, REVENUE_GENERATING, SPECULATIVE, Classification
 from .config import PROJECT_ROOT, Portfolio
 from .insights import Insight
 from .logutil import get_logger
-from .metrics import CoinMetrics
+from .metrics import CoinMetrics, historical_weekly_return_range
 from .risk import FinalAction
+from .signals import ADD, BUY
 from .universe import UniverseCoin
 
 logger = get_logger(__name__)
@@ -524,11 +525,99 @@ def write_state_json(ctx: ReportContext) -> Path:
     return path
 
 
+def _range_str(rng: Optional[dict]) -> str:
+    if not rng:
+        return "not enough price history"
+    return f"{rng['p10']:+.1f}% to {rng['p90']:+.1f}% (median {rng['median']:+.1f}%, over {rng['samples']} weeks)"
+
+
+def write_simple_report(ctx: ReportContext) -> Path:
+    """The condensed, on-demand view: top movers beyond a threshold, top
+    losers beyond a threshold, and the best-scoring BUY/ADD-eligible coins
+    (or the closest candidates, if none currently qualify) -- each with a
+    real historical weekly-return range instead of a fabricated forecast.
+    Written fresh every time `python main.py simple` (or `live`) runs."""
+    scfg = ctx.config["simple_report"]
+    threshold = scfg["mover_threshold_pct"]
+    top_n = scfg["top_n"]
+    coin_by_id = {c.coin_id: c for c in ctx.universe}
+
+    movers_24h = ctx.movers.get("24h", {})
+    tagged_moves = (
+        [(r, False) for r in movers_24h.get("gainers", [])]
+        + [(r, True) for r in movers_24h.get("high_risk_gainers", [])]
+        + [(r, False) for r in movers_24h.get("losers", [])]
+        + [(r, True) for r in movers_24h.get("high_risk_losers", [])]
+    )
+    seen_ids = set()
+    deduped = []  # [(row, is_high_risk), ...]
+    for r, is_high_risk in sorted(tagged_moves, key=lambda pair: pair[0].pct_change, reverse=True):
+        if r.coin_id in seen_ids:
+            continue
+        seen_ids.add(r.coin_id)
+        deduped.append((r, is_high_risk))
+
+    gainers = [pair for pair in deduped if pair[0].pct_change >= threshold][:top_n]
+    losers = sorted([pair for pair in deduped if pair[0].pct_change <= -threshold],
+                     key=lambda pair: pair[0].pct_change)[:top_n]
+
+    lines = [f"# Quick Report -- {ctx.fetch_time.strftime('%Y-%m-%d %H:%M UTC')}", "",
+             "_Rule-based research output. Not financial advice._", ""]
+
+    lines.append(f"## Top movers (>{threshold:.0f}%, 24h)")
+    if gainers:
+        for r, is_high_risk in gainers:
+            risk_tag = " *(thin liquidity -- high risk)*" if is_high_risk else ""
+            lines.append(f"- **{r.symbol} {r.pct_change:+.1f}%** -- A${r.price_aud:,.4f}{risk_tag}")
+    else:
+        lines.append(f"- None moved more than +{threshold:.0f}% in the last 24h.")
+
+    lines.append(f"\n## Top losers (<-{threshold:.0f}%, 24h)")
+    if losers:
+        for r, is_high_risk in losers:
+            risk_tag = " *(thin liquidity -- high risk)*" if is_high_risk else ""
+            lines.append(f"- **{r.symbol} {r.pct_change:+.1f}%** -- A${r.price_aud:,.4f}{risk_tag}")
+    else:
+        lines.append(f"- None dropped more than -{threshold:.0f}% in the last 24h.")
+
+    lines.append("\n## Potentials")
+    ranked = sorted(ctx.final_actions, key=lambda a: a.score, reverse=True)
+    buy_eligible = [a for a in ranked if a.action in (BUY, ADD)][:top_n]
+    if buy_eligible:
+        lines.append(f"\n**{len(buy_eligible)} coin(s) currently clear the bar for {BUY}/{ADD}:**\n")
+        for a in buy_eligible:
+            coin = coin_by_id.get(a.coin_id)
+            rng = historical_weekly_return_range([p for _, p in coin.daily_prices]) if coin else None
+            lines.append(f"- **{a.coin_id}** -- {a.action} (score {a.score:.2f}, {a.confidence} confidence). "
+                         f"Typical 1-week range: {_range_str(rng)}.")
+    else:
+        lines.append("\nNo coin currently clears the bar for BUY/ADD "
+                     "(only core/revenue-generating coins are eligible, and none scored high enough this run). "
+                     f"Closest {top_n} by score:\n")
+        closest = [a for a in ranked if a.action not in ("SELL", "TRIM")][:top_n]
+        for a in closest:
+            coin = coin_by_id.get(a.coin_id)
+            rng = historical_weekly_return_range([p for _, p in coin.daily_prices]) if coin else None
+            lines.append(f"- **{a.coin_id}** -- {a.action} (score {a.score:.2f}, {a.confidence} confidence). "
+                         f"Typical 1-week range: {_range_str(rng)}.")
+
+    lines.append("\n---")
+    lines.append("_\"Typical 1-week range\" is the real 10th-90th percentile of this coin's trailing 7-day "
+                 "returns over its available price history -- what it has actually done, not a prediction "
+                 "of what it will do next. A big mover above never triggers a BUY on its own._")
+
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    path = OUTPUT_DIR / "simple_report.md"
+    path.write_text("\n".join(lines))
+    return path
+
+
 def generate_all_reports(ctx: ReportContext) -> None:
     previous_actions = read_previous_actions()
     write_screen_csv(ctx)
     write_actions_md(ctx, previous_actions)
     write_report_md(ctx)
+    write_simple_report(ctx)
     write_live_report_html(ctx)
     write_state_json(ctx)
     generate_charts(ctx)

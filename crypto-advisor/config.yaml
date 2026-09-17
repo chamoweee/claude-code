@@ -67,6 +67,11 @@ movers:
   top_n: 10
   volume_spike_multiple: 3.0            # >3x 30d avg volume flags an insight
 
+# --- `python main.py simple` -- the condensed on-demand report -----------
+simple_report:
+  mover_threshold_pct: 20.0   # only show movers beyond +/- this in 24h
+  top_n: 3                    # top N gainers / losers / potentials
+
 # --- Insight engine thresholds -------------------------------------------
 insights:
   top_n_shown_first: 5

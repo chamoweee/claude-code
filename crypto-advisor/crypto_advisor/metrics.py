@@ -93,6 +93,30 @@ def sma(prices: list[float], window: int) -> Optional[float]:
     return float(np.mean(prices[-window:]))
 
 
+def historical_weekly_return_range(prices: list[float], min_samples: int = 10) -> Optional[dict]:
+    """Real distribution of trailing 7-day returns over the available price
+    history -- how much this coin has actually swung in a week, in either
+    direction. NOT a forecast: it says nothing about what happens next, only
+    what has already happened. Returns None (never a guess) if there isn't
+    enough history for the stat to mean anything.
+
+    p10/p90 are used instead of raw min/max because a short or synthetic
+    history's extremes are typically outliers, not a picture of "typical"."""
+    if len(prices) < 8:
+        return None
+    arr = np.array(prices, dtype=float)
+    weekly_returns = (arr[7:] / arr[:-7] - 1) * 100
+    weekly_returns = weekly_returns[np.isfinite(weekly_returns)]
+    if len(weekly_returns) < min_samples:
+        return None
+    return {
+        "p10": float(np.percentile(weekly_returns, 10)),
+        "median": float(np.median(weekly_returns)),
+        "p90": float(np.percentile(weekly_returns, 90)),
+        "samples": len(weekly_returns),
+    }
+
+
 def correlation_and_beta(coin_prices: list[float], btc_prices: list[float]) -> tuple[Optional[float], Optional[float]]:
     n = min(len(coin_prices), len(btc_prices))
     if n < 30:

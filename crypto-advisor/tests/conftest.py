@@ -36,6 +36,7 @@ def config() -> dict:
             "min_liquidity_market_cap_aud": 500_000_000, "min_liquidity_avg_volume_aud_30d": 10_000_000,
             "top_n": 10, "volume_spike_multiple": 3.0,
         },
+        "simple_report": {"mover_threshold_pct": 20.0, "top_n": 3},
         "insights": {
             "top_n_shown_first": 5, "near_ath_pct": 5.0, "btc_residual_threshold_pct": 15.0,
             "regime_dominance_shift_pct": 2.0, "sector_rotation_min_spread_pct": 8.0,

@@ -3,6 +3,7 @@
 
     python main.py screen      # build the investable universe + screen.csv, no advisory
     python main.py advise      # full pipeline incl. BUY/ADD/HOLD/TRIM/SELL/WATCH actions
+    python main.py simple      # condensed view: top movers/losers + BUY/ADD potentials -- prints to terminal
     python main.py backtest    # walk-forward backtest vs benchmarks
     python main.py live        # runs `advise` on a loop, with alerts + digests
 
@@ -18,7 +19,7 @@ import sys
 from crypto_advisor.backtest import run_backtest
 from crypto_advisor.config import load_config, load_env, load_portfolio
 from crypto_advisor.logutil import get_logger
-from crypto_advisor.report import generate_all_reports
+from crypto_advisor.report import OUTPUT_DIR, generate_all_reports
 from crypto_advisor.scheduler import run_live_loop, run_once_and_report, run_pipeline_once
 
 logger = get_logger("main")
@@ -30,6 +31,19 @@ def cmd_screen(args) -> None:
     portfolio = load_portfolio()
     ctx = run_once_and_report(config, env, portfolio, include_advisory=False)
     print(f"Screened {len(ctx.universe)} coins. See output/screen.csv, output/live_report.html, output/report.md")
+
+
+def cmd_simple(args) -> None:
+    """The condensed on-demand view: top movers/losers past a threshold, and
+    BUY/ADD potentials with a real historical weekly-return range. Runs the
+    full advisory pipeline (same as `advise`) then prints output/simple_report.md."""
+    config = load_config()
+    env = load_env()
+    portfolio = load_portfolio()
+    ctx = run_once_and_report(config, env, portfolio, include_advisory=True)
+    print((OUTPUT_DIR / "simple_report.md").read_text())
+    if ctx.stale_sources:
+        print(f"\nWARNING: stale/failed data sources this run: {ctx.stale_sources}")
 
 
 def cmd_advise(args) -> None:
@@ -77,6 +91,7 @@ def main() -> None:
 
     sub.add_parser("screen", help="Build the investable universe and screen.csv").set_defaults(func=cmd_screen)
     sub.add_parser("advise", help="Full pipeline with BUY/ADD/HOLD/TRIM/SELL/WATCH actions").set_defaults(func=cmd_advise)
+    sub.add_parser("simple", help="Condensed on-demand view: top movers/losers + BUY/ADD potentials").set_defaults(func=cmd_simple)
     sub.add_parser("backtest", help="Walk-forward backtest vs benchmarks").set_defaults(func=cmd_backtest)
 
     live_parser = sub.add_parser("live", help="Run the live loop (Ctrl+C to stop)")
