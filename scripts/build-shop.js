@@ -248,9 +248,21 @@ function productJsonLd(p) {
 }
 
 function productPage(p) {
-  const related = products.filter((o) => o.slug !== p.slug && o.category === p.category).slice(0, 3);
-  const fallback = products.filter((o) => o.slug !== p.slug).slice(0, 3);
-  const relatedList = related.length ? related : fallback;
+  // Same category first, then top up from the same group, then anything else,
+  // so the row is always full rather than a lone card in a wide grid.
+  const pools = [
+    (o) => o.category === p.category,
+    (o) => o.group === p.group,
+    () => true,
+  ];
+  const relatedList = [];
+  for (const matches of pools) {
+    for (const o of products) {
+      if (relatedList.length >= 3) break;
+      if (o.slug === p.slug || relatedList.includes(o)) continue;
+      if (matches(o)) relatedList.push(o);
+    }
+  }
 
   const optionFields = (p.options || [])
     .map(
