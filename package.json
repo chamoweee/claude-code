@@ -1,0 +1,14 @@
+{
+  "name": "flour-house-shop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static bakery storefront with Stripe checkout",
+  "scripts": {
+    "build": "node scripts/build-shop.js",
+    "dev": "node scripts/serve-shop.js",
+    "test": "node scripts/test-shop.js"
+  },
+  "dependencies": {
+    "stripe": "^18.0.0"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "buildCommand": "node scripts/build-shop.js",
+  "outputDirectory": "shop",
+  "rewrites": [
+    { "source": "/api/create-checkout-session", "destination": "/api/create-checkout-session" }
+  ]
+}

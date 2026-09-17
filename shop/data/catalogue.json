@@ -1,0 +1,288 @@
+[
+  {
+    "slug": "mini-spinach-rolls",
+    "name": "Mini Spinach Rolls",
+    "priceCents": 2700,
+    "packSize": 12,
+    "packLabel": "pack",
+    "emoji": "🥬",
+    "gradient": [
+      "#e8d9b8",
+      "#c79a5c"
+    ],
+    "leadDays": 1
+  },
+  {
+    "slug": "party-pastry-platter",
+    "name": "Party Pastry Platter",
+    "priceCents": 8900,
+    "packSize": 36,
+    "packLabel": "pieces",
+    "emoji": "🥟",
+    "gradient": [
+      "#f0dcae",
+      "#d9a441"
+    ],
+    "leadDays": 2
+  },
+  {
+    "slug": "party-pies",
+    "name": "Party Pies",
+    "priceCents": 2400,
+    "packSize": 12,
+    "packLabel": "pack",
+    "emoji": "🥧",
+    "gradient": [
+      "#eccfa0",
+      "#c08339"
+    ],
+    "leadDays": 1
+  },
+  {
+    "slug": "classic-sausage-rolls",
+    "name": "Classic Sausage Rolls",
+    "priceCents": 2600,
+    "packSize": 12,
+    "packLabel": "pack",
+    "emoji": "🌭",
+    "gradient": [
+      "#ecd6ad",
+      "#c9903f"
+    ],
+    "leadDays": 1
+  },
+  {
+    "slug": "mini-quiche-selection",
+    "name": "Mini Quiche Selection",
+    "priceCents": 3200,
+    "packSize": 12,
+    "packLabel": "pack",
+    "emoji": "🧀",
+    "gradient": [
+      "#f2e2bc",
+      "#cfa04b"
+    ],
+    "leadDays": 2
+  },
+  {
+    "slug": "butter-croissants",
+    "name": "Butter Croissants",
+    "priceCents": 2800,
+    "packSize": 6,
+    "packLabel": "pack",
+    "emoji": "🥐",
+    "gradient": [
+      "#f4dfae",
+      "#d8a63f"
+    ],
+    "leadDays": 1
+  },
+  {
+    "slug": "almond-croissants",
+    "name": "Almond Croissants",
+    "priceCents": 3400,
+    "packSize": 6,
+    "packLabel": "pack",
+    "emoji": "🥜",
+    "gradient": [
+      "#efd9b0",
+      "#c99544"
+    ],
+    "leadDays": 1
+  },
+  {
+    "slug": "danish-fruit-selection",
+    "name": "Danish Fruit Selection",
+    "priceCents": 3000,
+    "packSize": 8,
+    "packLabel": "pack",
+    "emoji": "🍑",
+    "gradient": [
+      "#f6dfb4",
+      "#e0a831"
+    ],
+    "leadDays": 1
+  },
+  {
+    "slug": "cinnamon-scrolls",
+    "name": "Cinnamon Scrolls",
+    "priceCents": 2600,
+    "packSize": 6,
+    "packLabel": "pack",
+    "emoji": "🌀",
+    "gradient": [
+      "#eed2a4",
+      "#c78a3c"
+    ],
+    "leadDays": 1
+  },
+  {
+    "slug": "chocolate-eclairs",
+    "name": "Chocolate Éclairs",
+    "priceCents": 3600,
+    "packSize": 6,
+    "packLabel": "pack",
+    "emoji": "🍫",
+    "gradient": [
+      "#d9b98d",
+      "#8a5a30"
+    ],
+    "leadDays": 1
+  },
+  {
+    "slug": "coffee-eclairs",
+    "name": "Coffee Éclairs",
+    "priceCents": 3600,
+    "packSize": 6,
+    "packLabel": "pack",
+    "emoji": "☕",
+    "gradient": [
+      "#d8bb96",
+      "#9a6b3c"
+    ],
+    "leadDays": 1
+  },
+  {
+    "slug": "mini-eclair-box",
+    "name": "Mini Éclair Box",
+    "priceCents": 4800,
+    "packSize": 18,
+    "packLabel": "pieces",
+    "emoji": "🎁",
+    "gradient": [
+      "#e2c9a2",
+      "#a97a45"
+    ],
+    "leadDays": 2
+  },
+  {
+    "slug": "lemon-meringue-tarts",
+    "name": "Lemon Meringue Tarts",
+    "priceCents": 3300,
+    "packSize": 6,
+    "packLabel": "pack",
+    "emoji": "🍋",
+    "gradient": [
+      "#f7e7ae",
+      "#e3b432"
+    ],
+    "leadDays": 1
+  },
+  {
+    "slug": "portuguese-tarts",
+    "name": "Portuguese Tarts",
+    "priceCents": 2800,
+    "packSize": 8,
+    "packLabel": "pack",
+    "emoji": "🥮",
+    "gradient": [
+      "#f3ddab",
+      "#cf9a3a"
+    ],
+    "leadDays": 1
+  },
+  {
+    "slug": "mini-cheesecakes",
+    "name": "Mini Cheesecakes",
+    "priceCents": 3800,
+    "packSize": 9,
+    "packLabel": "pack",
+    "emoji": "🍰",
+    "gradient": [
+      "#f5e3c4",
+      "#d2a55e"
+    ],
+    "leadDays": 2
+  },
+  {
+    "slug": "friand-selection",
+    "name": "Friand Selection",
+    "priceCents": 3000,
+    "packSize": 8,
+    "packLabel": "pack",
+    "emoji": "🫐",
+    "gradient": [
+      "#efe0c0",
+      "#c79b57"
+    ],
+    "leadDays": 1
+  },
+  {
+    "slug": "sourdough-loaf",
+    "name": "Sourdough Loaf",
+    "priceCents": 900,
+    "packSize": 1,
+    "packLabel": "loaf",
+    "emoji": "🍞",
+    "gradient": [
+      "#e9d2a8",
+      "#b8843c"
+    ],
+    "leadDays": 1
+  },
+  {
+    "slug": "dinner-rolls",
+    "name": "Soft Dinner Rolls",
+    "priceCents": 1200,
+    "packSize": 12,
+    "packLabel": "pack",
+    "emoji": "🥖",
+    "gradient": [
+      "#f0dcb2",
+      "#c2903f"
+    ],
+    "leadDays": 1
+  },
+  {
+    "slug": "celebration-cake-6in",
+    "name": "Celebration Cake — 6 inch",
+    "priceCents": 7500,
+    "packSize": 8,
+    "packLabel": "serves",
+    "emoji": "🎂",
+    "gradient": [
+      "#f5d5c8",
+      "#d98a6e"
+    ],
+    "leadDays": 3
+  },
+  {
+    "slug": "celebration-cake-8in",
+    "name": "Celebration Cake — 8 inch",
+    "priceCents": 11000,
+    "packSize": 16,
+    "packLabel": "serves",
+    "emoji": "🎉",
+    "gradient": [
+      "#f3cfd6",
+      "#c97a90"
+    ],
+    "leadDays": 3
+  },
+  {
+    "slug": "morning-tea-box",
+    "name": "Morning Tea Box",
+    "priceCents": 6500,
+    "packSize": 24,
+    "packLabel": "pieces",
+    "emoji": "🧁",
+    "gradient": [
+      "#f6e0bd",
+      "#d3a251"
+    ],
+    "leadDays": 2
+  },
+  {
+    "slug": "grazing-sweet-board",
+    "name": "Sweet Grazing Board",
+    "priceCents": 12500,
+    "packSize": 40,
+    "packLabel": "pieces",
+    "emoji": "🍓",
+    "gradient": [
+      "#f4d9c6",
+      "#cf8f63"
+    ],
+    "leadDays": 3
+  }
+]

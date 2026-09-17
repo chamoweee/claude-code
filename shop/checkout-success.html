@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order confirmed — The Flour House</title>
+  <meta name="description" content="Thanks for your order." />
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#f4a748" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23f4a748'/%3E%3Ctext x='50' y='70' font-size='56' text-anchor='middle'%3E%F0%9F%A5%90%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+<!-- BUILD:header -->
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <nav class="nav" aria-label="Main">
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-panel">
+        <span></span><span></span><span></span>
+      </button>
+      <a href="index.html" class="brand">
+        <span class="brand-prefix">THE</span>
+        <span class="brand-mark">FLOUR HOUSE</span>
+        <span class="brand-suburb">NORTH KELLYVILLE</span>
+      </a>
+      <div class="nav-actions">
+        <a class="icon-btn" href="cart.html" aria-label="View cart">
+          <span aria-hidden="true">🛒</span>
+          <span class="cart-count" data-cart-count hidden>0</span>
+        </a>
+      </div>
+    </nav>
+    <div class="nav-panel" id="nav-panel">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Our Menu</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="careers.html">Careers</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+  <div class="nav-scrim" hidden></div>
+<!-- /BUILD:header -->
+
+  <div class="demo-banner" id="demo-banner" hidden>
+    Demo mode — no payment was taken. Add a <strong>STRIPE_SECRET_KEY</strong> to take real orders.
+  </div>
+
+  <main id="main">
+    <section class="hero">
+      <div class="container hero-inner text-center" style="margin:0 auto;">
+        <span class="eyebrow">Order confirmed</span>
+        <h1>Thanks — we're on it</h1>
+        <p>A receipt is on its way to your inbox. We'll have your order boxed and ready on the day you chose.</p>
+        <div class="hero-actions" style="justify-content:center">
+          <a class="btn btn-dark btn-lg" href="shop.html">Order something else</a>
+          <a class="btn btn-outline btn-lg" href="index.html">Back home</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="info-grid">
+          <div class="info-card">
+            <div class="info-icon" aria-hidden="true">📧</div>
+            <h3>Check your email</h3>
+            <p>Your receipt and order summary have been sent. If it hasn't arrived in a few minutes, check your junk folder.</p>
+          </div>
+          <div class="info-card">
+            <div class="info-icon" aria-hidden="true">📞</div>
+            <h3>Need to change something?</h3>
+            <p>Call the shop on <a href="tel:0288881234">(02) 8888 1234</a> as early as you can and we'll sort it out.</p>
+          </div>
+          <div class="info-card">
+            <div class="info-icon" aria-hidden="true">🕕</div>
+            <h3>Collection</h3>
+            <p>Shop 4, 12 Harvest Way, North Kellyville. We open at 6am on weekdays.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+<!-- BUILD:footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="brand">
+        <span class="brand-prefix">THE</span>
+        <span class="brand-mark">FLOUR HOUSE</span>
+        <span class="brand-suburb">NORTH KELLYVILLE</span>
+      </a>
+          <p>Baked fresh every morning. Shop 4, 12 Harvest Way, North Kellyville NSW 2155.</p>
+        </div>
+        <div>
+          <h2>Shop</h2>
+          <ul>
+            <li><a href="shop.html">All products</a></li>
+            <li><a href="shop.html#shop-lines">Shop Lines</a></li>
+            <li><a href="shop.html#catering">Catering</a></li>
+            <li><a href="shop.html#cake-creator">Cake Creator</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Visit</h2>
+          <ul class="hours-list">
+            <li><span>Monday – Friday</span><span>6:00am – 4:00pm</span></li>
+            <li><span>Saturday</span><span>6:00am – 3:00pm</span></li>
+            <li><span>Sunday</span><span>7:00am – 2:00pm</span></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Contact</h2>
+          <ul>
+            <li><a href="tel:0288881234">(02) 8888 1234</a></li>
+            <li><a href="mailto:hello@theflourhouse.example">hello@theflourhouse.example</a></li>
+            <li><a href="contact.html">Find us</a></li>
+            <li><a href="careers.html">Work with us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 The Flour House. ABN 00 000 000 000.</span>
+        <span>Baked fresh every morning.</span>
+      </div>
+    </div>
+  </footer>
+  <button class="back-to-top" aria-label="Back to top">&#8593;</button>
+  <div class="toast" role="status" aria-live="polite"></div>
+<!-- /BUILD:footer -->
+  <script src="js/shop.js"></script>
+  <script>
+    // The order is placed, so the cart is finished with.
+    (function () {
+      try { localStorage.removeItem("fh-cart"); } catch (e) {}
+      if (window.FlourHouse) window.FlourHouse.paintCount();
+      if (new URLSearchParams(location.search).has("demo")) {
+        var b = document.getElementById("demo-banner");
+        if (b) b.hidden = false;
+      }
+    })();
+  </script>
+</body>
+</html>

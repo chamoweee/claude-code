@@ -1,0 +1,51 @@
+{
+  "brand": {
+    "name": "The Flour House",
+    "wordmark": "FLOUR HOUSE",
+    "prefix": "THE",
+    "suburb": "NORTH KELLYVILLE",
+    "tagline": "Baked fresh every morning",
+    "domain": "https://theflourhouse.example"
+  },
+  "contact": {
+    "phone": "(02) 8888 1234",
+    "email": "hello@theflourhouse.example",
+    "address": "Shop 4, 12 Harvest Way",
+    "suburb": "North Kellyville NSW 2155",
+    "abn": "00 000 000 000"
+  },
+  "hours": [
+    { "days": "Monday – Friday", "time": "6:00am – 4:00pm" },
+    { "days": "Saturday", "time": "6:00am – 3:00pm" },
+    { "days": "Sunday", "time": "7:00am – 2:00pm" }
+  ],
+  "ordering": {
+    "currency": "aud",
+    "currencySymbol": "$",
+    "minLeadHours": 24,
+    "deliveryFeeCents": 1500,
+    "freeDeliveryOverCents": 15000,
+    "deliveryNote": "Delivery available across the Hills District. Orders under $150 attract a $15 delivery fee.",
+    "pickupNote": "Pickup from the North Kellyville shop. We'll have your order boxed and ready."
+  },
+  "groups": [
+    {
+      "id": "shop-lines",
+      "label": "Shop Lines",
+      "icon": "pie",
+      "blurb": "Everything in our cabinet, by the pack."
+    },
+    {
+      "id": "catering",
+      "label": "Catering",
+      "icon": "platter",
+      "blurb": "Platters and boxes for offices, parties and functions."
+    },
+    {
+      "id": "cake-creator",
+      "label": "Cake Creator",
+      "icon": "cake",
+      "blurb": "Build a celebration cake — size, sponge, filling and finish."
+    }
+  ]
+}
