@@ -1,0 +1,155 @@
+# Crypto Screening & Advisory Agent -- configuration
+# All thresholds are tunable. AUD amounts are approximate and meant to be
+# adjusted to your own risk tolerance.
+
+general:
+  vs_currency: aud
+  secondary_currency: usd        # CoinGecko is queried in both; AUD is used everywhere shown to the user
+  refresh_interval_seconds: 300  # live report refresh cadence
+  timezone: Australia/Sydney
+  us_session_close_timezone: America/New_York
+  us_session_close_hour: 16
+  digest_hour_sydney: 8
+  request_timeout_seconds: 20
+
+# --- Universe filters --------------------------------------------------
+universe:
+  min_market_cap_aud: 500_000_000
+  min_avg_daily_volume_aud_30d: 10_000_000
+  min_price_history_days: 730          # ~2 years
+  max_coins_scanned: 80                # cap on how many CoinGecko-ranked coins we evaluate at all (rate-limit safety
+                                        # on the free API tier -- raise this if you have a paid CoinGecko key)
+  major_exchanges:                     # coin must trade on at least one of these (case-insensitive substring match on CoinGecko ticker market.name)
+    - Binance
+    - Coinbase Exchange
+    - Kraken
+    - OKX
+    - Bybit
+    - Upbit
+    - Crypto.com Exchange
+  excluded_categories:                 # CoinGecko category ids/names treated as automatic exclusions
+    - stablecoins
+    - wrapped-tokens
+    - bridged-tokens
+    - liquid-staking-tokens
+    - exchange-based-tokens
+  excluded_symbol_denylist:            # backstop for coins CoinGecko doesn't tag correctly
+    - usdt
+    - usdc
+    - dai
+    - tusd
+    - usdp
+    - fdusd
+    - wbtc
+    - weth
+    - steth
+    - wsteth
+    - reth
+    - cbeth
+    - wbeth
+
+# --- Classification ------------------------------------------------------
+classification:
+  core:
+    min_market_cap_aud: 10_000_000_000
+    min_avg_daily_volume_aud_30d: 100_000_000
+    min_price_history_days: 1500       # ~4 years
+    min_major_exchanges_listed: 3
+  revenue_generating:
+    min_quarters_with_revenue: 6       # out of last 8
+    max_annual_supply_inflation_pct: 5.0
+  # anything passing the universe filter but neither of the above -> speculative
+
+# --- Liquidity filter used for the "main" movers tables ------------------
+movers:
+  min_liquidity_market_cap_aud: 500_000_000
+  min_liquidity_avg_volume_aud_30d: 10_000_000
+  top_n: 10
+  volume_spike_multiple: 3.0            # >3x 30d avg volume flags an insight
+
+# --- Insight engine thresholds -------------------------------------------
+insights:
+  top_n_shown_first: 5
+  near_ath_pct: 5.0                     # within 5% of all-time high
+  btc_residual_threshold_pct: 15.0      # move unexplained by BTC-beta, in percentage points
+  regime_dominance_shift_pct: 2.0       # BTC dominance move (pp) over 7d considered a regime signal
+  sector_rotation_min_spread_pct: 8.0   # gap between best/worst category 24h performance
+
+# --- Exchange concentration flag -----------------------------------------
+liquidity_risk:
+  max_single_exchange_volume_share_pct: 60.0
+
+# --- Signal scoring weights (0-1, must sum to 1.0) ------------------------
+signals:
+  weight_fundamentals: 0.30
+  weight_valuation: 0.25
+  weight_trend: 0.30
+  weight_regime: 0.15
+  buy_score_threshold: 0.70
+  add_score_threshold: 0.55
+  trim_score_threshold: 0.35
+  sell_score_threshold: 0.20
+  # below add_score_threshold and above trim_score_threshold on a coin not held -> WATCH, not HOLD
+
+# --- Risk management -------------------------------------------------------
+risk:
+  max_position_pct_per_coin: 15.0
+  max_total_speculative_allocation_pct: 20.0
+  min_core_allocation_pct: 50.0
+  trailing_stop_pct: 25.0               # from rolling high since purchase/signal
+  large_unlock_flag_pct_of_supply: 5.0  # single unlock >5% of circulating supply within 30d flags fundamentals-broke
+  min_confidence_data_completeness: 0.6 # below this fraction of available fields -> confidence capped at "low"
+
+# --- Australian tax considerations ------------------------------------------
+au_tax:
+  cgt_discount_days: 365
+  cgt_discount_warning_window_days: 60  # warn when within this many days of the 12-month mark
+  exchange_fees_bps:                    # taker fee + typical spread, in basis points, per exchange
+    Kraken: 40
+    Binance: 30
+    Coinbase Exchange: 60
+    default: 50
+
+# --- Alerts -------------------------------------------------------------
+alerts:
+  holding_move_pct_threshold: 8.0       # instant alert if a held coin moves this much intraday
+  cooldown_minutes: 120                 # minimum gap between repeat alerts for the same (coin, alert_type)
+
+# --- Backtest -------------------------------------------------------------
+backtest:
+  start_date: "2017-01-01"
+  rebalance_days: 30
+  benchmark_universe_cap: 30            # cap coins in the equal-weight basket to control API load
+  top_movers_lookback_days: 1
+
+# --- Data sources -----------------------------------------------------------
+data_sources:
+  coingecko_base_url: https://api.coingecko.com/api/v3
+  defillama_base_url: https://api.llama.fi
+  binance_ws_base_url: wss://stream.binance.com:9443
+  cache_ttl_seconds:
+    markets: 240
+    coin_detail: 21600      # 6h
+    tickers: 21600
+    categories: 3600
+    global: 300
+    market_chart: 21600
+    defillama: 43200        # 12h
+  # Best-effort CoinGecko id -> DefiLlama protocol slug mapping for fees/revenue.
+  # Coins not listed here get fees/revenue = N/A (never estimated).
+  defillama_slug_map:
+    ethereum: ethereum
+    bitcoin: bitcoin
+    solana: solana
+    tron: tron
+    binancecoin: bsc
+    avalanche-2: avalanche
+    polygon-ecosystem-token: polygon
+    arbitrum: arbitrum
+    optimism: optimism
+    uniswap: uniswap
+    aave: aave
+    maker: makerdao
+    lido-dao: lido
+    chainlink: chainlink
+    the-open-network: ton

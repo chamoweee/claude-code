@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crypto Screening &amp; Advisory -- Live Report</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { font-family: -apple-system, Segoe UI, Roboto, sans-serif; margin: 0; padding: 1rem; background: #0e1117; color: #e6e6e6; }
+  h1 { font-size: 1.3rem; margin-bottom: 0.2rem; }
+  h2 { font-size: 1.05rem; margin-top: 2rem; border-bottom: 1px solid #333; padding-bottom: 0.3rem; }
+  .meta { color: #9aa; font-size: 0.85rem; margin-bottom: 1rem; }
+  .stale { color: #ffb454; font-weight: bold; }
+  table { border-collapse: collapse; width: 100%; margin-bottom: 1rem; font-size: 0.85rem; }
+  th, td { text-align: left; padding: 0.35rem 0.5rem; border-bottom: 1px solid #2a2f3a; white-space: nowrap; }
+  th { color: #9ab; font-weight: 600; }
+  .up { color: #4caf50; } .down { color: #ef5350; }
+  .held { color: #ffd54f; font-weight: bold; }
+  .card { background: #161b22; border-radius: 8px; padding: 0.8rem 1rem; margin-bottom: 0.8rem; }
+  .insight { padding: 0.5rem 0; border-bottom: 1px dashed #2a2f3a; }
+  .insight:last-child { border-bottom: none; }
+  .imp { color: #888; font-size: 0.75rem; }
+  .disclaimer { font-size: 0.75rem; color: #888; margin-top: 2rem; border-top: 1px solid #333; padding-top: 0.6rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.6rem; }
+  .stat { background: #161b22; border-radius: 8px; padding: 0.6rem; text-align: center; }
+  .stat .v { font-size: 1.1rem; font-weight: 700; }
+  .stat .l { font-size: 0.7rem; color: #9ab; }
+  @media (max-width: 600px) { table { font-size: 0.75rem; } th, td { padding: 0.25rem 0.35rem; } }
+</style>
+</head>
+<body>
+  <h1>Crypto Screening &amp; Advisory -- Live Report</h1>
+  <div class="meta">
+    Data fetched: {{ fetch_time }} AEST
+    {% if stale_sources %}<span class="stale">| STALE: {{ stale_sources|join(', ') }}</span>{% endif %}
+    <br>Rule-based research output. Not financial advice.
+  </div>
+
+  <h2>Market overview</h2>
+  <div class="grid">
+    <div class="stat"><div class="v">{{ overview.total_mcap }}</div><div class="l">Total market cap ({{ overview.total_mcap_chg }})</div></div>
+    <div class="stat"><div class="v">{{ overview.btc_price }}</div><div class="l">BTC ({{ overview.btc_chg }})</div></div>
+    <div class="stat"><div class="v">{{ overview.eth_price }}</div><div class="l">ETH ({{ overview.eth_chg }})</div></div>
+    <div class="stat"><div class="v">{{ overview.btc_dominance }}</div><div class="l">BTC dominance</div></div>
+    <div class="stat"><div class="v">{{ overview.breadth_24h }}</div><div class="l">Breadth up 24h</div></div>
+    <div class="stat"><div class="v">{{ overview.breadth_7d }}</div><div class="l">Breadth up 7d</div></div>
+  </div>
+
+  {% if summary_text %}
+  <h2>Today, in plain English</h2>
+  <div class="card">{{ summary_text }}</div>
+  {% endif %}
+
+  <h2>Top insights</h2>
+  <div class="card">
+  {% for i in insights[:5] %}
+    <div class="insight"><b>{{ loop.index }}.</b> {{ i.message }} <span class="imp">[{{ i.rule }}, importance {{ "%.1f"|format(i.importance) }}]</span></div>
+  {% endfor %}
+  {% if insights|length > 5 %}
+    <details><summary>{{ insights|length - 5 }} more insights</summary>
+    {% for i in insights[5:] %}
+      <div class="insight">{{ i.message }} <span class="imp">[{{ i.rule }}]</span></div>
+    {% endfor %}
+    </details>
+  {% endif %}
+  </div>
+
+  <h2>Actions for your portfolio &amp; watchlist</h2>
+  <table>
+    <tr><th>Coin</th><th>Action</th><th>Confidence</th><th>Score</th><th>Suggested</th><th>Entry/Stop</th><th>Top reason</th></tr>
+    {% for a in actions %}
+    <tr>
+      <td>{{ a.coin_id }}</td><td><b>{{ a.action }}</b></td><td>{{ a.confidence }}</td><td>{{ "%.2f"|format(a.score) }}</td>
+      <td>{{ a.suggested_aud and "A$%.2f"|format(a.suggested_aud) or "-" }}</td>
+      <td>{{ a.entry_price_aud and "A$%.4f"|format(a.entry_price_aud) or "-" }} / {{ a.stop_price_aud and "A$%.4f"|format(a.stop_price_aud) or "-" }}</td>
+      <td>{{ a.top_reason }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  {% for tf in ['1h', '24h', '7d'] %}
+  <h2>Top movers ({{ tf }})</h2>
+  <table>
+    <tr><th>Coin</th><th>Price (AUD)</th><th>% change</th><th>24h vol (AUD)</th><th>Vol/30d avg</th><th>Mcap (AUD)</th><th>Class</th><th>Held</th></tr>
+    {% for r in movers[tf].gainers %}
+    <tr>
+      <td>{{ r.symbol }}</td><td>A${{ "%.4f"|format(r.price_aud) }}</td><td class="up">+{{ "%.2f"|format(r.pct_change) }}%</td>
+      <td>A${{ "{:,.0f}".format(r.volume_24h_aud or 0) }}</td>
+      <td>{{ r.volume_vs_30d_avg and "%.1fx"|format(r.volume_vs_30d_avg) or "-" }}</td>
+      <td>A${{ "{:,.0f}".format(r.market_cap_aud or 0) }}</td><td>{{ r.classification }}</td>
+      <td>{{ r.held and "held" or "" }}</td>
+    </tr>
+    {% endfor %}
+    {% for r in movers[tf].losers %}
+    <tr>
+      <td>{{ r.symbol }}</td><td>A${{ "%.4f"|format(r.price_aud) }}</td><td class="down">{{ "%.2f"|format(r.pct_change) }}%</td>
+      <td>A${{ "{:,.0f}".format(r.volume_24h_aud or 0) }}</td>
+      <td>{{ r.volume_vs_30d_avg and "%.1fx"|format(r.volume_vs_30d_avg) or "-" }}</td>
+      <td>A${{ "{:,.0f}".format(r.market_cap_aud or 0) }}</td><td>{{ r.classification }}</td>
+      <td>{{ r.held and "held" or "" }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  <details><summary>High-risk movers ({{ tf }}, below liquidity filter)</summary>
+  <table>
+    <tr><th>Coin</th><th>Price (AUD)</th><th>% change</th><th>24h vol (AUD)</th><th>Mcap (AUD)</th></tr>
+    {% for r in movers[tf].high_risk_gainers + movers[tf].high_risk_losers %}
+    <tr><td>{{ r.symbol }}</td><td>A${{ "%.6f"|format(r.price_aud) }}</td>
+      <td class="{{ 'up' if r.pct_change >= 0 else 'down' }}">{{ "%.2f"|format(r.pct_change) }}%</td>
+      <td>A${{ "{:,.0f}".format(r.volume_24h_aud or 0) }}</td><td>A${{ "{:,.0f}".format(r.market_cap_aud or 0) }}</td></tr>
+    {% endfor %}
+  </table>
+  </details>
+  {% endfor %}
+
+  <h2>Sector performance</h2>
+  <table>
+    <tr><th>Category</th><th>24h</th><th>Market cap (USD)</th></tr>
+    {% for c in categories[:15] %}
+    <tr><td>{{ c.name }}</td>
+      <td class="{{ 'up' if (c.market_cap_change_24h or 0) >= 0 else 'down' }}">{{ "%.2f"|format(c.market_cap_change_24h or 0) }}%</td>
+      <td>${{ "{:,.0f}".format(c.market_cap or 0) }}</td></tr>
+    {% endfor %}
+  </table>
+
+  <div class="disclaimer">
+    Signals and insights are rule-based research output, not financial advice. Figures shown are the exact numbers
+    used to trigger each rule; missing data is shown as "-" and never estimated. See report.md for the full
+    data-quality section and excluded-coin log.
+  </div>
+</body>
+</html>

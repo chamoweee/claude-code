@@ -1,0 +1,21 @@
+# Copy to portfolio.yaml (gitignored -- it's your personal data) and edit.
+# All prices/cost bases are in AUD.
+
+cash_aud: 2000.0
+
+holdings:
+  - coin_id: bitcoin          # CoinGecko id, e.g. bitcoin, ethereum, solana
+    units: 0.05
+    cost_base_aud: 4200.00    # total AUD paid, including fees
+    purchase_date: "2023-11-10"
+    exchange: "Kraken"
+
+  - coin_id: ethereum
+    units: 1.2
+    cost_base_aud: 3100.00
+    purchase_date: "2024-02-14"
+    exchange: "Kraken"
+
+watchlist:
+  - solana
+  - chainlink

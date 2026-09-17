@@ -1,0 +1,15 @@
+.venv/
+.env
+portfolio.yaml
+data/raw/
+data/live_history/
+data/alert_cooldowns.json
+data/excluded_coins_log.csv
+data/data_quality_log.csv
+data/signals_history.csv
+data/decisions_journal.csv
+output/
+__pycache__/
+*.pyc
+.pytest_cache/
+.streamlit/
