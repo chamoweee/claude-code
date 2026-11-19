@@ -1,0 +1,15 @@
+{
+  "name": "en-zh-translator",
+  "version": "1.0.0",
+  "private": true,
+  "description": "English to Chinese translator powered by Claude",
+  "type": "module",
+  "bin": { "translate": "./translate.mjs" },
+  "scripts": {
+    "translate": "node translate.mjs",
+    "test": "node --test test.mjs"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.10.0"
+  }
+}
