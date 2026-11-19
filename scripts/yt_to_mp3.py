@@ -84,6 +84,13 @@ class Converter:
         self.cookies = cookies
         self.cookies_browser = cookies_browser
         self.files: list[str] = []
+        self.on_progress = None  # optional callable(fraction 0..1)
+
+    def _progress_hook(self, d: dict) -> None:
+        if self.on_progress and d.get("status") == "downloading":
+            total = d.get("total_bytes") or d.get("total_bytes_estimate")
+            if total:
+                self.on_progress(min(d.get("downloaded_bytes", 0) / total, 1.0))
 
     def _post_hook(self, d: dict) -> None:
         if d.get("status") == "finished" and d.get("postprocessor") == "MoveFiles":
@@ -115,6 +122,7 @@ class Converter:
                 {"key": "FFmpegMetadata", "add_metadata": True},
                 {"key": "EmbedThumbnail"},
             ],
+            "progress_hooks": [self._progress_hook],
             "postprocessor_hooks": [self._post_hook],
         }
         if self.cookies:
