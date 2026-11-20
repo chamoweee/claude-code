@@ -119,13 +119,80 @@ class MoneyManager:
         self._execute(Order(inst, side, abs(delta), reason=signal.reason, stop_price=signal.stop_price), price, ts)
 
 
-class Engine:
-    """Runs one or more markets bar-by-bar through a MoneyManager (backtest or paper)."""
+class PortfolioStrategy:
+    """A strategy that decides for all markets at once (e.g. the AI agent).
 
-    def __init__(self, mm: MoneyManager, markets: list[Market], vol_period: int = 14):
+    decide() returns {symbol: Signal}. Symbols left out mean "hold / no change".
+    """
+
+    warmup = 1
+
+    def decide(self, timestamp: str, history: dict[str, list[Bar]], mm: "MoneyManager",
+               instruments: dict[str, Instrument]) -> dict[str, Signal]:
+        raise NotImplementedError
+
+
+class Engine:
+    """Runs markets bar-by-bar through a MoneyManager. Used for backtests, paper and live trading.
+
+    Each market can have its own per-symbol Strategy, or set `strategy=None` and let a single
+    PortfolioStrategy (like the AI agent) decide for all of them every `decide_every` bars.
+    """
+
+    def __init__(self, mm: MoneyManager, markets: list[Market], vol_period: int = 14,
+                 portfolio_strategy: PortfolioStrategy | None = None, decide_every: int = 1):
         self.mm = mm
         self.markets = {m.instrument.symbol: m for m in markets}
         self.vol_period = vol_period
+        self.portfolio_strategy = portfolio_strategy
+        self.decide_every = max(1, decide_every)
+        self.history: dict[str, list[Bar]] = {s: [] for s in self.markets}
+        self._halt_handled = False
+        self._steps = 0
+        self.last_timestamp: str | None = None
+
+    def step(self, ts: str, bars: dict[str, Bar]) -> None:
+        """Process one timestamp's bars ({symbol: bar}). Safe to call live, one bar at a time."""
+        pf = self.mm.portfolio
+        pf.on_new_bar_time(ts)
+        for sym, bar in bars.items():
+            m = self.markets[sym]
+            pf.mark(sym, bar.open)
+            self.mm.check_stop(m.instrument, bar)
+            pf.mark(sym, bar.close)
+            self.history[sym].append(bar)
+
+        self.mm.risk.update(pf)
+        if self.mm.risk.halted and not self._halt_handled:
+            self._halt_handled = True
+            self.mm._event(ts, "*", "halt", self.mm.risk.halt_reason + " — flattening all positions")
+            for p in pf.open_positions():
+                side = Side.SELL if p.qty > 0 else Side.BUY
+                self.mm._execute(Order(p.instrument, side, abs(p.qty), reason="kill switch"),
+                                 p.last_price, ts, bypass_risk=True)
+
+        for sym, bar in bars.items():
+            m = self.markets[sym]
+            if m.strategy is None:
+                continue
+            hist = self.history[sym]
+            sig = m.strategy.on_bar(sym, hist)
+            if sig is not None:
+                self.mm.on_signal(m.instrument, sig, bar, atr(hist, self.vol_period))
+
+        ps = self.portfolio_strategy
+        if ps is not None and not self.mm.risk.halted and self._steps % self.decide_every == 0:
+            ready = {s: h for s, h in self.history.items()
+                     if len(h) >= ps.warmup and s in bars and self.markets[s].strategy is None}
+            if ready:
+                instruments = {s: self.markets[s].instrument for s in ready}
+                for sym, sig in ps.decide(ts, ready, self.mm, instruments).items():
+                    if sym in ready:
+                        self.mm.on_signal(instruments[sym], sig, ready[sym][-1],
+                                          atr(ready[sym], self.vol_period))
+        self._steps += 1
+        self.last_timestamp = ts
+        pf.record_equity(ts)
 
     def run(self) -> Portfolio:
         # Union of all timestamps so markets with different calendars (24/7 crypto vs weekday stocks) align.
@@ -133,34 +200,6 @@ class Engine:
         for sym, m in self.markets.items():
             for b in m.bars:
                 by_ts.setdefault(b.timestamp, {})[sym] = b
-        history: dict[str, list[Bar]] = {s: [] for s in self.markets}
-        pf = self.mm.portfolio
-        was_halted = False
-
         for ts in sorted(by_ts):
-            bars = by_ts[ts]
-            pf.on_new_bar_time(ts)
-            for sym, bar in bars.items():
-                m = self.markets[sym]
-                pf.mark(sym, bar.open)
-                self.mm.check_stop(m.instrument, bar)
-                pf.mark(sym, bar.close)
-                history[sym].append(bar)
-
-            self.mm.risk.update(pf)
-            if self.mm.risk.halted and not was_halted:
-                was_halted = True
-                self.mm._event(ts, "*", "halt", self.mm.risk.halt_reason + " — flattening all positions")
-                for p in pf.open_positions():
-                    side = Side.SELL if p.qty > 0 else Side.BUY
-                    self.mm._execute(Order(p.instrument, side, abs(p.qty), reason="kill switch"),
-                                     p.last_price, ts, bypass_risk=True)
-
-            for sym, bar in bars.items():
-                m = self.markets[sym]
-                hist = history[sym]
-                sig = m.strategy.on_bar(sym, hist)
-                if sig is not None:
-                    self.mm.on_signal(m.instrument, sig, bar, atr(hist, self.vol_period))
-            pf.record_equity(ts)
-        return pf
+            self.step(ts, by_ts[ts])
+        return self.mm.portfolio

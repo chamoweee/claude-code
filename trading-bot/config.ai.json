@@ -1,0 +1,50 @@
+{
+  "starting_cash": 100000,
+  "broker": "paper",
+  "ai": {
+    "enabled": true,
+    "model": "claude-opus-5-5",
+    "effort": "medium",
+    "web_search": false,
+    "decide_every": 1,
+    "min_conviction": 0.3,
+    "warmup": 60,
+    "max_calls": 200,
+    "journal": "ai_journal.jsonl"
+  },
+  "live": {
+    "timeframe": "1h",
+    "history_bars": 250,
+    "feed": { "type": "yahoo" },
+    "state_file": "bot_state.json",
+    "fills_log": "fills.jsonl"
+  },
+  "sizing": { "type": "fixed_fractional", "risk_per_trade": 0.01 },
+  "risk": {
+    "max_drawdown": 0.15,
+    "daily_loss_limit": 0.03,
+    "max_positions": 6,
+    "max_position_pct": 0.20,
+    "max_gross_leverage": 1.5,
+    "max_total_open_risk": 0.05,
+    "class_caps": { "crypto": 0.25, "forex": 1.0, "futures": 1.0 },
+    "class_max_position_pct": { "forex": 0.5, "futures": 0.4, "crypto": 0.15 }
+  },
+  "allocations": { "crypto": 0.5 },
+  "trail_stops": true,
+  "markets": [
+    { "symbol": "AAPL", "asset_class": "stock", "commission_per_unit": 0.005, "slippage_pct": 0.0005 },
+    { "symbol": "NVDA", "asset_class": "stock", "commission_per_unit": 0.005, "slippage_pct": 0.0005 },
+    { "symbol": "SPY", "asset_class": "etf", "commission_per_unit": 0.005, "slippage_pct": 0.0002 },
+    { "symbol": "BTC/USD", "feed_symbol": "BTC-USD", "asset_class": "crypto", "lot_size": 0.0001, "allow_short": true,
+      "commission_pct": 0.001, "slippage_pct": 0.0005 },
+    { "symbol": "ETH/USD", "feed_symbol": "ETH-USD", "asset_class": "crypto", "lot_size": 0.001, "allow_short": true,
+      "commission_pct": 0.001, "slippage_pct": 0.0005 },
+    { "symbol": "EUR/USD", "feed_symbol": "EURUSD=X", "asset_class": "forex", "lot_size": 1000,
+      "allow_short": true, "slippage_pct": 0.00005 },
+    { "symbol": "ES", "feed_symbol": "ES=F", "asset_class": "futures", "multiplier": 50, "allow_short": true,
+      "commission_per_unit": 2.25, "slippage_pct": 0.0001 },
+    { "symbol": "GC", "feed_symbol": "GC=F", "asset_class": "futures", "multiplier": 100, "allow_short": true,
+      "commission_per_unit": 2.25, "slippage_pct": 0.0001 }
+  ]
+}

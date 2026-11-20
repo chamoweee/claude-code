@@ -19,10 +19,20 @@ def main(argv: list[str] | None = None) -> int:
     bt.add_argument("-v", "--verbose", action="store_true", help="log every fill/rejection")
     bt.add_argument("--equity-csv", help="write the equity curve to this CSV")
     bt.add_argument("--trades-csv", help="write all fills to this CSV")
+    tr = sub.add_parser("trade", help="auto-trade on live data (paper broker unless --live)")
+    tr.add_argument("config")
+    tr.add_argument("--once", action="store_true", help="run a single cycle and exit (for cron)")
+    tr.add_argument("--poll", type=float, help="seconds between cycles (default: a quarter of the timeframe)")
+    tr.add_argument("--live", action="store_true",
+                    help="allow the config's real-money broker (also needs MONEYMANAGER_LIVE=1)")
+    tr.add_argument("-v", "--verbose", action="store_true")
     args = ap.parse_args(argv)
 
-    logging.basicConfig(level=logging.INFO if args.verbose else logging.WARNING, format="%(message)s")
+    logging.basicConfig(level=logging.INFO if args.verbose else logging.WARNING,
+                        format="%(asctime)s %(message)s" if args.cmd == "trade" else "%(message)s")
     cfg, base = load_config(args.config)
+    if args.cmd == "trade":
+        return trade(cfg, base, args)
     engine = build_from_config(cfg, base)
     pf = engine.run()
     mm = engine.mm
@@ -49,6 +59,23 @@ def main(argv: list[str] | None = None) -> int:
             w.writerow(["timestamp", "symbol", "side", "qty", "price", "commission", "reason"])
             for fl in pf.fills:
                 w.writerow([fl.timestamp, fl.symbol, fl.side.value, fl.qty, fl.price, fl.commission, fl.reason])
+    return 0
+
+
+def trade(cfg: dict, base, args) -> int:
+    from .live import build_autotrader
+
+    engine = build_from_config(cfg, base, allow_live=args.live)
+    if engine.mm.broker.is_live:
+        print("*** LIVE TRADING WITH REAL MONEY ***")
+    bot = build_autotrader(engine, cfg, base)
+    if args.once:
+        bot.cycle()
+    else:
+        bot.run_forever(args.poll)
+    ai = engine.portfolio_strategy
+    if ai is not None and hasattr(ai, "usage"):
+        print(f"AI calls this run: {ai.calls}, tokens in/out: {ai.usage['input_tokens']}/{ai.usage['output_tokens']}")
     return 0
 
 
