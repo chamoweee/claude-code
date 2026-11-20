@@ -1,0 +1,38 @@
+{
+  "starting_cash": 100000,
+  "broker": "paper",
+  "sizing": { "type": "fixed_fractional", "risk_per_trade": 0.01 },
+  "risk": {
+    "max_drawdown": 0.20,
+    "daily_loss_limit": 0.03,
+    "max_positions": 8,
+    "max_position_pct": 0.20,
+    "max_gross_leverage": 2.0,
+    "max_total_open_risk": 0.06,
+    "class_caps": { "crypto": 0.30, "stock": 1.0, "forex": 1.5, "futures": 1.5 },
+    "class_max_position_pct": { "forex": 0.75, "futures": 0.50, "crypto": 0.15 }
+  },
+  "allocations": { "crypto": 0.5 },
+  "trail_stops": true,
+  "strategy": { "type": "trend", "fast": 20, "slow": 50, "atr_period": 14, "atr_stop_mult": 3.0 },
+  "markets": [
+    { "symbol": "AAPL", "asset_class": "stock", "lot_size": 1, "commission_per_unit": 0.005,
+      "slippage_pct": 0.0005, "data": { "synthetic": { "start_price": 190, "vol": 0.016 } } },
+    { "symbol": "SPY", "asset_class": "etf", "lot_size": 1, "commission_per_unit": 0.005,
+      "slippage_pct": 0.0002, "data": { "synthetic": { "start_price": 480, "vol": 0.010 } } },
+    { "symbol": "BTC/USDT", "asset_class": "crypto", "lot_size": 0.0001, "allow_short": true,
+      "commission_pct": 0.001, "slippage_pct": 0.0005,
+      "data": { "synthetic": { "start_price": 60000, "vol": 0.03 } } },
+    { "symbol": "ETH/USDT", "asset_class": "crypto", "lot_size": 0.001, "allow_short": true,
+      "commission_pct": 0.001, "slippage_pct": 0.0005,
+      "data": { "synthetic": { "start_price": 3000, "vol": 0.035 } } },
+    { "symbol": "EUR/USD", "asset_class": "forex", "lot_size": 1000, "allow_short": true,
+      "slippage_pct": 0.00005, "data": { "synthetic": { "start_price": 1.08, "vol": 0.005 } } },
+    { "symbol": "ES", "asset_class": "futures", "multiplier": 50, "lot_size": 1, "allow_short": true,
+      "commission_per_unit": 2.25, "slippage_pct": 0.0001,
+      "data": { "synthetic": { "start_price": 5000, "vol": 0.011 } } },
+    { "symbol": "GC", "asset_class": "futures", "multiplier": 100, "lot_size": 1, "allow_short": true,
+      "commission_per_unit": 2.25, "slippage_pct": 0.0001,
+      "data": { "synthetic": { "start_price": 2000, "vol": 0.01 } } }
+  ]
+}
